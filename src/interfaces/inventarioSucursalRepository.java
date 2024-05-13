@@ -6,14 +6,14 @@ import modelos.inventarioSucursal;
 
 public interface inventarioSucursalRepository {
 
-    List<inventarioSucursal> getAllUsers(); // llama a todos los usuarios de la bdd
+    List<inventarioSucursal> getAllUsers(); 
     
-    inventarioSucursal getUserById(int id); //llama solo a uno, por su id
+    inventarioSucursal getUserById(int id); 
     
-    void addUser(inventarioSucursal user); //añade usuarios a la bdd
+    void addUser(inventarioSucursal user); 
     
-    void updateUser(inventarioSucursal user); //actualiza los usuarios de la bdd
+    void updateUser(inventarioSucursal user); 
     
-    void deleteUser(int id); //eliminar usuarios de la bdd
+    void deleteUser(int id); 
 	
 }
