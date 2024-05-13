@@ -1,6 +1,11 @@
-package clases;
+package vista;
 
 import javax.swing.JOptionPane;
+
+import modelos.adminDeposito;
+import modelos.adminSucursal;
+import modelos.cajero;
+import modelos.empleado;
 
 class Main {
 

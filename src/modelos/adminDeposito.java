@@ -1,4 +1,4 @@
-package clases;
+package modelos;
 
 import javax.swing.JOptionPane;
 
