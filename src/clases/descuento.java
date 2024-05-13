@@ -1,4 +1,4 @@
-package modelos;
+package clases;
 
 public class descuento {
 	private int idDescuento;

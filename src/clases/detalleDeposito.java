@@ -1,11 +1,11 @@
-package modelos;
+package clases;
 
-public class detallePedido {
+public class detalleDeposito {
 	private int idDetalle;
 	private int idProducto;
 	private int cantidad;
 	
-	public detallePedido(int idDetalle, int idProducto, int cantidad) {
+	public detalleDeposito(int idDetalle, int idProducto, int cantidad) {
 		super();
 		this.idDetalle = idDetalle;
 		this.idProducto = idProducto;
