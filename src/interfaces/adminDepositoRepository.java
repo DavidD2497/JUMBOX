@@ -6,14 +6,14 @@ import modelos.adminDeposito;
 
 public interface adminDepositoRepository {
 
-    List<adminDeposito> getAllUsers(); // llama a todos los usuarios de la bdd
+    List<adminDeposito> getAllUsers();
     
-    adminDeposito getUserById(int id); //llama solo a uno, por su id
+    adminDeposito getUserById(int id);
     
-    void addUser(adminDeposito user); //añade usuarios a la bdd
+    void addUser(adminDeposito user);
     
-    void updateUser(adminDeposito user); //actualiza los usuarios de la bdd
+    void updateUser(adminDeposito user);
     
-    void deleteUser(int id); //eliminar usuarios de la bdd
+    void deleteUser(int id);
 	
 }

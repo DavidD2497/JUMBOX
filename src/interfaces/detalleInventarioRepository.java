@@ -2,15 +2,17 @@ package interfaces;
 
 import java.util.List;
 
+import modelos.detalleInventario;
+
 public interface detalleInventarioRepository {
 
-	    List<detalleInventario> getAllUsers(); // llama a todos los usuarios de la bdd
+	    List<detalleInventario> getAllUsers();
 	    
-	    detalleInventario getUserById(int id); //llama solo a uno, por su id
+	    detalleInventario getUserById(int id);
 	    
-	    void addUser(detalleInventario user); //añade usuarios a la bdd
+	    void addUser(detalleInventario user);
 	    
-	    void updateUser(detalleInventario user); //actualiza los usuarios de la bdd
+	    void updateUser(detalleInventario user);
 	    
-	    void deleteUser(int id); //eliminar usuarios de la bdd
+	    void deleteUser(int id);
 }
