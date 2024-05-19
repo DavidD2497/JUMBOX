@@ -40,7 +40,13 @@ public class adminDeposito extends empleado {
 	public void validarDatos() {
 
 	}
+	
+	adminDeposito admin = new adminDeposito("Jumbox Max", "1234", 1);
 
+	public void DatosDeposito() {
+		JOptionPane.showMessageDialog(null, "Datos del Admin de Deposito: " + "/n Nombre: " + this.getNombre() + "/n Contraseña: " +  this.getContraseña() + "/n Id del Deposito: " +  this.idAdminDepo);
+	}
+	
 	public void crearDescuentoVencimiento() {
 		LocalDate fechaActual = LocalDate.now();
 		long diasHastaVencimiento = this.Producto.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
