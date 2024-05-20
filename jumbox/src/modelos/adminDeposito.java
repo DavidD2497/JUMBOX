@@ -10,7 +10,6 @@ public class adminDeposito extends empleado {
 	private producto Producto;
 	private descuento Descuento;
 
-    
 	public adminDeposito(String nombre, String contraseña, int idAdminDepo) {
 		super(nombre, contraseña);
 		this.idAdminDepo = idAdminDepo;
@@ -41,6 +40,13 @@ public class adminDeposito extends empleado {
 
 	}
 
+	adminDeposito admin = new adminDeposito("Jumbox Max", "1234", 1);
+
+	public void DatosDeposito() {
+		JOptionPane.showMessageDialog(null, "Datos del Deposito: " + "/n Nombre: " + this.getNombre() + "/n Contraseña: "
+				+ this.getContraseña() + "/n Id del Deposito: " + this.idAdminDepo);
+	}
+
 	public void crearDescuentoVencimiento() {
 		LocalDate fechaActual = LocalDate.now();
 		long diasHastaVencimiento = this.Producto.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
@@ -51,7 +57,7 @@ public class adminDeposito extends empleado {
 			descuento desc = new descuento(1, cantDescuento, "Por vencimiento cerca");
 			double precioDescuentoVencimiento = this.Producto.getPrecio() * (1 - (desc.getPorcentajeDesc() / 100.0));
 			this.Producto.setPrecio(precioDescuentoVencimiento);
-	
+
 			JOptionPane.showMessageDialog(null, "Se ha aplicado un descuento al producto "
 					+ this.Producto.getNombreProducto() + " por su fecha de vencimiento que está cerca de la actual.");
 		} else {
