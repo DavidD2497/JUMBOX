@@ -67,7 +67,7 @@ public class adminDeposito extends empleado {
 
 			JOptionPane.showMessageDialog(null, "Se ha aplicado un descuento al producto "
 					+ this.Producto.getNombreProducto() + " por su fecha de vencimiento que está cerca de la actual.");
-			return "Se aplico descuento";
+			return "Se aplicó el descuento";
 
 		} else {
 			JOptionPane.showMessageDialog(null, "El producto " + this.Producto.getNombreProducto()
