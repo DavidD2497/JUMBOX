@@ -2,13 +2,13 @@ package modelos;
 
 import java.util.LinkedList;
 
-public class venta {
+public class Venta {
 	private int idVenta;
 	private double montoTotal;
 	private String tipoPago;
-	private LinkedList<detalleVenta> listaVenta = new LinkedList<>();
+	private LinkedList<DetalleVenta> listaVenta = new LinkedList<>();
 	
-	public venta(int idVenta, double montoTotal, String tipoPago, LinkedList<detalleVenta> listaVenta) {
+	public Venta(int idVenta, double montoTotal, String tipoPago, LinkedList<DetalleVenta> listaVenta) {
 		super();
 		this.idVenta = idVenta;
 		this.montoTotal = montoTotal;
@@ -40,11 +40,11 @@ public class venta {
 		this.tipoPago = tipoPago;
 	}
 
-	public LinkedList<detalleVenta> getListaVenta() {
+	public LinkedList<DetalleVenta> getListaVenta() {
 		return listaVenta;
 	}
 
-	public void setListaVenta(LinkedList<detalleVenta> listaVenta) {
+	public void setListaVenta(LinkedList<DetalleVenta> listaVenta) {
 		this.listaVenta = listaVenta;
 	}
 }

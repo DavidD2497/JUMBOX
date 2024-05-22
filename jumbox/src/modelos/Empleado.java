@@ -4,14 +4,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-public class empleado {
+public class Empleado {
 	private String nombre;
 	private String contraseña;
-	private LinkedList<adminSucursal> listaAdminSucursal = new LinkedList<>();
-	private LinkedList<adminDeposito> listaAdminDeposito = new LinkedList<>();
-	private LinkedList<cajero> listaCajero = new LinkedList<>();
+	private LinkedList<AdminSucursal> listaAdminSucursal = new LinkedList<>();
+	private LinkedList<AdminDeposito> listaAdminDeposito = new LinkedList<>();
+	private LinkedList<Cajero> listaCajero = new LinkedList<>();
 	
-	public empleado(String nombre, String contraseña) {
+	public Empleado(String nombre, String contraseña) {
 		this.nombre = nombre;
 		this.contraseña = contraseña;
 	}
@@ -32,27 +32,27 @@ public class empleado {
 		this.contraseña = contraseña;
 	}
 
-	public LinkedList<adminSucursal> getListaAdminSucursal() {
+	public LinkedList<AdminSucursal> getListaAdminSucursal() {
 		return listaAdminSucursal;
 	}
 
-	public void setListaAdminSucursal(LinkedList<adminSucursal> listaAdminSucursal) {
+	public void setListaAdminSucursal(LinkedList<AdminSucursal> listaAdminSucursal) {
 		this.listaAdminSucursal = listaAdminSucursal;
 	}
 
-	public LinkedList<adminDeposito> getListaAdminDeposito() {
+	public LinkedList<AdminDeposito> getListaAdminDeposito() {
 		return listaAdminDeposito;
 	}
 
-	public void setListaAdminDeposito(LinkedList<adminDeposito> listaAdminDeposito) {
+	public void setListaAdminDeposito(LinkedList<AdminDeposito> listaAdminDeposito) {
 		this.listaAdminDeposito = listaAdminDeposito;
 	}
 
-	public LinkedList<cajero> getListaCajero() {
+	public LinkedList<Cajero> getListaCajero() {
 		return listaCajero;
 	}
 
-	public void setListaCajero(LinkedList<cajero> listaCajero) {
+	public void setListaCajero(LinkedList<Cajero> listaCajero) {
 		this.listaCajero = listaCajero;
 	}
 	

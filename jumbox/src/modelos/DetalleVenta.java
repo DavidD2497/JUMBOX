@@ -1,13 +1,13 @@
 package modelos;
 
-public class detalleVenta {
+public class DetalleVenta {
 	private int idProducto;
 	private int idVenta;
 	private double monto;
 	private int cantidad;
 	private int idDetalle;
 	
-	public detalleVenta(int idProducto, int idVenta, double monto, int cantidad, int idDetalle) {
+	public DetalleVenta(int idProducto, int idVenta, double monto, int cantidad, int idDetalle) {
 		super();
 		this.idProducto = idProducto;
 		this.idVenta = idVenta;

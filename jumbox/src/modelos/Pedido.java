@@ -3,12 +3,12 @@ package modelos;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-public class pedido {
+public class Pedido {
 	private int codigoPedido;
 	private LocalDate fechaEntrega;
-	private LinkedList<detallePedido> listaPedidos = new LinkedList<>();
+	private LinkedList<DetallePedido> listaPedidos = new LinkedList<>();
 	
-	public pedido(int codigoPedido, LocalDate fechaEntrega, LinkedList<detallePedido> listaPedidos) {
+	public Pedido(int codigoPedido, LocalDate fechaEntrega, LinkedList<DetallePedido> listaPedidos) {
 		super();
 		this.codigoPedido = codigoPedido;
 		this.fechaEntrega = fechaEntrega;
@@ -31,11 +31,11 @@ public class pedido {
 		this.fechaEntrega = fechaEntrega;
 	}
 
-	public LinkedList<detallePedido> getListaPedidos() {
+	public LinkedList<DetallePedido> getListaPedidos() {
 		return listaPedidos;
 	}
 
-	public void setListaPedidos(LinkedList<detallePedido> listaPedidos) {
+	public void setListaPedidos(LinkedList<DetallePedido> listaPedidos) {
 		this.listaPedidos = listaPedidos;
 	}
 }

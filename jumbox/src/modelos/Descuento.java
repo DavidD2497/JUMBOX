@@ -1,11 +1,11 @@
 package modelos;
 
-public class descuento {
+public class Descuento {
 	private int idDescuento;
 	private int porcentajeDesc;
 	private String tipoDesc;
 	
-	public descuento(int idDescuento, int porcentajeDesc, String tipoDesc) {
+	public Descuento(int idDescuento, int porcentajeDesc, String tipoDesc) {
 		super();
 		this.idDescuento = idDescuento;
 		this.porcentajeDesc = porcentajeDesc;

@@ -1,23 +1,23 @@
 package modelos;
 
-public class detalleInventario {
-    private producto producto;
+public class DetalleInventario {
+    private Producto producto;
     private int idDescuento;
     private int idDetalle;
     private int cantidad;
 
-    public detalleInventario(producto producto, int idDescuento, int idDetalle, int cantidad) {
+    public DetalleInventario(Producto producto, int idDescuento, int idDetalle, int cantidad) {
         this.producto = producto;
         this.idDescuento = idDescuento;
         this.idDetalle = idDetalle;
         this.cantidad = cantidad;
     }
 
-    public producto getProducto() {
+    public Producto getProducto() {
         return producto;
     }
 
-    public void setProducto(producto producto) {
+    public void setProducto(Producto producto) {
         this.producto = producto;
     }
 

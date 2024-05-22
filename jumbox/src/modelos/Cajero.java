@@ -3,11 +3,12 @@ package modelos;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
-public class cajero extends empleado {
+public class Cajero extends Empleado {
     private int idCajero;
-    private inventarioSucursal inventarioSucursal;
+    private InventarioSucursal inventarioSucursal;
+    
 
-    public cajero(String nombre, String contraseña, int idCajero, inventarioSucursal inventarioSucursal) {
+    public Cajero(String nombre, String contraseña, int idCajero, InventarioSucursal inventarioSucursal) {
         super(nombre, contraseña);
         this.idCajero = idCajero;
         this.inventarioSucursal = inventarioSucursal;
@@ -22,8 +23,8 @@ public class cajero extends empleado {
     }
 
     public void registroSalidaInventario(int idProducto, int cantidadSalida) {
-        LinkedList<detalleInventario> listaInventario = inventarioSucursal.getListaInventario();
-        for (detalleInventario detalle : listaInventario) {
+        LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
+        for (DetalleInventario detalle : listaInventario) {
             if (detalle.getProducto().getIdProducto() == idProducto) {
                 if (detalle.getCantidad() >= cantidadSalida) {
                     detalle.setCantidad(detalle.getCantidad() - cantidadSalida);

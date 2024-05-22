@@ -2,11 +2,11 @@ package modelos;
 
 import java.util.LinkedList;
 
-public class depositoGeneral {
+public class DepositoGeneral {
 	private int idDeposito;
-	private LinkedList<detalleDeposito> listaDeposito = new LinkedList<>();
+	private LinkedList<DetalleDeposito> listaDeposito = new LinkedList<>();
 	
-	public depositoGeneral(int idDeposito, LinkedList<detalleDeposito> listaDeposito) {
+	public DepositoGeneral(int idDeposito, LinkedList<DetalleDeposito> listaDeposito) {
 		super();
 		this.idDeposito = idDeposito;
 		this.listaDeposito = listaDeposito;
@@ -20,11 +20,11 @@ public class depositoGeneral {
 		this.idDeposito = idDeposito;
 	}
 
-	public LinkedList<detalleDeposito> getListaDeposito() {
+	public LinkedList<DetalleDeposito> getListaDeposito() {
 		return listaDeposito;
 	}
 
-	public void setListaDeposito(LinkedList<detalleDeposito> listaDeposito) {
+	public void setListaDeposito(LinkedList<DetalleDeposito> listaDeposito) {
 		this.listaDeposito = listaDeposito;
 	}
 	
