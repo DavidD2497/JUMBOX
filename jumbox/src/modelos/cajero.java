@@ -27,7 +27,7 @@ public class cajero extends empleado {
             if (detalle.getProducto().getIdProducto() == idProducto) {
                 if (detalle.getCantidad() >= cantidadSalida) {
                     detalle.setCantidad(detalle.getCantidad() - cantidadSalida);
-                    JOptionPane.showMessageDialog(null, "Se ha registrado la salida de " + cantidadSalida + " unidades del producto: " + detalle.getProducto().getNombreProducto());
+                    JOptionPane.showMessageDialog(null, "Se ha registrado la salida de " + cantidadSalida + " unidad/es del producto: " + detalle.getProducto().getNombreProducto());
                 } else {
                     JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalle.getProducto().getNombreProducto());
                 }
