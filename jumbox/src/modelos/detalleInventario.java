@@ -1,48 +1,48 @@
 package modelos;
 
 public class detalleInventario {
-	private int idProducto;
-	private int idDescuento;
-	private int idDetalle;
-	private int cantidad;
-	
-	public detalleInventario(int idProducto, int idDescuento, int idDetalle, int cantidad) {
-		super();
-		this.idProducto = idProducto;
-		this.idDescuento = idDescuento;
-		this.idDetalle = idDetalle;
-		this.cantidad = cantidad;
-	}
+    private producto producto;
+    private int idDescuento;
+    private int idDetalle;
+    private int cantidad;
 
-	public int getIdProducto() {
-		return idProducto;
-	}
+    public detalleInventario(producto producto, int idDescuento, int idDetalle, int cantidad) {
+        this.producto = producto;
+        this.idDescuento = idDescuento;
+        this.idDetalle = idDetalle;
+        this.cantidad = cantidad;
+    }
 
-	public void setIdProducto(int idProducto) {
-		this.idProducto = idProducto;
-	}
+    public producto getProducto() {
+        return producto;
+    }
 
-	public int getIdDescuento() {
-		return idDescuento;
-	}
+    public void setProducto(producto producto) {
+        this.producto = producto;
+    }
 
-	public void setIdDescuento(int idDescuento) {
-		this.idDescuento = idDescuento;
-	}
+    public int getIdDescuento() {
+        return idDescuento;
+    }
 
-	public int getIdDetalle() {
-		return idDetalle;
-	}
+    public void setIdDescuento(int idDescuento) {
+        this.idDescuento = idDescuento;
+    }
 
-	public void setIdDetalle(int idDetalle) {
-		this.idDetalle = idDetalle;
-	}
+    public int getIdDetalle() {
+        return idDetalle;
+    }
 
-	public int getCantidad() {
-		return cantidad;
-	}
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
+    }
 
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 }
+
