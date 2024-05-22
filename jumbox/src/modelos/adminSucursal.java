@@ -24,16 +24,14 @@ public class adminSucursal extends empleado{
 		JOptionPane.showMessageDialog(null, "¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Administrador de surcursal");
 	}
 	
-	public void registroEntradaSalida() {
+	public void registroEntradaInventario() {
 		
 	}
-	public void solicitarPedido() {
+	public void CrearsolicitudPedido() {
 		
 	}
-	public void creaDescuento() {
+	public void MostrarsolicitudPedido() {
 		
 	}
-	public void generarInforme() {
-		
-	}
+	
 }
