@@ -3,21 +3,15 @@ package modelos;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
-public class cajero extends empleado {
+public class Cajero extends Empleado {
     private int idCajero;
-<<<<<<< Updated upstream:jumbox/src/modelos/cajero.java
-    private inventarioSucursal inventarioSucursal;
-
-    public cajero(String nombre, String contraseña, int idCajero, inventarioSucursal inventarioSucursal) {
-=======
     private InventarioSucursal inventarioSucursal;
     private LinkedList<Venta> listaVentas = new LinkedList<>();
-    
 
-    public Cajero(String nombre, String contraseña, int idCajero) {
->>>>>>> Stashed changes:jumbox/src/modelos/Cajero.java
+    public Cajero(String nombre, String contraseña, int idCajero, InventarioSucursal inventarioSucursal) {
         super(nombre, contraseña);
         this.idCajero = idCajero;
+        this.inventarioSucursal = inventarioSucursal;
     }
 
     public int getIdCajero() {
@@ -28,9 +22,17 @@ public class cajero extends empleado {
         this.idCajero = idCajero;
     }
 
+    public LinkedList<Venta> getListaVentas() {
+        return listaVentas;
+    }
+
+    public void setListaVentas(LinkedList<Venta> listaVentas) {
+        this.listaVentas = listaVentas;
+    }
+
     public void registroSalidaInventario(int idProducto, int cantidadSalida) {
-        LinkedList<detalleInventario> listaInventario = inventarioSucursal.getListaInventario();
-        for (detalleInventario detalle : listaInventario) {
+        LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
+        for (DetalleInventario detalle : listaInventario) {
             if (detalle.getProducto().getIdProducto() == idProducto) {
                 if (detalle.getCantidad() >= cantidadSalida) {
                     detalle.setCantidad(detalle.getCantidad() - cantidadSalida);
@@ -43,7 +45,7 @@ public class cajero extends empleado {
         }
         JOptionPane.showMessageDialog(null, "Producto no encontrado en el inventario.");
     }
-    
+
     public void registrarVenta(LinkedList<DetalleVenta> detalles, String tipoPago) {
         double montoTotal = 0;
 
@@ -65,12 +67,17 @@ public class cajero extends empleado {
             }
         }
 
-        int idVenta = listaVentas.size() + 1;
+        int idVenta = listaVentas.size() + 1; // Generar un nuevo ID para la venta
         Venta nuevaVenta = new Venta(idVenta, montoTotal, tipoPago, detalles);
         listaVentas.add(nuevaVenta);
 
         JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
     }
+
+    public void bienvenida() {
+        JOptionPane.showMessageDialog(null, "¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Cajero");
+    }
 }
+
 
 
