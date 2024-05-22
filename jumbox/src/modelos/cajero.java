@@ -18,9 +18,6 @@ public class cajero extends empleado{
 		this.idCajero = idCajero;
 	}
 	
-	public void bienvenida() {
-		JOptionPane.showMessageDialog(null, "¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Cajero");
-	}
 	
 	public void registroEntradaSalida() {
 		
