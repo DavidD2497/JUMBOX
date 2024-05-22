@@ -71,3 +71,4 @@ java.io.FileNotFoundException: C:\Users\cpercodani\Desktop\JUMBOX\.metadata\.plu
 	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1149)
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2024-05-22 11:38:05,076 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
