@@ -40,14 +40,16 @@ public class Cajero extends Empleado {
                 } else {
                     JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalle.getProducto().getNombreProducto());
                 }
-                return;
+                break;
             }
         }
-        JOptionPane.showMessageDialog(null, "Producto no encontrado en el inventario.");
     }
+    
 
     public void registrarVenta(LinkedList<DetalleVenta> detalles, String tipoPago) {
         double montoTotal = 0;
+        boolean suficienteInventario = true;
+
 
         for (DetalleVenta detalleVenta : detalles) {
             int idProducto = detalleVenta.getIdProducto();
@@ -56,27 +58,39 @@ public class Cajero extends Empleado {
 
             for (DetalleInventario detalleInventario : listaInventario) {
                 if (detalleInventario.getProducto().getIdProducto() == idProducto) {
-                    if (detalleInventario.getCantidad() >= cantidadVenta) {
-                        detalleInventario.setCantidad(detalleInventario.getCantidad() - cantidadVenta);
-                        montoTotal += detalleVenta.getMonto();
-                    } else {
+                    if (detalleInventario.getCantidad() < cantidadVenta) {
                         JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalleInventario.getProducto().getNombreProducto());
-                        return;
+                        suficienteInventario = false;
+                        break;
                     }
                 }
             }
         }
 
-        int idVenta = listaVentas.size() + 1; // Generar un nuevo ID para la venta
-        Venta nuevaVenta = new Venta(idVenta, montoTotal, tipoPago, detalles);
-        listaVentas.add(nuevaVenta);
+        if (suficienteInventario) {
+            for (DetalleVenta detalleVenta : detalles) {
+                int idProducto = detalleVenta.getIdProducto();
+                int cantidadVenta = detalleVenta.getCantidad();
+                LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
 
-        JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
+                for (DetalleInventario detalleInventario : listaInventario) {
+                    if (detalleInventario.getProducto().getIdProducto() == idProducto) {
+                        detalleInventario.setCantidad(detalleInventario.getCantidad() - cantidadVenta);
+                        montoTotal += detalleVenta.getMonto();
+                        break;
+                    }
+                }
+            }
+
+            int idVenta = listaVentas.size() + 1;
+            Venta nuevaVenta = new Venta(idVenta, montoTotal, tipoPago, detalles);
+            listaVentas.add(nuevaVenta);
+
+            JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
+        }
+        
     }
 
-    public void bienvenida() {
-        JOptionPane.showMessageDialog(null, "¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Cajero");
-    }
 }
 
 
