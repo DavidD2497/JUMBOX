@@ -1,8 +1,5 @@
 package modelos;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 import javax.swing.JOptionPane;
 
 public class AdminDeposito extends Empleado {

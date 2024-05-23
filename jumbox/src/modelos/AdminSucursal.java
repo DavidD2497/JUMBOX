@@ -53,16 +53,21 @@ public class AdminSucursal extends Empleado {
 		if (diasHastaVencimiento <= 14) {
 			int cantDescuento = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el porcentaje de descuento"));
 			do {
-				try {
-					cantDescuento = Integer.parseInt(
-							JOptionPane.showInputDialog("Ingrese un porcentaje de descuento válido (entre 5% y 95%)"));
-					if (cantDescuento > 95 || cantDescuento < 5) {
-						JOptionPane.showMessageDialog(null, "El porcentaje de descuento debe estar entre 5% y 95%");
+				boolean flag= true;
+				do {
+					
+					try {
+						cantDescuento = Integer.parseInt(
+								JOptionPane.showInputDialog("Ingrese un porcentaje de descuento válido (entre 5% y 95%)"));
+						if (cantDescuento > 95 || cantDescuento < 5) {
+							JOptionPane.showMessageDialog(null, "El porcentaje de descuento debe estar entre 5% y 95%");
+						}
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Ingrese un valor válido");
+						cantDescuento = -1;
+						flag=false;
 					}
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Ingrese un valor válido");
-					cantDescuento = -1;
-				}
+				} while (flag==false);
 			} while (cantDescuento < 95 && cantDescuento > 5);
 			Descuento desc = new Descuento(1, cantDescuento);
 			double precioDescuentoVencimiento = this.producto.getPrecio() * (1 - (desc.getPorcentajeDesc() / 100.0));
