@@ -1,8 +1,8 @@
 package interfaces;
 
-import modelos.DetalleDeposito;
-
 import java.util.List;
+
+import modelos.DetalleDeposito;
 
 public interface DetalleDepRepository {
 
