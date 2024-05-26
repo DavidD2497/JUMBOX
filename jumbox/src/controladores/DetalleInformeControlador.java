@@ -13,8 +13,8 @@ import modelos.DetalleInforme;
 public class DetalleInformeControlador implements DetalleInformeRepository {
     private final Connection connection;
 
-    public DetalleInformeControlador(Connection connection) {
-        this.connection = connection;
+    public DetalleInformeControlador() {
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
