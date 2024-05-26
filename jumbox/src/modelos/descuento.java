@@ -1,15 +1,13 @@
 package modelos;
 
-public class descuento {
+public class Descuento {
 	private int idDescuento;
-	private int porcentajeDesc;
-	private String tipoDesc;
-	
-	public descuento(int idDescuento, int porcentajeDesc, String tipoDesc) {
+	private double porcentajeDesc;
+
+	public Descuento(int idDescuento, double porcentajeDesc) {
 		super();
 		this.idDescuento = idDescuento;
 		this.porcentajeDesc = porcentajeDesc;
-		this.tipoDesc = tipoDesc;
 	}
 
 	public int getIdDescuento() {
@@ -20,19 +18,11 @@ public class descuento {
 		this.idDescuento = idDescuento;
 	}
 
-	public int getPorcentajeDesc() {
+	public double getPorcentajeDesc() {
 		return porcentajeDesc;
 	}
 
-	public void setPorcentajeDesc(int porcentajeDesc) {
+	public void setPorcentajeDesc(double porcentajeDesc) {
 		this.porcentajeDesc = porcentajeDesc;
-	}
-
-	public String getTipoDesc() {
-		return tipoDesc;
-	}
-
-	public void setTipoDesc(String tipoDesc) {
-		this.tipoDesc = tipoDesc;
 	}
 }

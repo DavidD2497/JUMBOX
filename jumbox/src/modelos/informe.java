@@ -2,11 +2,11 @@ package modelos;
 
 import java.util.LinkedList;
 
-public class informe {
+public class Informe {
 	private int idInforme;
-	private LinkedList<detalleInforme> listaInformes = new LinkedList<>();
+	private LinkedList<DetalleInforme> listaInformes = new LinkedList<>();
 	
-	public informe(int idInforme, LinkedList<detalleInforme> listaInformes) {
+	public Informe(int idInforme, LinkedList<DetalleInforme> listaInformes) {
 		super();
 		this.idInforme = idInforme;
 		this.listaInformes = listaInformes;
@@ -20,11 +20,11 @@ public class informe {
 		this.idInforme = idInforme;
 	}
 
-	public LinkedList<detalleInforme> getListaInformes() {
+	public LinkedList<DetalleInforme> getListaInformes() {
 		return listaInformes;
 	}
 
-	public void setListaInformes(LinkedList<detalleInforme> listaInformes) {
+	public void setListaInformes(LinkedList<DetalleInforme> listaInformes) {
 		this.listaInformes = listaInformes;
 	}
 }

@@ -2,11 +2,11 @@ package modelos;
 
 import java.util.LinkedList;
 
-public class inventarioSucursal {
+public class InventarioSucursal {
 	private int idInventario;
-	private LinkedList<detalleInventario> listaInventario = new LinkedList<>();
+	private LinkedList<DetalleInventario> listaInventario = new LinkedList<>();
 	
-	public inventarioSucursal(int idInventario, LinkedList<detalleInventario> listaInventario) {
+	public InventarioSucursal(int idInventario, LinkedList<DetalleInventario> listaInventario) {
 		super();
 		this.idInventario = idInventario;
 		this.listaInventario = listaInventario;
@@ -20,11 +20,11 @@ public class inventarioSucursal {
 		this.idInventario = idInventario;
 	}
 
-	public LinkedList<detalleInventario> getListaInventario() {
+	public LinkedList<DetalleInventario> getListaInventario() {
 		return listaInventario;
 	}
 
-	public void setListaInventario(LinkedList<detalleInventario> listaInventario) {
+	public void setListaInventario(LinkedList<DetalleInventario> listaInventario) {
 		this.listaInventario = listaInventario;
 	}
 }

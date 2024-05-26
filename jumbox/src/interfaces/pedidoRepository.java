@@ -1,19 +1,17 @@
 package interfaces;
 
 import java.util.List;
+import modelos.Pedido;
 
-import modelos.pedido;
+public interface PedidoRepository {
 
-public interface pedidoRepository {
+    List<Pedido> getAllPedidos(); // Obtiene todos los pedidos de la base de datos
 
-	
-List<pedido> getAllUsers(); 
-    
-    pedido getUserById(int id); 
-    
-    void addUser(pedido user); 
-    
-    void updateUser(pedido user); 
-    
-    void deleteUser(int id); 
+    Pedido getPedidoById(int id); // Obtiene un pedido por su ID
+
+    void addPedido(Pedido pedido); // Agrega un pedido a la base de datos
+
+    void updatePedido(Pedido pedido); // Actualiza un pedido en la base de datos
+
+    void deletePedido(int id); // Elimina un pedido de la base de datos
 }

@@ -2,17 +2,17 @@ package interfaces;
 
 import java.util.List;
 
-import modelos.cajero;
+import modelos.Cajero;
 
-public interface cajeroRepository {
+public interface CajeroRepository {
 
-    List<cajero> getAllUsers(); 
+    List<Cajero> getAllUsers(); 
     
-    cajero getUserById(int id);
+    Cajero getUserById(int id);
     
-    void addUser(cajero user);
+    void addUser(Cajero user);
     
-    void updateUser(cajero user); 
+    void updateUser(Cajero user); 
     
     void deleteUser(int id);
 }

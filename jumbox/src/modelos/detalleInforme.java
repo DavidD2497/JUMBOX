@@ -1,11 +1,11 @@
 package modelos;
 
-public class detalleInforme {
+public class DetalleInforme {
 	private int idDetalle;
 	private int idVenta;
 	private int idInventario;
 	
-	public detalleInforme(int idDetalle, int idVenta, int idInventario) {
+	public DetalleInforme(int idDetalle, int idVenta, int idInventario) {
 		super();
 		this.idDetalle = idDetalle;
 		this.idVenta = idVenta;

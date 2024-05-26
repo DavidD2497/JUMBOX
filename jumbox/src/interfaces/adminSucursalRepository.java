@@ -2,17 +2,17 @@ package interfaces;
 
 import java.util.List;
 
-import modelos.adminSucursal;
+import modelos.AdminSucursal;
 
-public interface adminSucursalRepository {
+public interface AdminSucursalRepository {
 
-    List<adminSucursal> getAllUsers();
+    List<AdminSucursal> getAllUsers();
     
-    adminSucursal getUserById(int id);
+    AdminSucursal getUserById(int id);
     
-    void addUser(adminSucursal user);
+    void addUser(AdminSucursal user);
     
-    void updateUser(adminSucursal user);
+    void updateUser(AdminSucursal user);
     
     void deleteUser(int id);
 }

@@ -2,17 +2,16 @@ package interfaces;
 
 import java.util.List;
 
-import modelos.empleado;
+import modelos.Empleado;
+public interface EmpleadoRepository {
 
-public interface empleadoRepository {
-
-    List<empleado> getAllUsers(); 
+    List<Empleado> getAllUsers(); 
     
-    empleado getUserById(int id); 
+    Empleado getUserById(int id); 
     
-    void addUser(empleado user); 
+    void addUser(Empleado user); 
     
-    void updateUser(empleado user); 
+    void updateUser(Empleado user); 
     
     void deleteUser(int id); 
 	

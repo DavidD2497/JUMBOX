@@ -1,19 +1,17 @@
 package interfaces;
 
 import java.util.List;
+import modelos.Informe;
 
-import modelos.informe;
+public interface InformeRepository {
 
-public interface informeRepository {
+    List<Informe> getAllInformes(); // Obtiene todos los informes de la base de datos
 
-    List<informe> getAllUsers(); 
-    
-    informe getUserById(int id); 
-    
-    void addUser(informe user); 
-    
-    void updateUser(informe user); 
-    
-    void deleteUser(int id); 
-	
+    Informe getInformeById(int id); // Obtiene un informe por su ID
+
+    void addInforme(Informe informe); // Agrega un informe a la base de datos
+
+    void updateInforme(Informe informe); // Actualiza un informe en la base de datos
+
+    void deleteInforme(int id); // Elimina un informe de la base de datos
 }

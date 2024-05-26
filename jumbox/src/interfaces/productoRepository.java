@@ -1,18 +1,17 @@
 package interfaces;
 
 import java.util.List;
+import modelos.Producto;
 
-import modelos.producto;
+public interface ProductoRepository {
 
-public interface productoRepository {
+    List<Producto> getAllProductos(); // Obtiene todos los productos de la base de datos
 
-List<producto> getAllUsers(); 
-    
-    producto getUserById(int id); 
-    
-    void addUser(producto user); 
-    
-    void updateUser(producto user); 
-    
-    void deleteUser(int id); 
+    Producto getProductoById(int id); // Obtiene un producto por su ID
+
+    void addProducto(Producto producto); // Agrega un producto a la base de datos
+
+    void updateProducto(Producto producto); // Actualiza un producto en la base de datos
+
+    void deleteProducto(int id); // Elimina un producto de la base de datos
 }

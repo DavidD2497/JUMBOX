@@ -1,17 +1,17 @@
 package interfaces;
 
 import java.util.List;
+import modelos.DetalleVenta;
 
-import modelos.detalleVenta;
+public interface DetalleVentaRepository {
 
-public interface detalleVentaRepository {
-	List<detalleVenta> getAllUsers();
-    
-	detalleVenta getUserById(int id);
-    
-    void addUser(detalleVenta user);
-    
-    void updateUser(detalleVenta user);
-    
-    void deleteUser(int id);
+    List<DetalleVenta> getAllDetalleVentas(); // Obtiene todos los detalles de ventas de la base de datos
+
+    DetalleVenta getDetalleVentaById(int id); // Obtiene un detalle de venta por su ID
+
+    void addDetalleVenta(DetalleVenta detalleVenta); // Agrega un detalle de venta a la base de datos
+
+    void updateDetalleVenta(DetalleVenta detalleVenta); // Actualiza un detalle de venta en la base de datos
+
+    void deleteDetalleVenta(int id); // Elimina un detalle de venta de la base de datos
 }

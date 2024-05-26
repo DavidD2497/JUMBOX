@@ -2,14 +2,14 @@ package modelos;
 
 import java.time.LocalDate;
 
-public class producto {
+public class Producto {
 	private int idProducto;
 	private String nombreProducto;
 	private String categoria;
 	private double precio;
 	private LocalDate fechaVencimiento;
 	
-	public producto(int idProducto, String nombreProducto, String categoria, double precio,
+	public Producto(int idProducto, String nombreProducto, String categoria, double precio,
 			LocalDate fechaVencimiento) {
 		super();
 		this.idProducto = idProducto;

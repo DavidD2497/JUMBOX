@@ -2,13 +2,14 @@ package modelos;
 
 import javax.swing.JOptionPane;
 
-public class adminDeposito extends empleado{
+public class AdminDeposito extends Empleado {
 	private int idAdminDepo;
+	
 
-	public adminDeposito(String nombre, String contraseña, int idAdminDepo) {
-		super(nombre, contraseña);
-		this.idAdminDepo = idAdminDepo;
-	}
+	public AdminDeposito(String nombre, String email, String contraseña, int idAdminDepo) {
+        super(nombre, email, contraseña);
+        this.idAdminDepo = idAdminDepo;
+    }
 
 	public int getIdAdminDepo() {
 		return idAdminDepo;
@@ -17,16 +18,26 @@ public class adminDeposito extends empleado{
 	public void setIdAdminDepo(int idAdminDepo) {
 		this.idAdminDepo = idAdminDepo;
 	}
-	
-	public void bienvenida() {
-		JOptionPane.showMessageDialog(null, "¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Administrador de depósito");
-	}
+
 	
 	public void registroEntradaSalida() {
-		
+
 	}
-	
+
 	public void armarPedido() {
-		
+
 	}
+
+	public void validarDatos() {
+
+	}
+
+	AdminDeposito admin = new AdminDeposito("Jumbox Max", "prueba@gmail.com", "1234", 1);
+
+	public void DatosDeposito() {
+		JOptionPane.showMessageDialog(null, "Datos del Deposito: " + "/n Nombre: " + this.getNombre()
+				+ "/n Contraseña: " + this.getContraseña() + "/n Id del Deposito: " + this.idAdminDepo);
+	}
+
+	
 }

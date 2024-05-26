@@ -2,15 +2,15 @@ package vista;
 
 import javax.swing.JOptionPane;
 
-import modelos.adminDeposito;
-import modelos.adminSucursal;
-import modelos.cajero;
-import modelos.empleado;
+
+import modelos.AdminDeposito;
+import modelos.AdminSucursal;
+import modelos.Cajero;
+import modelos.Empleado;
 
 class Main {
 
 	public static void main(String[] args) {
-
 		int opcion;
 		boolean login=false;
 		int id=0;
@@ -20,26 +20,26 @@ class Main {
 		opcion = JOptionPane.showOptionDialog(null, "Seleccione la opción segun corresponda",
 				"Selecciona una opción", 0, 0, null, menu, menu[0]);
 		String tipoUsuario = menu[opcion];
-		empleado empleadoManager = new empleado("", "");
-		empleadoManager.cargarEmpleados();
+		
+		Empleado empleadoManager = new Empleado("", "");
 					if (opcion<3) {
 						id = Integer.parseInt(JOptionPane.showInputDialog("Ingrese su id de empleado"));
 						
 						pass = JOptionPane.showInputDialog("Ingrese su contraseña");
 					
-						login = empleadoManager.iniciarSesion(id, pass, tipoUsuario);
+						//login = empleadoManager.iniciarSesion(id, pass, tipoUsuario);
 					}
 					if (login == true) {
 
 						switch (opcion) {
 						case 0:
-							for (adminSucursal adminSuc : empleadoManager.getListaAdminSucursal()) {
+							for (AdminSucursal adminSuc : empleadoManager.getListaAdminSucursal()) {
 								if (adminSuc.getIdAdminSuc() == id && adminSuc.getContraseña().equals(pass)) {
 									empleadoManager = adminSuc;
 									break;
 								}
 							}
-							empleadoManager.bienvenida();
+							//empleadoManager.bienvenida();
 							int opcion2;
 							do {
 							String[] menu2 = { "Registrar entradas", "Crear descuento", "Generar informe",
@@ -67,13 +67,13 @@ class Main {
 							} while (opcion2 != 4);
 							break;
 						case 1:
-							for (adminDeposito adminDep : empleadoManager.getListaAdminDeposito()) {
+							for (AdminDeposito adminDep : empleadoManager.getListaAdminDeposito()) {
 								if (adminDep.getIdAdminDepo() == id && adminDep.getContraseña().equals(pass)) {
 									empleadoManager = adminDep;
 									break;
 								}
 							}
-							empleadoManager.bienvenida();
+						//	empleadoManager.bienvenida();
 							int opcion3;
 							do {
 							String[] menu3 = { "Registrar salidas", "Armar pedido", "Salir" };
@@ -93,13 +93,13 @@ class Main {
 							} while (opcion3 != 2);
 							break;
 						case 2:
-							for (cajero cajero : empleadoManager.getListaCajero()) {
+							for (Cajero cajero : empleadoManager.getListaCajero()) {
 								if (cajero.getIdCajero() == id && cajero.getContraseña().equals(pass)) {
 									empleadoManager = cajero;
 									break;
 								}
 							}
-							empleadoManager.bienvenida();
+						//	empleadoManager.bienvenida();
 							int opcion4;
 							do {
 							String[] menu4 = { "Registrar venta", "Salir" };

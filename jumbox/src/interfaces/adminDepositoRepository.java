@@ -2,17 +2,17 @@ package interfaces;
 
 import java.util.List;
 
-import modelos.adminDeposito;
+import modelos.AdminDeposito;
 
-public interface adminDepositoRepository {
+public interface AdminDepositoRepository {
 
-    List<adminDeposito> getAllUsers();
+    List<AdminDeposito> getAllUsers();
     
-    adminDeposito getUserById(int id);
+    AdminDeposito getUserById(int id);
     
-    void addUser(adminDeposito user);
+    void addUser(AdminDeposito user);
     
-    void updateUser(adminDeposito user);
+    void updateUser(AdminDeposito user);
     
     void deleteUser(int id);
 	
