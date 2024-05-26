@@ -160,35 +160,4 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
         }
         return producto;
     }
-    
-    public int getCantidadDisponible(int idProducto) {
-        int cantidadDisponible = 0;
-        String query = "SELECT SUM(cantidad) AS total FROM detalles_inventario WHERE idProducto = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, idProducto);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                cantidadDisponible = resultSet.getInt("total");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return cantidadDisponible;
-    }
-    
-    public void actualizarCantidadProducto(int idProducto, int nuevaCantidad) {
-        String query = "UPDATE detalles_inventario SET cantidad = ? WHERE idProducto = ?";
-        
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, nuevaCantidad);
-            statement.setInt(2, idProducto);
-            statement.executeUpdate();
-            System.out.println("Inventario actualizado correctamente.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

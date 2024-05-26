@@ -11,8 +11,8 @@ import modelos.DetalleVenta;
 public class DetalleVentaControlador {
     private final Connection connection;
 
-    public DetalleVentaControlador() {
-    	this.connection = DatabaseConnection.getInstance().getConnection();
+    public DetalleVentaControlador(Connection connection) {
+        this.connection = connection;
     }
 
     public void addDetalleVenta(DetalleVenta detalleVenta) {
@@ -75,33 +75,5 @@ public class DetalleVentaControlador {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-    
-    public int getIdProducto(int idDetalle) {
-        String query = "SELECT idProducto FROM detalle_venta WHERE idDetalle = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, idDetalle);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("idProducto");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-    
-    public int getCantidad(int idDetalle) {
-        String query = "SELECT cantidad FROM detalle_venta WHERE idDetalle = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, idDetalle);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("cantidad");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
     }
 }

@@ -13,8 +13,8 @@ import modelos.Venta;
 public class VentaControlador {
     private final Connection connection;
 
-    public VentaControlador() {
-    	this.connection = DatabaseConnection.getInstance().getConnection();
+    public VentaControlador(Connection connection) {
+        this.connection = connection;
     }
 
     public List<Venta> getAllVentas() {
