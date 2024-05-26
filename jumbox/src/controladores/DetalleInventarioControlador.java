@@ -109,7 +109,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
 		}
 	}
 
-	private Producto obtenerProductoPorId(int id) throws SQLException {
+	/*private Producto obtenerProductoPorId(int id) throws SQLException {
 		Producto producto = null;
 		try {
 			PreparedStatement statement = connection
@@ -128,6 +128,6 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
 			throw e;
 		}
 		return producto;
-	}
+	}*/
 
 }
