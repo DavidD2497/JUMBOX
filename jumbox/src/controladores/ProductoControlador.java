@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import interfaces.ProductoRepository;
 import modelos.Producto;
 
@@ -18,6 +17,7 @@ public class ProductoControlador implements ProductoRepository {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
+    
     @Override
     public List<Producto> getAllProductos() {
         List<Producto> productos = new ArrayList<>();
