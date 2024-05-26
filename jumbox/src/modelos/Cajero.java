@@ -8,9 +8,10 @@ public class Cajero extends Empleado {
     private InventarioSucursal inventarioSucursal;
     private LinkedList<Venta> listaVentas = new LinkedList<>();
 
-    public Cajero(String nombre, String email, String contraseña, int idCajero) {
+    public Cajero(String nombre, String email, String contraseña, int idCajero, InventarioSucursal inventarioSucursal) {
         super(nombre, email, contraseña);
         this.idCajero = idCajero;
+        this.inventarioSucursal = inventarioSucursal;
     }
 
     public int getIdCajero() {
@@ -27,10 +28,6 @@ public class Cajero extends Empleado {
 
     public void setListaVentas(LinkedList<Venta> listaVentas) {
         this.listaVentas = listaVentas;
-    }
-    
-    public int getId() {
-        return idCajero;
     }
 
     public void registroSalidaInventario(int idProducto, int cantidadSalida) {
