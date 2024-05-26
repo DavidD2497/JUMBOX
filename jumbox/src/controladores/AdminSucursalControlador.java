@@ -6,147 +6,109 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import interfaces.AdminSucursalRepository;
 import modelos.AdminSucursal;
 
-public class AdminSucursalControlador {
-    
-    // Método para obtener la conexión a la base de datos (debes implementar este método según tu configuración)
-    private Connection obtenerConexion() {
-        // Implementa la lógica para obtener y retornar la conexión a la base de datos
-        // Esto puede variar dependiendo del sistema de gestión de bases de datos que estés utilizando (MySQL, PostgreSQL, etc.)
-        return null; // Solo es un ejemplo, debes implementarlo según tu configuración
+public class AdminSucursalControlador implements AdminSucursalRepository {
+    private final Connection connection;
+
+    public AdminSucursalControlador(Connection connection) {
+        this.connection = connection;
     }
-    
-    // Método para crear un nuevo administrador de sucursal y guardarlo en la base de datos
-    public void crearAdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
-        AdminSucursal adminSucursal = new AdminSucursal(nombre, email, contraseña, idAdminSuc);
-        Connection connection = obtenerConexion();
-        String query = "INSERT INTO admin_sucursal (nombre, email, contraseña, id_admin_sucursal) VALUES (?, ?, ?, ?)";
-        
+
+    @Override
+    public List<AdminSucursal> getAllUsers() {
+        List<AdminSucursal> users = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, adminSucursal.getNombre());
-            statement.setString(2, adminSucursal.getEmail());
-            statement.setString(3, adminSucursal.getContraseña());
-            statement.setInt(4, adminSucursal.getIdAdminSuc());
-            statement.executeUpdate();
-            statement.close();
-            connection.close();
-            System.out.println("El administrador de sucursal fue creado exitosamente en la base de datos.");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM admin_sucursal");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                AdminSucursal user = new AdminSucursal(
+                        resultSet.getString("nombre"),
+                        resultSet.getString("email"),
+                        resultSet.getString("contraseña"),
+                        resultSet.getInt("idAdminSuc")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    @Override
+    public AdminSucursal getUserById(int id) {
+        AdminSucursal user = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM admin_sucursal WHERE idAdminSuc = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new AdminSucursal(
+                        resultSet.getString("nombre"),
+                        resultSet.getString("email"),
+                        resultSet.getString("contraseña"),
+                        resultSet.getInt("idAdminSuc")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public void addUser(AdminSucursal user) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO admin_sucursal(nombre, email, contraseña, idAdminSuc) VALUES (?, ?, ?, ?)");
+            statement.setString(1, user.getNombre());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getContraseña());
+            statement.setInt(4, user.getIdAdminSuc());
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Usuario insertado exitosamente");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    // Método para eliminar un administrador de sucursal de la base de datos por su ID
-    public void eliminarAdminSucursal(int idAdminSuc) {
-        Connection connection = obtenerConexion();
-        String query = "DELETE FROM admin_sucursal WHERE id_admin_sucursal = ?";
-        
+
+    @Override
+    public void updateUser(AdminSucursal user) {
         try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idAdminSuc);
+            PreparedStatement statement = connection.prepareStatement("UPDATE admin_sucursal SET nombre = ?, email = ?, contraseña = ? WHERE idAdminSuc = ?");
+            statement.setString(1, user.getNombre());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getContraseña());
+            statement.setInt(4, user.getIdAdminSuc());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Usuario actualizado exitosamente");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM admin_sucursal WHERE idAdminSuc = ?");
+            statement.setInt(1, id);
+
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("El administrador de sucursal fue eliminado exitosamente de la base de datos.");
-            } else {
-                System.out.println("No se encontró ningún administrador de sucursal con el ID proporcionado.");
+                System.out.println("Usuario eliminado exitosamente");
             }
-            statement.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    // Método para obtener todos los administradores de sucursal de la base de datos
-    public List<AdminSucursal> obtenerTodosAdminSucursal() {
-        List<AdminSucursal> adminsSucursal = new ArrayList<>();
-        Connection connection = obtenerConexion();
-        String query = "SELECT * FROM admin_sucursal";
-        
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
-            
-            while (resultSet.next()) {
-                AdminSucursal adminSucursal = new AdminSucursal(
-                    resultSet.getString("nombre"),
-                    resultSet.getString("email"),
-                    resultSet.getString("contraseña"),
-                    resultSet.getInt("id_admin_sucursal")
-                );
-                adminsSucursal.add(adminSucursal);
-            }
-            
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return adminsSucursal;
-    }
-    
-    // Método para obtener un administrador de sucursal por su ID
-    public AdminSucursal obtenerAdminSucursalPorId(int idAdminSuc) {
-        Connection connection = obtenerConexion();
-        String query = "SELECT * FROM admin_sucursal WHERE id_admin_sucursal = ?";
-        
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idAdminSuc);
-            ResultSet resultSet = statement.executeQuery();
-            
-            if (resultSet.next()) {
-                AdminSucursal adminSucursal = new AdminSucursal(
-                    resultSet.getString("nombre"),
-                    resultSet.getString("email"),
-                    resultSet.getString("contraseña"),
-                    resultSet.getInt("id_admin_sucursal")
-                );
-                statement.close();
-                connection.close();
-                return adminSucursal;
-            } else {
-                System.out.println("No se encontró ningún administrador de sucursal con el ID proporcionado.");
-            }
-            
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return null;
-    }
-    
-    // Método para actualizar los datos de un administrador de sucursal en la base de datos
-    public void actualizarAdminSucursal(AdminSucursal adminSucursal) {
-        Connection connection = obtenerConexion();
-        String query = "UPDATE admin_sucursal SET nombre = ?, email = ?, contraseña = ? WHERE id_admin_sucursal = ?";
-        
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, adminSucursal.getNombre());
-            statement.setString(2, adminSucursal.getEmail());
-            statement.setString(3, adminSucursal.getContraseña());
-            statement.setInt(4, adminSucursal.getIdAdminSuc());
-            int rowsUpdated = statement.executeUpdate();
-            
-            if (rowsUpdated > 0) {
-                System.out.println("Los datos del administrador de sucursal fueron actualizados exitosamente.");
-            } else {
-                System.out.println("No se encontró ningún administrador de sucursal con el ID proporcionado para actualizar.");
-            }
-            
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    // Otros métodos para la gestión de administradores de sucursal podrían agregarse aquí
-    
 }
