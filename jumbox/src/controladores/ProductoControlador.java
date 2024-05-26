@@ -17,6 +17,7 @@ public class ProductoControlador implements ProductoRepository {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
+    
     @Override
     public List<Producto> getAllProductos() {
         List<Producto> productos = new ArrayList<>();
