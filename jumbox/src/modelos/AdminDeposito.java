@@ -18,6 +18,10 @@ public class AdminDeposito extends Empleado {
 	public void setIdAdminDepo(int idAdminDepo) {
 		this.idAdminDepo = idAdminDepo;
 	}
+	
+	public int getId() {
+        return idAdminDepo;
+    }
 
 	
 	public void registroEntradaSalida() {
@@ -31,6 +35,7 @@ public class AdminDeposito extends Empleado {
 	public void validarDatos() {
 
 	}
+	
 
 	AdminDeposito admin = new AdminDeposito("Jumbox Max", "prueba@gmail.com", "1234", 1);
 
