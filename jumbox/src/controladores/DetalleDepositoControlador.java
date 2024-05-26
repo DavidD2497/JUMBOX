@@ -38,6 +38,8 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
         return detalles;
     }
 
+    
+    
     @Override
     public DetalleDeposito getDetalleDepositoById(int id) {
         DetalleDeposito detalle = null;
