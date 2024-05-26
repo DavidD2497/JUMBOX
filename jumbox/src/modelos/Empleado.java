@@ -6,15 +6,17 @@ import javax.swing.JOptionPane;
 
 public class Empleado {
 	private String nombre;
-	private String contraseña;
+    private String email;
+    private String contraseña;
 	private LinkedList<AdminSucursal> listaAdminSucursal = new LinkedList<>();
 	private LinkedList<AdminDeposito> listaAdminDeposito = new LinkedList<>();
 	private LinkedList<Cajero> listaCajero = new LinkedList<>();
 	
-	public Empleado(String nombre, String contraseña) {
-		this.nombre = nombre;
-		this.contraseña = contraseña;
-	}
+	public Empleado(String nombre, String email, String contraseña) {
+        this.nombre = nombre;
+        this.email = email;
+        this.contraseña = contraseña;
+    }
 
 	public String getNombre() {
 		return nombre;
@@ -22,6 +24,14 @@ public class Empleado {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public String getEmail() {
+	    return email;
+	}
+
+	public void setEmail(String email) {
+	    this.email = email;
 	}
 
 	public String getContraseña() {
