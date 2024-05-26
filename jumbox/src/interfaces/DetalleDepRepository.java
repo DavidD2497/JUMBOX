@@ -1,19 +1,17 @@
 package interfaces;
 
-import modelos.DetalleDeposito;
-
 import java.util.List;
+import modelos.DetalleDeposito;
 
 public interface DetalleDepRepository {
 
-	List<DetalleDeposito> getAllUsers(); // llama a todos los usuarios de la bdd
+    List<DetalleDeposito> getAllDetalleDepositos(); // Obtiene todos los detalles de depósito de la base de datos
 
-	DetalleDeposito getUserById(int id); // llama solo a uno, por su id
+    DetalleDeposito getDetalleDepositoById(int id); // Obtiene un detalle de depósito por su ID
 
-	void addUser(DetalleDeposito user); // añade usuarios a la bdd
+    void addDetalleDeposito(DetalleDeposito detalle); // Agrega un detalle de depósito a la base de datos
 
-	void updateUser(DetalleDeposito user); // actualiza los usuarios de la bdd
+    void updateDetalleDeposito(DetalleDeposito detalle); // Actualiza un detalle de depósito en la base de datos
 
-	void deleteUser(int id); // eliminar usuarios de la bdd
-
+    void deleteDetalleDeposito(int id); // Elimina un detalle de depósito de la base de datos
 }
