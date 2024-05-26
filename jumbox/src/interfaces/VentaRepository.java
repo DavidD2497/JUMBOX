@@ -1,17 +1,17 @@
 package interfaces;
 
 import java.util.List;
-
 import modelos.Venta;
 
 public interface VentaRepository {
-	List<Venta> getAllUsers();
 
-	Venta getUserById(int id);
+    List<Venta> getAllVentas(); // Obtiene todas las ventas de la base de datos
 
-	void addUser(Venta user);
+    Venta getVentaById(int id); // Obtiene una venta por su ID
 
-	void updateUser(Venta user);
+    void addVenta(Venta venta); // Agrega una venta a la base de datos
 
-	void deleteUser(int id);
+    void updateVenta(Venta venta); // Actualiza una venta en la base de datos
+
+    void deleteVenta(int id); // Elimina una venta de la base de datos
 }

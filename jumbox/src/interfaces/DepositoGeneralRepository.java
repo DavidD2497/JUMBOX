@@ -1,17 +1,16 @@
 package interfaces;
 
 import java.util.List;
-
 import modelos.DepositoGeneral;
 
 public interface DepositoGeneralRepository {
-	List<DepositoGeneral> getAllUsers();
+	List<DepositoGeneral> getAllDepositosGenerales(); // Obtiene todos los depósitos generales
 
-	DepositoGeneral getUserById(int id);
+	DepositoGeneral getDepositoGeneralById(int id); // Obtiene un depósito general por su ID
 
-	void addUser(DepositoGeneral user);
+	void addDepositoGeneral(DepositoGeneral deposito); // Agrega un depósito general
 
-	void updateUser(DepositoGeneral user);
+	void updateDepositoGeneral(DepositoGeneral deposito); // Actualiza un depósito general
 
-	void deleteUser(int id);
+	void deleteDepositoGeneral(int id); // Elimina un depósito general
 }
