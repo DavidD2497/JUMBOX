@@ -1,6 +1,7 @@
 package modelos;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Venta {
 	private int idVenta;
@@ -8,12 +9,12 @@ public class Venta {
 	private String tipoPago;
 	private LinkedList<DetalleVenta> listaVenta = new LinkedList<>();
 	
-	public Venta(int idVenta, double montoTotal, String tipoPago, LinkedList<DetalleVenta> listaVenta) {
+	public Venta(int idVenta, double montoTotal, String tipoPago, List<DetalleVenta> detallesVenta) {
 		super();
 		this.idVenta = idVenta;
 		this.montoTotal = montoTotal;
 		this.tipoPago = tipoPago;
-		this.listaVenta = listaVenta;
+		this.listaVenta = new LinkedList<>(listaVenta);
 	}
 
 	public int getIdVenta() {

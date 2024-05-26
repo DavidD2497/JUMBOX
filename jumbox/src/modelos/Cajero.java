@@ -28,6 +28,10 @@ public class Cajero extends Empleado {
     public void setListaVentas(LinkedList<Venta> listaVentas) {
         this.listaVentas = listaVentas;
     }
+    
+    public int getId() {
+        return idCajero;
+    }
 
     public void registroSalidaInventario(int idProducto, int cantidadSalida) {
         LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();

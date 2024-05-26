@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-public class Empleado {
+public abstract class Empleado {
 	private String nombre;
     private String email;
     private String contraseña;
@@ -65,6 +65,8 @@ public class Empleado {
 	public void setListaCajero(LinkedList<Cajero> listaCajero) {
 		this.listaCajero = listaCajero;
 	}
+	
+	public abstract int getId();
 	
 }
 
