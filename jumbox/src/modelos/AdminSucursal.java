@@ -12,10 +12,10 @@ public class AdminSucursal extends Empleado {
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
 
-	public AdminSucursal(String nombre, String contraseña, int idAdminSuc) {
-		super(nombre, contraseña);
-		this.idAdminSuc = idAdminSuc;
-	}
+	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
+        super(nombre, email, contraseña);
+        this.idAdminSuc = idAdminSuc;
+    }
 
 	public int getIdAdminSuc() {
 		return idAdminSuc;
