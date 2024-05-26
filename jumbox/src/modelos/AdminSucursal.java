@@ -25,6 +25,10 @@ public class AdminSucursal extends Empleado {
 	public void setIdAdminSuc(int idAdminSuc) {
 		this.idAdminSuc = idAdminSuc;
 	}
+	
+	public int getId() {
+        return idAdminSuc;
+    }
 
 	public int getId() {
 		return idAdminSuc;
