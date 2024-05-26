@@ -6,13 +6,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-public class AdminSucursal extends Empleado {
+public class adminSucursal extends Empleado {
 	private int idAdminSuc;
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
+	private InventarioSucursal inventarioSucursal;
 
-	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
+	public adminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
         super(nombre, email, contraseña);
         this.idAdminSuc = idAdminSuc;
     }
@@ -30,21 +31,36 @@ public class AdminSucursal extends Empleado {
 				"¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Administrador de surcursal");
 	}
 
-	public void registroEntradaSalida() {
+	public void registroEntrada(int idProducto, int cantidadEntrada) {
+	      LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
+	        for (DetalleInventario detalle : listaInventario) {
+	            if (detalle.getProducto().getIdProducto() == idProducto) {
+	            		detalle.setCantidad(detalle.getCantidad() + cantidadEntrada);
+	                    JOptionPane.showMessageDialog(null, "Se ha registrado la entrada de " + cantidadEntrada + " unidad/es del producto: " + detalle.getProducto().getNombreProducto());
+	                break;
+	            }
+	        }
+	    }
+		
+		
+	
 
+	public void CrearSolicitudPedido() {
+
+		
+		
+		
+	}
+	
+	public void MostrarSolicitudPedido() {
+
+		
+		
+		
 	}
 
-	public void solicitarPedido() {
 
-	}
-
-	public void creaDescuento() {
-
-	}
-
-	public void generarInforme() {
-
-	}
+	
 
 	public String crearDescuentoVencimiento(Producto productoa) {
 		LocalDate fechaActual = LocalDate.now();
