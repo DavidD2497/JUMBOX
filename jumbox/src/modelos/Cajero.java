@@ -3,14 +3,11 @@ package modelos;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import controladores.VentaControlador;
-import controladores.DetalleVentaControlador;
 import controladores.InventarioSucursalControlador;
-import controladores.DetalleInventarioControlador;
 
 public class Cajero extends Empleado {
     private int idCajero;
-    private InventarioSucursal inventarioSucursal;
-    private LinkedList<Venta> listaVentas = new LinkedList<>();
+
 
     public Cajero(String nombre, String email, String contraseña, int idCajero) {
         super(nombre, email, contraseña);
@@ -23,14 +20,6 @@ public class Cajero extends Empleado {
 
     public void setIdCajero(int idCajero) {
         this.idCajero = idCajero;
-    }
-
-    public LinkedList<Venta> getListaVentas() {
-        return listaVentas;
-    }
-
-    public void setListaVentas(LinkedList<Venta> listaVentas) {
-        this.listaVentas = listaVentas;
     }
     
     public int getId() {
@@ -53,7 +42,6 @@ public class Cajero extends Empleado {
     
     public void registrarVenta(LinkedList<DetalleVenta> detalles, String tipoPago) {
 
-        DetalleVentaControlador detalleVentaControlador = new DetalleVentaControlador();
         InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
         VentaControlador ventaControlador = new VentaControlador();
 
