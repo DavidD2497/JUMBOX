@@ -69,7 +69,7 @@ public abstract class Empleado {
 	public abstract int getId();
 	
 	
-    public static boolean iniciarSesion(String email, String contraseña) {
+    public boolean iniciarSesion(String email, String contraseña) {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         Empleado empleado = empleadoControlador.getUserByEmailAndPassword(email, contraseña);
 
@@ -82,7 +82,7 @@ public abstract class Empleado {
         }
     }
     
-    public static void registrarEmpleado(String nombre, String email, String contraseña, String tipo) {
+    public void registrarEmpleado(String nombre, String email, String contraseña, String tipo) {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
 
         if (empleadoControlador.getUserByEmail(email) != null) {
@@ -110,7 +110,7 @@ public abstract class Empleado {
         JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente.");
     }
     
-    public static void borrarEmpleado(String email) {
+    public void borrarEmpleado(String email) {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         Empleado empleado = empleadoControlador.getUserByEmail(email);
 
@@ -122,7 +122,7 @@ public abstract class Empleado {
         }
     }
     
-    public static void editarUsuario(String email, String nuevoNombre, String nuevoEmail, String nuevaContraseña, String nuevoTipo) {
+    public void editarUsuario(String email, String nuevoNombre, String nuevoEmail, String nuevaContraseña, String nuevoTipo) {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         Empleado empleado = empleadoControlador.getUserByEmail(email);
 
