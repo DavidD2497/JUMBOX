@@ -12,8 +12,13 @@ import modelos.Informe;
 public class InformeControlador {
     private final Connection connection;
 
+<<<<<<< HEAD
+    public InformeControlador(Connection connection) {
+        this.connection = connection;
+=======
     public InformeControlador() {
     	this.connection = DatabaseConnection.getInstance().getConnection();
+>>>>>>> david
     }
 
     public void addInforme(Informe informe) {
