@@ -11,13 +11,8 @@ import modelos.DetalleVenta;
 public class DetalleVentaControlador {
     private final Connection connection;
 
-<<<<<<< HEAD
-    public DetalleVentaControlador(Connection connection) {
-        this.connection = connection;
-=======
     public DetalleVentaControlador() {
     	this.connection = DatabaseConnection.getInstance().getConnection();
->>>>>>> david
     }
 
     public void addDetalleVenta(DetalleVenta detalleVenta) {
