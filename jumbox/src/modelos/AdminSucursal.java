@@ -30,11 +30,6 @@ public class AdminSucursal extends Empleado {
 		return idAdminSuc;
 	}
 
-	public void bienvenida() {
-		JOptionPane.showMessageDialog(null,
-				"¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Administrador de surcursal");
-	}
-
 	public void registroEntradaSalida() {
 
 	}
