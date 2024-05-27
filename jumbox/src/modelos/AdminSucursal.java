@@ -6,14 +6,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-public class adminSucursal extends Empleado {
+public class AdminSucursal extends Empleado {
 	private int idAdminSuc;
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
 	private InventarioSucursal inventarioSucursal;
 
-	public adminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
+	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
         super(nombre, email, contraseña);
         this.idAdminSuc = idAdminSuc;
     }
@@ -24,11 +24,6 @@ public class adminSucursal extends Empleado {
 
 	public void setIdAdminSuc(int idAdminSuc) {
 		this.idAdminSuc = idAdminSuc;
-	}
-
-	public void bienvenida() {
-		JOptionPane.showMessageDialog(null,
-				"¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Administrador de surcursal");
 	}
 
 	public void registroEntrada(int idProducto, int cantidadEntrada) {
