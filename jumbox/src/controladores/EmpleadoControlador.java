@@ -194,4 +194,91 @@ public class EmpleadoControlador {
             e.printStackTrace();
         }
     }
+    
+    public Empleado getUserByEmailAndPassword(String email, String contraseña) {
+        Empleado empleado = null;
+        try {
+            String query = "SELECT * FROM empleado WHERE email = ? AND contraseña = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            statement.setString(2, contraseña);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String tipo = resultSet.getString("tipo");
+                switch (tipo) {
+                    case "AdminDeposito":
+                        empleado = new AdminDeposito(
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getInt("idAdminDepo")
+                        );
+                        break;
+                    case "AdminSucursal":
+                        empleado = new AdminSucursal(
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getInt("idAdminSuc")
+                        );
+                        break;
+                    case "Cajero":
+                        empleado = new Cajero(
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getInt("idCajero")
+                        );
+                        break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return empleado;
+    }
+    
+    public Empleado getUserByEmail(String email) {
+        Empleado empleado = null;
+        try {
+            String query = "SELECT * FROM empleado WHERE email = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String tipo = resultSet.getString("tipo");
+                switch (tipo) {
+                    case "AdminDeposito":
+                        empleado = new AdminDeposito(
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getInt("idAdminDepo")
+                        );
+                        break;
+                    case "AdminSucursal":
+                        empleado = new AdminSucursal(
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getInt("idAdminSuc")
+                        );
+                        break;
+                    case "Cajero":
+                        empleado = new Cajero(
+                            resultSet.getString("nombre"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getInt("idCajero")
+                        );
+                        break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return empleado;
+    }
 }
