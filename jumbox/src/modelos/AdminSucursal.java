@@ -33,8 +33,11 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
+		
 		 InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
-		 inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadEntrada);
+		 int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
+		 int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		 inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
 		 JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
 		       }
 		    
