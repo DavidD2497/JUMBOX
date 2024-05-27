@@ -32,8 +32,8 @@ public class Cajero extends Empleado {
         int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
 
         if (cantidadDisponible >= cantidadSalida) {
-           
-            inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadSalida);
+        	int cantidadTotal = cantidadDisponible - cantidadSalida;
+            inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
             JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
         } else {
             JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
