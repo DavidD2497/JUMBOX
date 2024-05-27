@@ -48,7 +48,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
 
             if (resultSet.next()) {
                 Producto producto = obtenerProductoPorId(resultSet.getInt("idProducto"));
-                detalleInventario = new DetalleInventario(producto, resultSet.getInt("idDescuento"),
+                detalleInventario = new detalleInventario(producto, resultSet.getInt("idDescuento"),
                         resultSet.getInt("idDetalle"), resultSet.getInt("cantidad"));
             }
         } catch (SQLException e) {
