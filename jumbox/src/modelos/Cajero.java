@@ -37,18 +37,17 @@ public class Cajero extends Empleado {
         return idCajero;
     }
 
-    public void registroSalidaInventario(int idProducto, int cantidadSalida) {
-        LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
-        for (DetalleInventario detalle : listaInventario) {
-            if (detalle.getProducto().getIdProducto() == idProducto) {
-                if (detalle.getCantidad() >= cantidadSalida) {
-                    detalle.setCantidad(detalle.getCantidad() - cantidadSalida);
-                    JOptionPane.showMessageDialog(null, "Se ha registrado la salida de " + cantidadSalida + " unidad/es del producto: " + detalle.getProducto().getNombreProducto());
-                } else {
-                    JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalle.getProducto().getNombreProducto());
-                }
-                break;
-            }
+    public void registrarSalidaProducto(int idProducto, int cantidadSalida) {
+        InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
+
+        int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
+
+        if (cantidadDisponible >= cantidadSalida) {
+           
+            inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadSalida);
+            JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
         }
     }
     
