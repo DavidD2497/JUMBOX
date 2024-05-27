@@ -6,12 +6,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
+import controladores.InventarioSucursalControlador;
 
 public class AdminSucursal extends Empleado {
 	private int idAdminSuc;
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
+	
 
 	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
 		super(nombre, email, contraseña);
@@ -30,21 +32,21 @@ public class AdminSucursal extends Empleado {
 		return idAdminSuc;
 	}
 
-	public void registroEntradaSalida() {
+	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
+		 InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
+		 inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadEntrada);
+		 JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+		       }
+		    
+		
+	public void SolicitarPedido() {
 
 	}
 
-	public void solicitarPedido() {
+	public void MostrarSolicitudPedido() {
 
 	}
 
-	public void creaDescuento() {
-
-	}
-
-	public void generarInforme() {
-
-	}
 
 	public String crearDescuentoVencimiento(Producto productoa) {
 		LocalDate fechaActual = LocalDate.now();
