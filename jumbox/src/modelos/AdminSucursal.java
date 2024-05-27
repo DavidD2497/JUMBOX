@@ -6,13 +6,18 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
+import modelos.Pedido;
+import modelos.DetallePedido;
 import controladores.InventarioSucursalControlador;
+import controladores.PedidoControlador;
 
 public class AdminSucursal extends Empleado {
 	private int idAdminSuc;
 	private Producto producto;
 	private Descuento descuento;
+	private Pedido pedido;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
+	private LinkedList<DetallePedido> listaPedidos = new LinkedList<>();
 	
 
 	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
@@ -43,12 +48,34 @@ public class AdminSucursal extends Empleado {
 		    
 		
 	public void SolicitarPedido() {
+		PedidoControlador pedidoControlador = new PedidoControlador();
+		String[] menu = { "Solicitar pedido", "Mostrar solicitudes de pedido", "Salir" };
+		int opcion = JOptionPane.showOptionDialog(null, "Seleccione la opción segun corresponda",
+				"Selecciona una opción", 0, 0, null, menu, menu[0]);
+		do {
+			switch (opcion) {
+			case 0:
+				while (opcion==0) {
+				int idproducto=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id del producto"));
+				int cantidadProducto=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de productos" ));
+					listaPedidos.add(new DetallePedido(0,idproducto,cantidadProducto));
+					int pregunta=JOptionPane.showConfirmDialog(null,"Desea Agregar mas Productos","Selecciona la opcion",JOptionPane.YES_NO_CANCEL_OPTION);
+				}
+				
+				break;
+			case 1:
+				JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
+				break;
+			default:
+				break;
+			}
+			
+		} while (opcion==1);
+			pedidoControlador.addPedido(pedido);
 
 	}
 
-	public void MostrarSolicitudPedido() {
 
-	}
 
 
 	public String crearDescuentoVencimiento(Producto productoa) {
