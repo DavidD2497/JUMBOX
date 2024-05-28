@@ -47,7 +47,7 @@ public class AdminSucursal extends Empleado {
 	    
 	        int cantidadTotal = cantidadDisponible + cantidadEntrada;
 	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-	        JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " +detalleInventarioControlador.getNombreProducto(idProducto)  + " registrada con éxito.");
+	        JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades al producto " +detalleInventarioControlador.getNombreProducto(idProducto)  + " registrada con éxito.");
 	        return true;
 	   
 	}

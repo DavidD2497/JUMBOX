@@ -20,5 +20,5 @@ public interface DetalleInventarioRepository {
     void actualizarCantidadProducto( int idInventarioSucursal, int idProducto, int nuevaCantidad);
     
     boolean existeProducto(int idInventarioSucursal,int idProducto);
-    public boolean getNombreProducto( int idProducto) ;
+    public String getNombreProducto( int idProducto) ;
 }

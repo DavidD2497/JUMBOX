@@ -47,10 +47,12 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
 
             while (resultSet.next()) {
                 int idProducto = resultSet.getInt("id_producto");
+              int  idInventarioSucursal = resultSet.getInt("id_inventario_sucursal");
                 int idDescuento = resultSet.getInt("id_descuento");
                 int idDetalle = resultSet.getInt("id_detalle");
+                
                 int cantidad = resultSet.getInt("cantidad");
-                DetalleInventario detalleInventario = new DetalleInventario(idProducto, idDescuento, idDetalle, cantidad);
+                DetalleInventario detalleInventario = new DetalleInventario(idProducto,idInventarioSucursal, idDescuento, idDetalle, cantidad);
                 listaInventario.add(detalleInventario);
             }
 

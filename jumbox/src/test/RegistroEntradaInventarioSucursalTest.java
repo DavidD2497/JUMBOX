@@ -12,20 +12,20 @@ public class RegistroEntradaInventarioSucursalTest {
 
 
 	   @Test
-	    public boolean RegistroEntradaCorrecto() {
+	    public void RegistroEntradaCorrecto() {
 	        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 	        boolean flag = false;
 
-	        for (DetalleInventario admin : detalleInventarioControlador.getAllDetalleInventarios()) {
-	            if (AdminSucursal.registroEntradaProducto(1, 1, 20)) {
+	       
+	            if (AdminSucursal.registroEntradaProducto(2, 2, 20)) {
 	                flag = true;
-	                break;
-	            }
+	              
+	            
 	        }
 
 	        assertEquals(true, flag);
 	        
-			return flag;
+		
 	    }
 	}
 

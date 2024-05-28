@@ -116,11 +116,12 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     }
     
     @Override
-    public int getCantidadDisponible(int idProducto) {
+    public int getCantidadDisponible(int idInventarioSucursal, int idProducto) {
         int cantidadDisponible = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalles_inventario` WHERE `idProducto` = ?");
-            statement.setInt(1, idProducto);
+            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            statement.setInt(1, idInventarioSucursal);
+            statement.setInt(2, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -132,12 +133,14 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
         return cantidadDisponible;
     }
 
+
     @Override
-    public void actualizarCantidadProducto( int idProducto, int nuevaCantidad) {
+    public void actualizarCantidadProducto(int idInventarioSucursal, int idProducto, int nuevaCantidad) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE `detalles_inventario` SET `cantidad` = ? WHERE ? AND `idProducto` = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE `detalle_inventario` SET `cantidad` = ? WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
             statement.setInt(1, nuevaCantidad);
-            statement.setInt(2, idProducto);
+            statement.setInt(2, idInventarioSucursal);
+            statement.setInt(3, idProducto);
             statement.executeUpdate();
             System.out.println("Cantidad del producto actualizada correctamente.");
         } catch (SQLException e) {
@@ -145,13 +148,16 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
         }
     }
 
+
     @Override
-    public boolean existeProducto( int idProducto) {
+    public boolean existeProducto(int idInventarioSucursal, int idProducto) {
         boolean existe = false;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalles_inventario` WHERE `idInventarioSucursal` = ? AND `idProducto` = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
             
-            statement.setInt(1, idProducto);
+            statement.setInt(1, idInventarioSucursal); // Aquí se establece idInventarioSucursal en el primer parámetro
+            statement.setInt(2, idProducto); // Aquí se establece idProducto en el segundo parámetro
+            
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -164,21 +170,21 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     }
     
     @Override
-    public boolean getNombreProducto( int idProducto) {
-        boolean existe = false;
+    public String getNombreProducto(int idProducto) {
+        String nombreProducto = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT nombre FROM `producto` WHERE `idProducto` = ?");
-            
+            PreparedStatement statement = connection.prepareStatement("SELECT nombre_producto FROM `producto` WHERE `id_producto` = ?");
             statement.setInt(1, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                existe = true;
+                nombreProducto = resultSet.getString("nombre_producto");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return existe;
+        return nombreProducto;
     }
+
 
 }
