@@ -51,6 +51,10 @@ public class AdminSucursal extends Empleado {
 	}
 
 
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
 	public String crearDescuentoVencimiento(Producto productoa) {
 		LocalDate fechaActual = LocalDate.now();
 		long diasHastaVencimiento = productoa.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
