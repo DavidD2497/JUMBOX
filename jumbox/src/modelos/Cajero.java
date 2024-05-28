@@ -2,51 +2,63 @@ package modelos;
 
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
+import controladores.VentaControlador;
+import controladores.InventarioSucursalControlador;
+import controladores.DetalleInventarioControlador;
 
 public class Cajero extends Empleado {
-    private int idCajero;
-    private InventarioSucursal inventarioSucursal;
-    private LinkedList<Venta> listaVentas = new LinkedList<>();
+    private String tipo;
 
-    public Cajero(String nombre, String email, String contraseña, int idCajero, InventarioSucursal inventarioSucursal) {
+
+    public Cajero(String nombre, String email, String contraseña) {
         super(nombre, email, contraseña);
-        this.idCajero = idCajero;
-        this.inventarioSucursal = inventarioSucursal;
+        this.tipo = "Cajero";
     }
 
-    public int getIdCajero() {
-        return idCajero;
-    }
+    public String getTipo() {
+		return tipo;
+	}
 
-    public void setIdCajero(int idCajero) {
-        this.idCajero = idCajero;
-    }
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
-    public LinkedList<Venta> getListaVentas() {
-        return listaVentas;
-    }
 
-    public void setListaVentas(LinkedList<Venta> listaVentas) {
-        this.listaVentas = listaVentas;
-    }
 
-    public void registroSalidaInventario(int idProducto, int cantidadSalida) {
-        LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
-        for (DetalleInventario detalle : listaInventario) {
-            if (detalle.getProducto().getIdProducto() == idProducto) {
-                if (detalle.getCantidad() >= cantidadSalida) {
-                    detalle.setCantidad(detalle.getCantidad() - cantidadSalida);
-                    JOptionPane.showMessageDialog(null, "Se ha registrado la salida de " + cantidadSalida + " unidad/es del producto: " + detalle.getProducto().getNombreProducto());
-                } else {
-                    JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalle.getProducto().getNombreProducto());
-                }
-                break;
-            }
-        }
-    }
+	public boolean registrarSalidaProducto(int idInventarioSucursal, int idProducto, int cantidadSalida) {
+	    if (cantidadSalida <= 0) {
+	        JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
+	        return false;
+	    }
+
+	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
+	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+	        JOptionPane.showMessageDialog(null, "El ID del producto no existe en el inventario de la sucursal.");
+	        return false;
+	    }
+
+	    int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+	    if (cantidadDisponible >= cantidadSalida) {
+	        int cantidadTotal = cantidadDisponible - cantidadSalida;
+	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+	        JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+	        return true;
+	    } else {
+	        JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
+	        return false;
+	    }
+	}
+
+	
+	
     
-
     public void registrarVenta(LinkedList<DetalleVenta> detalles, String tipoPago) {
+
+        InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
+        VentaControlador ventaControlador = new VentaControlador();
+
         double montoTotal = 0;
         boolean suficienteInventario = true;
 
@@ -54,41 +66,30 @@ public class Cajero extends Empleado {
         for (DetalleVenta detalleVenta : detalles) {
             int idProducto = detalleVenta.getIdProducto();
             int cantidadVenta = detalleVenta.getCantidad();
-            LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
-
-            for (DetalleInventario detalleInventario : listaInventario) {
-                if (detalleInventario.getProducto().getIdProducto() == idProducto) {
-                    if (detalleInventario.getCantidad() < cantidadVenta) {
-                        JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalleInventario.getProducto().getNombreProducto());
-                        suficienteInventario = false;
-                        break;
-                    }
-                }
+            int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
+            if (cantidadDisponible < cantidadVenta) {
+                JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto con ID: " + idProducto);
+                suficienteInventario = false;
+                break;
             }
         }
+
 
         if (suficienteInventario) {
             for (DetalleVenta detalleVenta : detalles) {
-                int idProducto = detalleVenta.getIdProducto();
-                int cantidadVenta = detalleVenta.getCantidad();
-                LinkedList<DetalleInventario> listaInventario = inventarioSucursal.getListaInventario();
-
-                for (DetalleInventario detalleInventario : listaInventario) {
-                    if (detalleInventario.getProducto().getIdProducto() == idProducto) {
-                        detalleInventario.setCantidad(detalleInventario.getCantidad() - cantidadVenta);
-                        montoTotal += detalleVenta.getMonto();
-                        break;
-                    }
-                }
+                montoTotal += detalleVenta.getMonto();
+               
+                inventarioSucursalControlador.actualizarCantidadProducto(detalleVenta.getIdProducto(), detalleVenta.getCantidad());
             }
 
-            int idVenta = listaVentas.size() + 1;
-            Venta nuevaVenta = new Venta(idVenta, montoTotal, tipoPago, detalles);
-            listaVentas.add(nuevaVenta);
+
+            Venta nuevaVenta = new Venta(0, montoTotal, tipoPago, detalles);
+            
+            ventaControlador.addVenta(nuevaVenta);
+
 
             JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
         }
-        
     }
 
 }
