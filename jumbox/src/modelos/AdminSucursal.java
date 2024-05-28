@@ -13,7 +13,6 @@ public class AdminSucursal extends Empleado {
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
-	
 
 	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
 		super(nombre, email, contraseña);
@@ -33,15 +32,15 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
-		
-		 InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
-		 int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
-		 int cantidadTotal = cantidadDisponible + cantidadEntrada;
-		 inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
-		 JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
-		       }
-		    
-		
+
+		InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
+		int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
+		int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
+		JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: "
+				+ idProducto + " registrada con éxito.");
+	}
+
 	public void SolicitarPedido() {
 
 	}
@@ -50,9 +49,12 @@ public class AdminSucursal extends Empleado {
 
 	}
 
-
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public LinkedList<Descuento> getDescuentos() {
+		return descuentos;
 	}
 
 	public String crearDescuentoVencimiento(Producto productoa) {
@@ -97,14 +99,13 @@ public class AdminSucursal extends Empleado {
 		return "Error al aplicar el descuento";
 	}
 
-	public String editarDescuento(int indiceDescuento) {
+	public String editarDescuento(int indiceDescuento, int nuevoPorcentaje) {
 		if (indiceDescuento < 0 || indiceDescuento >= descuentos.size()) {
 			JOptionPane.showMessageDialog(null, "Porcentaje inválido");
 			return "El descuento no es válido";
 		}
 
 		Descuento descuento = descuentos.get(indiceDescuento);
-		int nuevoPorcentaje;
 		do {
 			try {
 				nuevoPorcentaje = Integer.parseInt(
@@ -143,13 +144,12 @@ public class AdminSucursal extends Empleado {
 
 	}
 
-	public String eliminarDescuento() {
+	public String eliminarDescuento(String indiceEliminar) {
 		if (descuentos.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No hay descuentos disponibles para eliminar");
 			return "No hay descuentos disponibles para eliminar";
 		}
 
-		String indiceEliminar;
 		do {
 			indiceEliminar = JOptionPane.showInputDialog("Ingrese el índice del descuento que desea eliminar");
 			try {
