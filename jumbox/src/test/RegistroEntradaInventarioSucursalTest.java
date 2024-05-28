@@ -10,14 +10,14 @@ import controladores.DetalleInventarioControlador;
 public class RegistroEntradaInventarioSucursalTest {
 
 
-
+		// Aca se prueba el registro de entrada correcto
 	   @Test
-	    public void RegistroEntradaCorrecto() {
+	    public void EntradaCorrecto() {
 	        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 	        boolean flag = false;
 
 	       
-	            if (AdminSucursal.registroEntradaProducto(2, 2, 20)) {
+	            if (AdminSucursal.registroEntradaProducto(0, 2, 20)) {
 	                flag = true;
 	              
 	            
@@ -27,5 +27,60 @@ public class RegistroEntradaInventarioSucursalTest {
 	        
 		
 	    }
+	   
+	// Aca se prueba el registro de entrada con cantidad 0
+	   @Test
+	    public void Cantidad0() {
+	        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+	        boolean flag = false;
+
+	       
+	            if (AdminSucursal.registroEntradaProducto(2, 2, 30)) {
+	                flag = true;
+	              
+	            
+	        }
+
+	        assertEquals(true, flag);
+	        
+		
+	    }
+	   
+	   //Aca se prueba si el id del producto existe
+	   @Test
+	    public void ProductoInexistente() {
+	        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+	        boolean flag = false;
+
+	       
+	            if (AdminSucursal.registroEntradaProducto(10, 10, 20)) {
+	                flag = true;
+	              
+	            
+	        }
+
+	        assertEquals(true, flag);
+	        
+		
+	    }
+	   
+	   //Aca se prueba el registro de entrada con cantidad >= 1000
+	   @Test
+	    public void CantidadMayor1000() {
+	        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+	        boolean flag = false;
+
+	       
+	            if (AdminSucursal.registroEntradaProducto(10, 10, 1000)) {
+	                flag = true;
+	              
+	            
+	        }
+
+	        assertEquals(true, flag);
+	        
+		
+	    }
+	   
 	}
 
