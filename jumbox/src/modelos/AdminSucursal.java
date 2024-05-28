@@ -6,60 +6,41 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
-import controladores.InventarioSucursalControlador;
 
 public class AdminSucursal extends Empleado {
-	private int idAdminSuc;
+	private String tipo;
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
-	
 
-	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
+	public AdminSucursal(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
-		this.idAdminSuc = idAdminSuc;
+		this.tipo = "AdminSucursal";
 	}
 
-	public int getIdAdminSuc() {
-		return idAdminSuc;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setIdAdminSuc(int idAdminSuc) {
-		this.idAdminSuc = idAdminSuc;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	public int getId() {
-		return idAdminSuc;
+	public void registroEntradaSalida() {
+
 	}
 
-	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
-	    
-	    InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
-	    int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
-	    if (cantidadEntrada == 0) {
-	        
-	        JOptionPane.showMessageDialog(null, "No se va a registrar ninguna entrada si la cantidad es 0");
-	    }
-	    
-	    int cantidadTotal = cantidadDisponible + cantidadEntrada;
-	    inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
-	    
-	    JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " + idProducto 
-	    + " registrada con éxito.");
-	
-	}
-	
-	
-		
-	public void SolicitarPedido() {
-		InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
-		
+	public void solicitarPedido() {
+
 	}
 
-	public void MostrarSolicitudPedido() {
-		
+	public void creaDescuento() {
+
 	}
 
+	public void generarInforme() {
+
+	}
 
 	public String crearDescuentoVencimiento(Producto productoa) {
 		LocalDate fechaActual = LocalDate.now();
