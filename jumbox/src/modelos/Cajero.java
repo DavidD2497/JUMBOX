@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import controladores.VentaControlador;
 import controladores.InventarioSucursalControlador;
+import controladores.DetalleInventarioControlador;
 
 public class Cajero extends Empleado {
     private String tipo;
@@ -24,19 +25,34 @@ public class Cajero extends Empleado {
 
 
 
-	public void registrarSalidaProducto(int idProducto, int cantidadSalida) {
-        InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
+	public boolean registrarSalidaProducto(int idInventarioSucursal, int idProducto, int cantidadSalida) {
+	    if (cantidadSalida <= 0) {
+	        JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
+	        return false;
+	    }
 
-        int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
+	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 
-        if (cantidadDisponible >= cantidadSalida) {
-        	int cantidadTotal = cantidadDisponible - cantidadSalida;
-            inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
-            JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
-        }
-    }
+	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+	        JOptionPane.showMessageDialog(null, "El ID del producto no existe en el inventario de la sucursal.");
+	        return false;
+	    }
+
+	    int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+	    if (cantidadDisponible >= cantidadSalida) {
+	        int cantidadTotal = cantidadDisponible - cantidadSalida;
+	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+	        JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+	        return true;
+	    } else {
+	        JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
+	        return false;
+	    }
+	}
+
+	
+	
     
     public void registrarVenta(LinkedList<DetalleVenta> detalles, String tipoPago) {
 
