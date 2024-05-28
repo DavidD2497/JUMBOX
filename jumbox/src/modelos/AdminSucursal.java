@@ -144,16 +144,17 @@ public class AdminSucursal extends Empleado {
 
 	}
 
-	public String eliminarDescuento(String indiceEliminar) {
+	public String eliminarDescuento(int indiceEliminar) {
 		if (descuentos.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No hay descuentos disponibles para eliminar");
 			return "No hay descuentos disponibles para eliminar";
 		}
 
 		do {
-			indiceEliminar = JOptionPane.showInputDialog("Ingrese el índice del descuento que desea eliminar");
+			indiceEliminar = Integer
+					.parseInt(JOptionPane.showInputDialog("Ingrese el índice del descuento que desea eliminar"));
 			try {
-				int indiceDescuento = Integer.parseInt(indiceEliminar);
+				int indiceDescuento = indiceEliminar;
 				if (indiceDescuento < 0 || indiceDescuento >= descuentos.size()) {
 					JOptionPane.showMessageDialog(null, "El descuento no es válido");
 				} else {

@@ -63,7 +63,7 @@ public class AdminSucursal_Test {
 		Descuento descuento = new Descuento(1, 10);
 		adminSucursal.getDescuentos().add(descuento);
 
-		adminSucursal.eliminarDescuento("0");
+		adminSucursal.eliminarDescuento(0);
 
 		assertTrue(adminSucursal.getDescuentos().isEmpty());
 	}
