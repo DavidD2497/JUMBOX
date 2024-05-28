@@ -8,26 +8,22 @@ import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
 
 public class AdminSucursal extends Empleado {
-	private int idAdminSuc;
+	private String tipo;
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
 
-	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
+	public AdminSucursal(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
-		this.idAdminSuc = idAdminSuc;
+		this.tipo = "AdminSucursal";
 	}
 
-	public int getIdAdminSuc() {
-		return idAdminSuc;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setIdAdminSuc(int idAdminSuc) {
-		this.idAdminSuc = idAdminSuc;
-	}
-
-	public int getId() {
-		return idAdminSuc;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public void registroEntradaSalida() {

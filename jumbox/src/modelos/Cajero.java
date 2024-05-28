@@ -6,27 +6,25 @@ import controladores.VentaControlador;
 import controladores.InventarioSucursalControlador;
 
 public class Cajero extends Empleado {
-    private int idCajero;
+    private String tipo;
 
 
-    public Cajero(String nombre, String email, String contraseña, int idCajero) {
+    public Cajero(String nombre, String email, String contraseña) {
         super(nombre, email, contraseña);
-        this.idCajero = idCajero;
+        this.tipo = "Cajero";
     }
 
-    public int getIdCajero() {
-        return idCajero;
-    }
+    public String getTipo() {
+		return tipo;
+	}
 
-    public void setIdCajero(int idCajero) {
-        this.idCajero = idCajero;
-    }
-    
-    public int getId() {
-        return idCajero;
-    }
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
-    public void registrarSalidaProducto(int idProducto, int cantidadSalida) {
+
+
+	public void registrarSalidaProducto(int idProducto, int cantidadSalida) {
         InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
 
         int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
