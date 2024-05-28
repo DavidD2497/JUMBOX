@@ -6,8 +6,11 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
+import controladores.DetalleInventarioControlador;
 
 public class AdminSucursal extends Empleado {
+	int idProducto;
+	int cantidadEntrada;
 	private String tipo;
 	private Producto producto;
 	private Descuento descuento;
@@ -26,9 +29,29 @@ public class AdminSucursal extends Empleado {
 		this.tipo = tipo;
 	}
 
-	public void registroEntradaSalida() {
+	public static boolean registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
+	    if (cantidadEntrada <= 0) {
+	        JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor que cero.");
+	        return false;
+	    }
 
+	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
+	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+	        JOptionPane.showMessageDialog(null, "El ID del producto no existe en el inventario de la sucursal.");
+	        return false;
+	    }
+
+	    int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+	    
+	        int cantidadTotal = cantidadDisponible + cantidadEntrada;
+	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+	        JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " +detalleInventarioControlador.getNombreProducto(idProducto)  + " registrada con éxito.");
+	        return true;
+	   
 	}
+	
 
 	public void solicitarPedido() {
 
