@@ -6,12 +6,14 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
+import controladores.InventarioSucursalControlador;
 
 public class AdminSucursal extends Empleado {
 	private int idAdminSuc;
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
+	
 
 	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
 		super(nombre, email, contraseña);
@@ -30,26 +32,24 @@ public class AdminSucursal extends Empleado {
 		return idAdminSuc;
 	}
 
-	public void bienvenida() {
-		JOptionPane.showMessageDialog(null,
-				"¡Bienvenido " + this.getNombre() + "! Ha iniciado sesión como Administrador de surcursal");
-	}
-
-	public void registroEntradaSalida() {
-
-	}
-
-	public void solicitarPedido() {
-
-	}
-
-	public void creaDescuento() {
+	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
+		
+		 InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
+		 int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
+		 int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		 inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
+		 JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+		       }
+		    
+		
+	public void SolicitarPedido() {
 
 	}
 
-	public void generarInforme() {
+	public void MostrarSolicitudPedido() {
 
 	}
+
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;

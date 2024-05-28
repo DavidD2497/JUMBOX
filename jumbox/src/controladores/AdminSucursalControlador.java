@@ -13,8 +13,8 @@ import modelos.AdminSucursal;
 public class AdminSucursalControlador implements AdminSucursalRepository {
     private final Connection connection;
 
-    public AdminSucursalControlador(Connection connection) {
-        this.connection = connection;
+    public AdminSucursalControlador() {
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override

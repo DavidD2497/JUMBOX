@@ -2,10 +2,10 @@ package clases;
 
 import javax.swing.JOptionPane;
 
-public class adminDeposito extends empleado{
+public class AdminDeposito extends empleado{
 	private int idAdminDepo;
 
-	public adminDeposito(String nombre, String contraseña, int idAdminDepo) {
+	public AdminDeposito(String nombre, String contraseña, int idAdminDepo) {
 		super(nombre, contraseña);
 		this.idAdminDepo = idAdminDepo;
 	}
