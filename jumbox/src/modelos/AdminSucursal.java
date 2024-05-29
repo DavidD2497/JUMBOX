@@ -92,4 +92,9 @@ public class AdminSucursal extends Empleado {
         return true;
 
     }
+	
+	public void mostrarPedido() {
+        PedidoControlador pedidoControlador= new PedidoControlador();
+        JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
+    }
 }
