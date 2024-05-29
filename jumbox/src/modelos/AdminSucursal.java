@@ -3,12 +3,11 @@ package modelos;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
-import java.time.LocalDate;  
-import controladores.DescuentoControlador;
+
 import controladores.DetalleInventarioControlador;
+import controladores.DetallePedidoControlador;
 import controladores.PedidoControlador;
 
 public class AdminSucursal extends Empleado {
@@ -33,52 +32,67 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public static boolean registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
-		
-		 if (cantidadEntrada>=1000 ) {
-			 // JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que 1000.");
-			 
-	            return false;
-	        }
-		 
-	    if (cantidadEntrada <= 0) {
-	        // JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor que cero.");
-	        return false;
-	    }
 
-	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+		if (cantidadEntrada >= 1000) {
+			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
+			// 1000.");
 
-	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-	        // JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
-	        return false;
-	    }
+			return false;
+		}
 
-	    int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+		if (cantidadEntrada <= 0) {
+			// JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor
+			// que cero.");
+			return false;
+		}
 
-	    
-	        int cantidadTotal = cantidadDisponible + cantidadEntrada;
-	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-	        // JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades al producto " +detalleInventarioControlador.getNombreProducto(idProducto)  + " registrada con éxito.");
-	        return true;
-	   
+		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
+		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
+			// inventario de la sucursal.");
+			return false;
+		}
+
+		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+		int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+		// JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + "
+		// unidades al producto "
+		// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
+		// con éxito.");
+		return true;
+
 	}
-	
 
-	public void solicitarPedido( LinkedList <DetallePedido> listaDetalle, LocalDate fechaEntrega) {
-		PedidoControlador pedidoControlador = new PedidoControlador();
-		Pedido nuevoPedido= new Pedido(fechaEntrega);
-		pedidoControlador.addPedido(nuevoPedido);
-	
-		
-		
-		
-		
-	for (int i = 0; i < listaDetalle.size(); i++) {
-		
-		
+	public void solicitarPedido(LinkedList<DetallePedido> listaDetalle, LocalDate fechaEntrega) {
+
+		if (listaDetalle.isEmpty() || fechaEntrega == null) {
+			JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
+		} else {	
+			
+			for (DetallePedido detalle : listaDetalle) {
+			if () {
+				
+			}
+			}
+			
+			
+			PedidoControlador pedidoControlador = new PedidoControlador();
+			Pedido nuevoPedido = new Pedido(fechaEntrega);
+			pedidoControlador.addPedido(nuevoPedido);
+			DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+
+			for (DetallePedido detalle : listaDetalle) {
+				detalle.setIdPedido(nuevoPedido.getCodigoPedido());
+				detallePedidoControlador.addDetallePedido(detalle.getCantidad(), detalle.getIdProducto(),
+						detalle.getIdPedido());
+			}
+			
+		}
+
 	}
-	
-	}
-	
 
 	public void creaDescuento() {
 

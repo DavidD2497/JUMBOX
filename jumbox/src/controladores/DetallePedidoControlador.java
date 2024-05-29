@@ -63,12 +63,12 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
     }
 
     @Override
-    public void addDetallePedido(DetallePedido detallePedido) {
+    public void addDetallePedido( int idProducto, int cantidad, int idPedido) {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_pedido (id_producto, cantidad, id_pedido) VALUES (?, ?, ?)");
-            statement.setInt(1, detallePedido.getIdProducto());
-            statement.setInt(2, detallePedido.getCantidad());
-            statement.setInt(3, detallePedido.getIdPedido());
+            statement.setInt(1, idProducto);
+            statement.setInt(2, cantidad);
+            statement.setInt(3, idPedido);
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
