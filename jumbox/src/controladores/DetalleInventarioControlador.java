@@ -14,8 +14,8 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
 
     private Connection connection;
 
-    public DetalleInventarioControlador(Connection connection) {
-        this.connection = connection;
+    public DetalleInventarioControlador() {
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override

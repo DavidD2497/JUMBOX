@@ -15,9 +15,9 @@ public class ProductoControlador implements ProductoRepository {
 
     private Connection connection;
 
-    // Constructor que recibe la conexión a la base de datos
-    public ProductoControlador(Connection connection) {
-        this.connection = connection;
+    
+    public ProductoControlador() {
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
