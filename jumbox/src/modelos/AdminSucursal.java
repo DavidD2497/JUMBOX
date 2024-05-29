@@ -61,7 +61,8 @@ public class AdminSucursal extends Empleado {
 	
 
 	public void solicitarPedido() {
-
+		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+		
 	}
 
 	public void creaDescuento() {
