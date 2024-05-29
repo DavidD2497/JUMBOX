@@ -112,4 +112,40 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public List<DetallePedido> getDetallePedidoByIdPedido(int idPedido) {
+		List<DetallePedido> detallesPedido = new ArrayList<>();
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("SELECT * FROM detalles_pedidos WHERE idPedido = ?");
+			statement.setInt(1, idPedido);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				DetallePedido detallePedido = new DetallePedido(resultSet.getInt("idDetalle"),
+						resultSet.getInt("idProducto"), resultSet.getInt("cantidad"));
+				detallesPedido.add(detallePedido);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return detallesPedido;
+	} 
+    
+    @Override
+    public void deleteDetallesByIdPedido(int idPedido) {
+	    try {
+	        PreparedStatement statement = connection.prepareStatement("DELETE FROM detalles_pedidos WHERE idPedido = ?");
+	        statement.setInt(1, idPedido);
+
+	        int rowsDeleted = statement.executeUpdate();
+	        if (rowsDeleted > 0) {
+	            System.out.println("Detalles de Pedido eliminados exitosamente");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	} 
+    
 }
