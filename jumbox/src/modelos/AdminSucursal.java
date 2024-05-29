@@ -3,10 +3,13 @@ package modelos;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+import java.time.LocalDate;  
 import controladores.DescuentoControlador;
 import controladores.DetalleInventarioControlador;
+import controladores.PedidoControlador;
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
@@ -60,10 +63,22 @@ public class AdminSucursal extends Empleado {
 	}
 	
 
-	public void solicitarPedido() {
-		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+	public void solicitarPedido( LinkedList <DetallePedido> listaDetalle, LocalDate fechaEntrega) {
+		PedidoControlador pedidoControlador = new PedidoControlador();
+		Pedido nuevoPedido= new Pedido(fechaEntrega);
+		pedidoControlador.addPedido(nuevoPedido);
+	
+		
+		
+		
+		
+	for (int i = 0; i < listaDetalle.size(); i++) {
+		
 		
 	}
+	
+	}
+	
 
 	public void creaDescuento() {
 
