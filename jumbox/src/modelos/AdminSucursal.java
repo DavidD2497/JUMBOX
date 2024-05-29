@@ -10,6 +10,7 @@ import controladores.DetalleInventarioControlador;
 import controladores.DetallePedidoControlador;
 import controladores.PedidoControlador;
 import controladores.ProductoControlador;
+import controladores.DescuentoControlador;
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
@@ -100,6 +101,10 @@ public class AdminSucursal extends Empleado {
 		JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
 		return true;
 
+	}
+	public void mostrarPedido() {
+		PedidoControlador pedidoControlador= new PedidoControlador();
+		JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
 	}
 
 	public void creaDescuento() {

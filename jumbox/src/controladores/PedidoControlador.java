@@ -25,7 +25,7 @@ public class PedidoControlador implements PedidoRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int codigoPedido = resultSet.getInt("codigo_pedido");
+                int codigoPedido = resultSet.getInt("id_pedido");
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
                 Pedido pedido = new Pedido(fechaEntrega);
                 pedido.setCodigoPedido(codigoPedido);
