@@ -1,63 +1,58 @@
 package modelos;
 
-import java.util.LinkedList;
 import javax.swing.JOptionPane;
+import controladores.DetalleDepositoControlador;
 
 public class AdminDeposito extends Empleado {
-	private int idAdminDepo;
-	private LinkedList<DetalleInventario> listaInventario = new LinkedList<>();
+	private String tipo;
 
-	public AdminDeposito(String nombre, String email, String contraseña, int idAdminDepo) {
+	public AdminDeposito(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
-		this.idAdminDepo = idAdminDepo;
+		this.tipo = "AdminDeposito";
 	}
 
-	public int getIdAdminDepo() {
-		return idAdminDepo;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setIdAdminDepo(int idAdminDepo) {
-		this.idAdminDepo = idAdminDepo;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	public int getId() {
-		return idAdminDepo;
-	}
 
-	public LinkedList<DetalleInventario> getListaInventario() {
-		return listaInventario;
-	}
 
-	public void setListaInventario(LinkedList<DetalleInventario> listaInventario) {
-		this.listaInventario = listaInventario;
-	}
+	public static boolean registrarSalidaDepositoGeneral(int idDepositoGeneral, int idProducto, int cantidadSalida) {
+	    if (cantidadSalida <= 0) {
+	        //JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
+	        return false;
+	    }
 
-	public void registroSalidaInventario(int idProducto, int cantidadSalida) {
-		for (DetalleInventario detalle : listaInventario) {
-			if (detalle.getProducto().getIdProducto() == idProducto) {
-				if (detalle.getCantidad() >= cantidadSalida) {
-					detalle.setCantidad(detalle.getCantidad() - cantidadSalida);
-					JOptionPane.showMessageDialog(null, "Se ha registrado la salida de " + cantidadSalida + " unidad/es del producto: " + detalle.getProducto().getNombreProducto());
-				} else {
-					JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto: " + detalle.getProducto().getNombreProducto());
-				}
-				break;
-			}
-		}
+	    DetalleDepositoControlador detalleDepositoControlador = new DetalleDepositoControlador();
+
+	    if (!detalleDepositoControlador.existeProducto(idDepositoGeneral, idProducto)) {
+	        //JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
+	        return false;
+	    }
+
+	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible(idDepositoGeneral, idProducto);
+
+	    if (cantidadDisponible >= cantidadSalida) {
+	        int cantidadTotal = cantidadDisponible - cantidadSalida;
+	        detalleDepositoControlador.actualizarCantidadProducto(idDepositoGeneral, idProducto, cantidadTotal);
+	        //JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+	        return true;
+	    } else {
+	        //JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
+	        return false;
+	    }
 	}
 
 	public void armarPedido() {
-		// Lógica para armar pedido
+
 	}
 
 	public void validarDatos() {
-		// Lógica para validar datos
+
 	}
 
-	AdminDeposito admin = new AdminDeposito("Jumbox Max", "prueba@gmail.com", "1234", 1);
-
-	public void DatosDeposito() {
-		JOptionPane.showMessageDialog(null, "Datos del Deposito: " + "\n Nombre: " + this.getNombre()
-				+ "\n Contraseña: " + this.getContraseña() + "\n Id del Deposito: " + this.idAdminDepo);
-	}
 }
