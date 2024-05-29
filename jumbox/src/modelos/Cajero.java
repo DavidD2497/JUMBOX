@@ -88,10 +88,9 @@ public class Cajero extends Empleado {
             VentaControlador ventaControlador = new VentaControlador();
             ventaControlador.addVenta(venta);
             
-            int idVenta = ventaControlador.obtenerUltimoIdVenta(); // Obtener el ID de la venta recién creada
+
 
             for (DetalleVenta detalle : detallesVenta) {
-                detalle.setIdVenta(idVenta); // Establecer el ID de la venta en el detalle antes de insertarlo
                 detalleVentaControlador.addDetalleVenta(detalle);
             }
 
