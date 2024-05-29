@@ -1,7 +1,11 @@
 package modelos;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
+
 import javax.swing.JOptionPane;
-import controladores.DetalleDepositoControlador; 
+import controladores.DetalleDepositoControlador;
+import controladores.PedidoControlador;
 
 public class AdminDeposito extends Empleado {
 	private int idAdminDepo;
@@ -51,37 +55,38 @@ public class AdminDeposito extends Empleado {
 				+ "/n Contraseña: " + this.getContraseña() + "/n Id del Deposito: " + this.idAdminDepo);
 	}
 
-	public static boolean registrarSalidaDepositoGeneral(int idDepositoGeneral, int idProducto, int cantidadSalida) {
-		if (cantidadSalida <= 0) {
-			// JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que
-			// cero.");
-			return false;
+	public void confirmarSolicitudDePedido(LinkedList<DetallePedido> listaDetalle) {
+		if (listaDetalle.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No hay detalles de pedido para confirmar.");
+			return;
 		}
 
 		DetalleDepositoControlador detalleDepositoControlador = new DetalleDepositoControlador();
+		boolean pedidoConfirmado = true;
 
-		if (!detalleDepositoControlador.existeProducto(idDepositoGeneral, idProducto)) {
-			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
-			// inventario de la sucursal.");
-			return false;
+		for (DetallePedido detalle : listaDetalle) {
+			int idProducto = detalle.getIdProducto();
+			int cantidadSolicitada = detalle.getCantidad();
+
+			if (!detalleDepositoControlador.existeProducto(idProducto, cantidadSolicitada)) {
+				pedidoConfirmado = false;
+				JOptionPane.showMessageDialog(null, "El producto: " + idProducto + " no esta disponible");
+				break;
+			}
 		}
 
-		int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible(idDepositoGeneral, idProducto);
-
-		if (cantidadDisponible >= cantidadSalida) {
-			int cantidadTotal = cantidadDisponible - cantidadSalida;
-			detalleDepositoControlador.actualizarCantidadProducto(idDepositoGeneral, idProducto, cantidadTotal);
-			// JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + "
-			// unidades del producto con ID: " + idProducto + " registrada con éxito.");
-			return true;
+		if (pedidoConfirmado) {
+			PedidoControlador pedidoControlador = new PedidoControlador();
+			Pedido nuevoPedido = new Pedido(LocalDate.now());
+			pedidoControlador.addPedido(nuevoPedido);
+			int codigoPedido = nuevoPedido.getCodigoPedido();
+			pedidoControlador.actualizarEstadoPedido(codigoPedido, "Confirmado");
+			JOptionPane.showMessageDialog(null,
+					"El pedido fue confirmado. Todos los productos están disponibles");
 		} else {
-			// JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar
-			// " + cantidadSalida + " unidades del producto con ID: " + idProducto);
-			return false;
+			JOptionPane.showMessageDialog(null,
+					"No fue confirmado el pedido. Al menos uno de los productos solicitados no está disponible");
 		}
 	}
-	
-	public void confirmarSolicitudDePedido () {
-		
-	}
+
 }

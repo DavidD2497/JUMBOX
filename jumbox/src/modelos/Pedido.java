@@ -14,7 +14,9 @@ public class Pedido {
 		this.fechaEntrega = fechaEntrega;
 		this.listaPedidos = listaPedidos;
 	}
-
+	public Pedido(LocalDate fechaEntrega) {
+		this.fechaEntrega = fechaEntrega;
+	}
 	public int getCodigoPedido() {
 		return codigoPedido;
 	}
