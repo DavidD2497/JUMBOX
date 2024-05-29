@@ -63,5 +63,14 @@ public class SolicitarPedidoTest {
 		assertFalse(resultado);
 
 	}
+	
+	@Test
+    public void testSolicitarPedido_FechaAnterior() {
+        LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
+        listaDetalle.add(new DetallePedido(1, 2, 3));
+          LocalDate fecha = LocalDate.of(2024, 5, 30);
+        boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fecha);
+        assertFalse(resultado);
+    }
 
 }
