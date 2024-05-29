@@ -124,19 +124,5 @@ public class PedidoControlador implements PedidoRepository {
 		return listaPedidos;
 	}
 
-	public void actualizarEstadoPedido(int codigoPedido, String estado) {
-		try {
-			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigoPedido = ?");
-			statement.setString(1, estado);
-			statement.setInt(2, codigoPedido);
-
-			int rowsUpdated = statement.executeUpdate();
-			if (rowsUpdated > 0) {
-				System.out.println("Estado del pedido actualizado exitosamente");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	
 }
