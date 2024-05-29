@@ -89,9 +89,9 @@ public class AdminSucursal extends Empleado {
 		}
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		Pedido nuevoPedido = new Pedido(fechaEntrega);
-		pedidoControlador.addPedido(nuevoPedido);
+		pedidoControlador.addPedido(nuevoPedido);int idPedido= pedidoControlador.obtenerUltimoIdPedido();
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
-		int idPedido= pedidoControlador.obtenerUltimoIdPedido();
+		
 		for (DetallePedido detalle : listaDetalle) {
 			detalle.setIdPedido(idPedido);
 			detallePedidoControlador.addDetallePedido(detalle);
