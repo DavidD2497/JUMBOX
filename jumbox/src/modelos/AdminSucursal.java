@@ -1,7 +1,13 @@
 package modelos;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
+
 import javax.swing.JOptionPane;
 import controladores.DetalleInventarioControlador;
+import controladores.DetallePedidoControlador;
+import controladores.PedidoControlador;
+import controladores.ProductoControlador;
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
@@ -52,8 +58,38 @@ public class AdminSucursal extends Empleado {
 	}
 	
 
-	public void CrearSolicitudPedido() {
+	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle, LocalDate fechaEntrega) {
+        ProductoControlador productoControlador = new ProductoControlador();
+        if (listaDetalle.isEmpty() || fechaEntrega == null) {
+            //JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
+            return false;
+        }
 
-	}
-	
+        for (DetallePedido detalle : listaDetalle) {
+            if (productoControlador.getProductoById(detalle.getIdProducto()) == null) {
+                //JOptionPane.showMessageDialog(null, "El producto con ID " + detalle.getIdProducto() + " no existe.");
+
+                return false;
+            }
+
+        }
+
+        if (fechaEntrega.isBefore(LocalDate.now().plusDays(2))) {
+            //JOptionPane.showMessageDialog(null, "La fecha ingresada debe ser posterior a la fecha actual");
+            return false;
+        }
+        PedidoControlador pedidoControlador = new PedidoControlador();
+        Pedido nuevoPedido = new Pedido(fechaEntrega);
+        pedidoControlador.addPedido(nuevoPedido);int idPedido= pedidoControlador.obtenerUltimoIdPedido();
+        DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+
+        for (DetallePedido detalle : listaDetalle) {
+            detalle.setIdPedido(idPedido);
+            detallePedidoControlador.addDetallePedido(detalle);
+
+        }
+        //JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
+        return true;
+
+    }
 }

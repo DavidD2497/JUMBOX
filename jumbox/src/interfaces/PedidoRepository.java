@@ -14,4 +14,6 @@ public interface PedidoRepository {
     void updatePedido(Pedido pedido); // Actualiza un pedido en la base de datos
 
     void deletePedido(int id); // Elimina un pedido de la base de datos
+    
+    int obtenerUltimoIdPedido();
 }
