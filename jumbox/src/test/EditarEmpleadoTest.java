@@ -13,7 +13,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "david@gmail.com", "nuevaContraseña", "AdminDeposito")) {
+            if (empleado.editarEmpleado("luis.fernandez@gmail.com", "NuevoNombre", "luis.fernandez@gmail.com", "nuevaContraseña", "AdminDeposito")) {
                 flag = true;
                 break;
             }

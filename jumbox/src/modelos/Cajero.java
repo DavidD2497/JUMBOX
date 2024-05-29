@@ -1,9 +1,7 @@
 package modelos;
 
-import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import controladores.VentaControlador;
-import controladores.InventarioSucursalControlador;
 import controladores.DetalleInventarioControlador;
 
 public class Cajero extends Empleado {
@@ -25,16 +23,16 @@ public class Cajero extends Empleado {
 
 
 
-	public boolean registrarSalidaProducto(int idInventarioSucursal, int idProducto, int cantidadSalida) {
+	public static boolean registrarSalidaProductoInventarioSuc(int idInventarioSucursal, int idProducto, int cantidadSalida) {
 	    if (cantidadSalida <= 0) {
-	        JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
+	        //JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
 	        return false;
 	    }
 
 	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 
 	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-	        JOptionPane.showMessageDialog(null, "El ID del producto no existe en el inventario de la sucursal.");
+	        //JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
 	        return false;
 	    }
 
@@ -43,10 +41,10 @@ public class Cajero extends Empleado {
 	    if (cantidadDisponible >= cantidadSalida) {
 	        int cantidadTotal = cantidadDisponible - cantidadSalida;
 	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-	        JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+	        //JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
 	        return true;
 	    } else {
-	        JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
+	        //JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
 	        return false;
 	    }
 	}
