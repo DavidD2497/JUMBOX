@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import interfaces.VentaRepository;
-import modelos.DetalleVenta;
 import modelos.Venta;
 
 public class VentaControlador implements VentaRepository {
@@ -20,18 +19,15 @@ public class VentaControlador implements VentaRepository {
     @Override
     public List<Venta> getAllVentas() {
         List<Venta> ventas = new ArrayList<>();
-        String query = "SELECT * FROM venta";
-        
-        try (PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ventas");
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int idVenta = resultSet.getInt("idVenta");
                 double montoTotal = resultSet.getDouble("montoTotal");
                 String tipoPago = resultSet.getString("tipoPago");
-                List<DetalleVenta> detalles = getDetallesByVentaId(idVenta);
 
-                Venta venta = new Venta(idVenta, montoTotal, tipoPago, detalles);
+                Venta venta = new Venta(montoTotal, tipoPago);
                 ventas.add(venta);
             }
         } catch (SQLException e) {
@@ -43,16 +39,16 @@ public class VentaControlador implements VentaRepository {
     @Override
     public Venta getVentaById(int id) {
         Venta venta = null;
-        String query = "SELECT * FROM venta WHERE idVenta = ?";
-        
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ventas WHERE idVenta = ?");
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    double montoTotal = resultSet.getDouble("montoTotal");
-                    String tipoPago = resultSet.getString("tipoPago");
-                    venta = new Venta(id, montoTotal, tipoPago, new ArrayList<>());
-                }
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                double montoTotal = resultSet.getDouble("montoTotal");
+                String tipoPago = resultSet.getString("tipoPago");
+
+                venta = new Venta(montoTotal, tipoPago);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,110 +58,68 @@ public class VentaControlador implements VentaRepository {
 
     @Override
     public void addVenta(Venta venta) {
-        String queryVenta = "INSERT INTO venta (idVenta, montoTotal, tipoPago) VALUES (?, ?, ?)";
-        String queryDetalle = "INSERT INTO detalle_venta (idDetalle, idVenta, idProducto, monto, cantidad) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO ventas (montoTotal, tipoPago) VALUES (?, ?)");
+            statement.setDouble(1, venta.getMontoTotal());
+            statement.setString(2, venta.getTipoPago());
 
-        try (PreparedStatement statementVenta = connection.prepareStatement(queryVenta);
-             PreparedStatement statementDetalle = connection.prepareStatement(queryDetalle)) {
-
-            connection.setAutoCommit(false);
-
-            statementVenta.setInt(1, venta.getIdVenta());
-            statementVenta.setDouble(2, venta.getMontoTotal());
-            statementVenta.setString(3, venta.getTipoPago());
-            statementVenta.executeUpdate();
-
-            for (DetalleVenta detalle : venta.getListaVenta()) {
-                statementDetalle.setInt(1, detalle.getIdDetalle());
-                statementDetalle.setInt(2, venta.getIdVenta());
-                statementDetalle.setInt(3, detalle.getIdProducto());
-                statementDetalle.setDouble(4, detalle.getMonto());
-                statementDetalle.setInt(5, detalle.getCantidad());
-                statementDetalle.executeUpdate();
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Venta agregada exitosamente.");
             }
-
-            connection.commit();
-            connection.setAutoCommit(true);
-            System.out.println("Venta agregada exitosamente.");
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
             e.printStackTrace();
         }
     }
 
     @Override
     public void updateVenta(Venta venta) {
-        String queryVenta = "UPDATE venta SET montoTotal = ?, tipoPago = ? WHERE idVenta = ?";
-        String queryDeleteDetalle = "DELETE FROM detalle_venta WHERE idVenta = ?";
-        String queryInsertDetalle = "INSERT INTO detalle_venta (idDetalle, idVenta, idProducto, monto, cantidad) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE ventas SET montoTotal = ?, tipoPago = ? WHERE idVenta = ?");
+            statement.setDouble(1, venta.getMontoTotal());
+            statement.setString(2, venta.getTipoPago());
+            statement.setInt(3, venta.getIdVenta());
 
-        try (PreparedStatement statementVenta = connection.prepareStatement(queryVenta);
-             PreparedStatement statementDeleteDetalle = connection.prepareStatement(queryDeleteDetalle);
-             PreparedStatement statementInsertDetalle = connection.prepareStatement(queryInsertDetalle)) {
-
-            connection.setAutoCommit(false);
-
-            statementVenta.setDouble(1, venta.getMontoTotal());
-            statementVenta.setString(2, venta.getTipoPago());
-            statementVenta.setInt(3, venta.getIdVenta());
-            statementVenta.executeUpdate();
-
-            statementDeleteDetalle.setInt(1, venta.getIdVenta());
-            statementDeleteDetalle.executeUpdate();
-
-            for (DetalleVenta detalle : venta.getListaVenta()) {
-                statementInsertDetalle.setInt(1, detalle.getIdDetalle());
-                statementInsertDetalle.setInt(2, venta.getIdVenta());
-                statementInsertDetalle.setInt(3, detalle.getIdProducto());
-                statementInsertDetalle.setDouble(4, detalle.getMonto());
-                statementInsertDetalle.setInt(5, detalle.getCantidad());
-                statementInsertDetalle.executeUpdate();
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Venta actualizada exitosamente.");
             }
-
-            connection.commit();
-            connection.setAutoCommit(true);
-            System.out.println("Venta actualizada exitosamente.");
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
             e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteVenta(int idVenta) {
-        String queryDeleteVenta = "DELETE FROM venta WHERE idVenta = ?";
-        String queryDeleteDetalle = "DELETE FROM detalle_venta WHERE idVenta = ?";
+    public void deleteVenta(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM ventas WHERE idVenta = ?");
+            statement.setInt(1, id);
 
-        try (PreparedStatement statementDeleteVenta = connection.prepareStatement(queryDeleteVenta);
-             PreparedStatement statementDeleteDetalle = connection.prepareStatement(queryDeleteDetalle)) {
-
-            connection.setAutoCommit(false);
-
-            statementDeleteVenta.setInt(1, idVenta);
-            statementDeleteVenta.executeUpdate();
-
-            statementDeleteDetalle.setInt(1, idVenta);
-            statementDeleteDetalle.executeUpdate();
-
-            connection.commit();
-            connection.setAutoCommit(true);
-            System.out.println("Venta eliminada exitosamente.");
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Venta eliminada exitosamente.");
             }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public int obtenerUltimoIdVenta() {
+        int ultimoIdVenta = -1;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(idVenta) FROM ventas");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                ultimoIdVenta = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ultimoIdVenta;
     }
 }
 

@@ -113,4 +113,23 @@ public class ProductoControlador implements ProductoRepository {
 
         return new Producto(idProducto, nombreProducto, categoria, precio, fechaVencimiento.toLocalDate());
     }
+    
+    @Override
+    
+    public double getPrecioProductoById(int id) {
+        double precio = 0.0;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT precio FROM productos WHERE idProducto = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                precio = resultSet.getDouble("precio");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return precio;
+    }
+
 }
