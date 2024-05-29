@@ -33,6 +33,7 @@ public class AdminSucursal extends Empleado {
 		
 		 if (cantidadEntrada>=1000 ) {
 			 // JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que 1000.");
+			 
 	            return false;
 	        }
 		 
