@@ -14,8 +14,8 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
 
     private Connection connection;
 
-    public InventarioSucursalControlador(Connection connection) {
-        this.connection = connection;
+    public InventarioSucursalControlador() {
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
