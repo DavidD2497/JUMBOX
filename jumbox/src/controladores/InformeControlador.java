@@ -6,36 +6,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import modelos.DetalleInforme;
+import interfaces.InformeRepository;
 import modelos.Informe;
 
-public class InformeControlador {
+
+public class InformeControlador implements InformeRepository {
     private final Connection connection;
 
     public InformeControlador() {
-    	this.connection = DatabaseConnection.getInstance().getConnection();
+        this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
-    public void addInforme(Informe informe) {
-        String query = "INSERT INTO informe (idInforme) VALUES (?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, informe.getIdInforme());
-            statement.executeUpdate();
-            System.out.println("Informe agregado con éxito.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    @Override
     public List<Informe> getAllInformes() {
         List<Informe> informes = new ArrayList<>();
-        String query = "SELECT * FROM informe";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM informes");
             ResultSet resultSet = statement.executeQuery();
+
             while (resultSet.next()) {
                 int idInforme = resultSet.getInt("idInforme");
-                List<DetalleInforme> listaDetalles = getDetallesInforme(idInforme);
-                Informe informe = new Informe(idInforme, listaDetalles);
+
+                Informe informe = new Informe(idInforme);
                 informes.add(informe);
             }
         } catch (SQLException e) {
@@ -44,48 +36,66 @@ public class InformeControlador {
         return informes;
     }
 
+    @Override
     public Informe getInformeById(int id) {
         Informe informe = null;
-        String query = "SELECT * FROM informe WHERE idInforme = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM informes WHERE idInforme = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
-                List<DetalleInforme> listaDetalles = getDetallesInforme(id);
-                informe = new Informe(id, listaDetalles);
+                int idInforme = resultSet.getInt("idInforme");
+
+                informe = new Informe(idInforme);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return informe;
     }
+    
+    @Override
+    public void addInforme(Informe informe) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO informes (idInforme) VALUES (?)");
+            statement.setInt(1, informe.getIdInforme());
 
-    private List<DetalleInforme> getDetallesInforme(int idInforme) {
-        List<DetalleInforme> detalles = new ArrayList<>();
-        String query = "SELECT * FROM detalle_informe WHERE idInforme = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, idInforme);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                DetalleInforme detalle = new DetalleInforme(
-                        resultSet.getInt("idDetalle"),
-                        resultSet.getInt("idVenta"),
-                        resultSet.getInt("idInventario")
-                );
-                detalles.add(detalle);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Informe agregado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return detalles;
     }
 
+    @Override
+    public void updateInforme(Informe informe) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE informes SET idInforme = ? WHERE idInforme = ?");
+            statement.setInt(1, informe.getIdInforme());
+            statement.setInt(2, informe.getIdInforme());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Informe actualizado exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void deleteInforme(int id) {
-        String query = "DELETE FROM informe WHERE idInforme = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM informes WHERE idInforme = ?");
             statement.setInt(1, id);
-            statement.executeUpdate();
-            System.out.println("Informe eliminado con éxito.");
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Informe eliminado exitosamente.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

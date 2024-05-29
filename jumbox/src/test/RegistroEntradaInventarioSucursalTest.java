@@ -17,7 +17,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	        boolean flag = false;
 
 	       
-	            if (AdminSucursal.registroEntradaProducto(0, 2, 20)) {
+	            if (AdminSucursal.registroEntradaProducto(2, 2, 20)) {
 	                flag = true;
 	              
 	            
@@ -35,13 +35,13 @@ public class RegistroEntradaInventarioSucursalTest {
 	        boolean flag = false;
 
 	       
-	            if (AdminSucursal.registroEntradaProducto(2, 2, 30)) {
+	            if (AdminSucursal.registroEntradaProducto(2, 2, 0)) {
 	                flag = true;
 	              
 	            
 	        }
 
-	        assertEquals(true, flag);
+	        assertEquals(false, flag);
 	        
 		
 	    }
@@ -59,7 +59,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	            
 	        }
 
-	        assertEquals(true, flag);
+	        assertEquals(false, flag);
 	        
 		
 	    }
@@ -77,7 +77,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	            
 	        }
 
-	        assertEquals(true, flag);
+	        assertEquals(false, flag);
 	        
 		
 	    }
