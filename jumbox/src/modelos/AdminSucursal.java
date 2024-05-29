@@ -6,11 +6,11 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+
 import controladores.DetalleInventarioControlador;
 import controladores.DetallePedidoControlador;
 import controladores.PedidoControlador;
 import controladores.ProductoControlador;
-import controladores.DescuentoControlador;
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
@@ -130,8 +130,7 @@ public class AdminSucursal extends Empleado {
 					} else {
 						Descuento desc = new Descuento(1, cantDescuento);
 
-						DescuentoControlador descuentoControlador = new DescuentoControlador();
-						descuentoControlador.addDescuento(desc);
+						
 
 						double precioDescuentoVencimiento = this.producto.getPrecio()
 								* (1 - (desc.getPorcentajeDesc() / 100.0));
@@ -173,9 +172,6 @@ public class AdminSucursal extends Empleado {
 					JOptionPane.showMessageDialog(null, "El porcentaje de descuento debe estar entre 5% y 95%");
 				} else {
 					descuento.setPorcentajeDesc(nuevoPorcentaje);
-					DescuentoControlador descuentoControlador = new DescuentoControlador();
-					descuentoControlador.updateDescuento(descuento);
-
 					JOptionPane.showMessageDialog(null, "El descuento fue editado correctamente");
 					return "El descuento fue editado correctamente";
 				}
@@ -218,8 +214,7 @@ public class AdminSucursal extends Empleado {
 					JOptionPane.showMessageDialog(null, "El descuento no es válido");
 				} else {
 					descuentos.remove(indiceDescuento);
-					DescuentoControlador descuentoControlador = new DescuentoControlador();
-					descuentoControlador.deleteDescuento(indiceDescuento);
+	
 					JOptionPane.showMessageDialog(null, "El descuento fue eliminado correctamente");
 					return "El descuento fue eliminado correctamente";
 				}

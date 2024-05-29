@@ -40,7 +40,12 @@ public class VentaControlador implements VentaRepository {
         return ventas;
     }
 
-    @Override
+    private List<DetalleVenta> getDetallesByVentaId(int idVenta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
     public Venta getVentaById(int id) {
         Venta venta = null;
         String query = "SELECT * FROM venta WHERE idVenta = ?";

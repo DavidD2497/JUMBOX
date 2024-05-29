@@ -56,10 +56,10 @@ public class ProductoControlador implements ProductoRepository {
     public void addProducto(Producto producto) {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO productos (nombre_producto, categoria, precio, fecha_vencimiento) VALUES (?, ?, ?, ?)");
-            statement.setString(1, producto.getnombre_producto());
+            statement.setLong(1, producto.getIdProducto());
             statement.setString(2, producto.getCategoria());
             statement.setDouble(3, producto.getPrecio());
-            statement.setDate(4, Date.valueOf(producto.getfecha_vencimiento()));
+            statement.setDate(4, Date.valueOf(producto.getFechaVencimiento()));
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -74,11 +74,11 @@ public class ProductoControlador implements ProductoRepository {
     public void updateProducto(Producto producto) {
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE productos SET nombre_producto = ?, categoria = ?, precio = ?, fecha_vencimiento = ? WHERE id_producto = ?");
-            statement.setString(1, producto.getnombre_producto());
+            statement.setLong(1, producto.getIdProducto());
             statement.setString(2, producto.getCategoria());
             statement.setDouble(3, producto.getPrecio());
-            statement.setDate(4, Date.valueOf(producto.getfecha_vencimiento()));
-            statement.setInt(5, producto.getid_producto());
+            statement.setDate(4, Date.valueOf(producto.getFechaVencimiento()));
+            statement.setInt(5, producto.getIdProducto());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {

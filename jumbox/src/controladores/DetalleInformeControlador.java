@@ -27,7 +27,7 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
                 DetalleInforme detalle = new DetalleInforme(
                         resultSet.getInt("idDetalle"),
                         resultSet.getInt("idVenta"),
-                        resultSet.getInt("idInventario")
+                        resultSet.getInt("idInventario"), 0
                 );
                 detalles.add(detalle);
             }
@@ -48,7 +48,7 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
                 detalle = new DetalleInforme(
                         resultSet.getInt("idDetalle"),
                         resultSet.getInt("idVenta"),
-                        resultSet.getInt("idInventario")
+                        resultSet.getInt("idInventario"), id
                 );
             }
         } catch (SQLException e) {
