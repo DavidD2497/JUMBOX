@@ -5,13 +5,19 @@ import modelos.InventarioSucursal;
 
 public interface InventarioSucursalRepository {
 
-    List<InventarioSucursal> getAllInventarioSucursal(); // Obtiene todos los inventarios de sucursales de la base de datos
+    List<InventarioSucursal> getAllInventarioSucursal(); 
 
-    InventarioSucursal getInventarioSucursalById(int id); // Obtiene un inventario de sucursal por su ID
+    InventarioSucursal getInventarioSucursalById(int id); 
 
-    void addInventarioSucursal(InventarioSucursal inventarioSucursal); // Agrega un inventario de sucursal a la base de datos
+    void addInventarioSucursal(InventarioSucursal inventarioSucursal); 
 
-    void updateInventarioSucursal(InventarioSucursal inventarioSucursal); // Actualiza un inventario de sucursal en la base de datos
+    void updateInventarioSucursal(InventarioSucursal inventarioSucursal);
 
-    void deleteInventarioSucursal(int id); // Elimina un inventario de sucursal de la base de datos
+    void deleteInventarioSucursal(int id);
+    
+    int getCantidadDisponible(int idProducto);
+    
+    void actualizarCantidadProducto(int idProducto, int nuevaCantidad);
+    
+    boolean existeProducto(int idProducto);
 }

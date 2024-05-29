@@ -5,15 +5,15 @@ import org.junit.Test;
 import modelos.Empleado;
 import controladores.EmpleadoControlador;
 
-public class IniciarSesionTest {
+public class EditarEmpleadoTest {
 
     @Test
-    public void inicioSesionCorrecto() {
+    public void EditarEmpleadoCorrecto() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana.torres@gmail.com", "1234")) {
+            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "david@gmail.com", "nuevaContraseña", "AdminDeposito")) {
                 flag = true;
                 break;
             }
@@ -21,29 +21,14 @@ public class IniciarSesionTest {
 
         assertEquals(true, flag);
     }
-
+    
     @Test
-    public void inicioSesionMailVacio() {
+    public void EditarEmpleadoEmailVacio() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("", "contraseña45")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionContraseñaVacia() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana@example.com", "")) {
+            if (empleado.editarEmpleado("", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "AdminDeposito")) {
                 flag = true;
                 break;
             }
@@ -53,42 +38,12 @@ public class IniciarSesionTest {
     }
     
     @Test
-    public void inicioSesionAmbosCamposVacios() {
+    public void EditarEmpleadoCamposVacios() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("", "")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionEmailIncorrectoContraseñaCorrecta() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("correo.incorrecto@example.com", "1234")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionEmailCorrectoContraseñaIncorrecta() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana.torres@gmail.com", "contraseñaIncorrecta")) {
+            if (empleado.editarEmpleado("david@gmail.com", "", "", "", "")) {
                 flag = true;
                 break;
             }
@@ -97,7 +52,49 @@ public class IniciarSesionTest {
         assertEquals(false, flag);
     }
     
+    @Test
+    public void EditarEmpleadoTipoNoValido() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "TipoInvalido")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
     
+    @Test
+    public void EditarEmpleadoNuevoEmailInvalido() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
 
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "nuevoemailgmail.com", "nuevaContraseña", "AdminDeposito")) {
+                flag = true;
+                break;
+            }
+        }
 
+        assertEquals(false, flag);
+    }
+    
+    @Test
+    public void EditarEmpleadoEmailIncorrecto() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.editarEmpleado("noexiste@gmail.com", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "AdminDeposito")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
 }
+

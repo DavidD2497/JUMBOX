@@ -6,79 +6,71 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
-import modelos.Pedido;
-import modelos.DetallePedido;
-import controladores.InventarioSucursalControlador;
-import controladores.PedidoControlador;
+import controladores.DetalleInventarioControlador;
 
 public class AdminSucursal extends Empleado {
-	private int idAdminSuc;
+	int idProducto;
+	int cantidadEntrada;
+	private String tipo;
 	private Producto producto;
 	private Descuento descuento;
-	public int idPedido;
-	private Pedido pedido;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
-	private LinkedList<DetallePedido> listaPedidos = new LinkedList<>();
+
+	public AdminSucursal(String nombre, String email, String contraseña) {
+		super(nombre, email, contraseña);
+		this.tipo = "AdminSucursal";
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public static boolean registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
+		
+		 if (cantidadEntrada>=1000 ) {
+			 // JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que 1000.");
+			 
+	            return false;
+	        }
+		 
+	    if (cantidadEntrada <= 0) {
+	        // JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor que cero.");
+	        return false;
+	    }
+
+	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
+	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+	        // JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
+	        return false;
+	    }
+
+	    int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+	    
+	        int cantidadTotal = cantidadDisponible + cantidadEntrada;
+	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+	        // JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades al producto " +detalleInventarioControlador.getNombreProducto(idProducto)  + " registrada con éxito.");
+	        return true;
+	   
+	}
 	
 
-	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
-		super(nombre, email, contraseña);
-		this.idAdminSuc = idAdminSuc;
-	}
-
-	public int getIdAdminSuc() {
-		return idAdminSuc;
-	}
-
-	public void setIdAdminSuc(int idAdminSuc) {
-		this.idAdminSuc = idAdminSuc;
-	}
-
-	public int getId() {
-		return idAdminSuc;
-	}
-
-	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
-		
-		 InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
-		 int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
-		 int cantidadTotal = cantidadDisponible + cantidadEntrada;
-		 inventarioSucursalControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
-		 JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
-		       }
-		    
-		
-	public void SolicitarPedido() {
-		int pregunta=0;
-		PedidoControlador pedidoControlador = new PedidoControlador();
-		String[] menu = { "Solicitar pedido", "Mostrar solicitudes de pedido", "Salir" };
-		int opcion = JOptionPane.showOptionDialog(null, "Seleccione la opción segun corresponda",
-				"Selecciona una opción", 0, 0, null, menu, menu[0]);
-		do {
-			switch (opcion) {
-			case 0:
-				while (pregunta==0) {
-				int idproducto=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id del producto"));
-				int cantidadProducto=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de productos" ));
-					listaPedidos.add(new DetallePedido(0,idproducto,cantidadProducto));
-					 pregunta=JOptionPane.showConfirmDialog(null,"Desea Agregar mas Productos","Selecciona la opcion",JOptionPane.YES_NO_CANCEL_OPTION);
-				}idPedido++;
-				pedidoControlador.addPedido(new Pedido(idPedido, null, listaPedidos));
-				break;
-			case 1:
-				JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
-				break;
-			default:
-				break;
-			}
-			
-		} while (opcion==1);
-			pedidoControlador.addPedido(pedido);
+	public void solicitarPedido() {
 
 	}
 
+	public void creaDescuento() {
 
+	}
 
+	public void generarInforme() {
+
+	}
 
 	public String crearDescuentoVencimiento(Producto productoa) {
 		LocalDate fechaActual = LocalDate.now();

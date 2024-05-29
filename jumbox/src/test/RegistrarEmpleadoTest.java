@@ -5,15 +5,15 @@ import org.junit.Test;
 import modelos.Empleado;
 import controladores.EmpleadoControlador;
 
-public class IniciarSesionTest {
+public class RegistrarEmpleadoTest {
 
     @Test
-    public void inicioSesionCorrecto() {
+    public void RegistroEmpleadoCorrecto() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana.torres@gmail.com", "1234")) {
+            if (empleado.registrarEmpleado("David", "david@gmail.com", "1234","Cajero")) {
                 flag = true;
                 break;
             }
@@ -21,29 +21,14 @@ public class IniciarSesionTest {
 
         assertEquals(true, flag);
     }
-
+    
     @Test
-    public void inicioSesionMailVacio() {
+    public void RegistroEmpleadoNombreVacio() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("", "contraseña45")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionContraseñaVacia() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana@example.com", "")) {
+            if (empleado.registrarEmpleado("", "david@gmail.com", "1234","Cajero")) {
                 flag = true;
                 break;
             }
@@ -53,42 +38,12 @@ public class IniciarSesionTest {
     }
     
     @Test
-    public void inicioSesionAmbosCamposVacios() {
+    public void RegistroEmpleadoEmailVacio() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("", "")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionEmailIncorrectoContraseñaCorrecta() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("correo.incorrecto@example.com", "1234")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionEmailCorrectoContraseñaIncorrecta() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana.torres@gmail.com", "contraseñaIncorrecta")) {
+            if (empleado.registrarEmpleado("David", "", "1234","Cajero")) {
                 flag = true;
                 break;
             }
@@ -97,7 +52,80 @@ public class IniciarSesionTest {
         assertEquals(false, flag);
     }
     
+    @Test
+    public void RegistroEmpleadoContraseñaVacia() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.registrarEmpleado("David", "david@gmail.com", "","Cajero")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
     
+    @Test
+    public void RegistroEmpleadoTipoVacio() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.registrarEmpleado("David", "david@gmail.com", "1234","")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
+    
+    @Test
+    public void RegistroEmpleadoEmailSinArroba() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.registrarEmpleado("David", "davidgmail.com", "1234","Cajero")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
+    
+    @Test
+    public void RegistroEmpleadoEmailYaExistente() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.registrarEmpleado("David", "ana.torres@gmail.com", "1234","Cajero")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
+    
+    @Test
+    public void RegistroEmpleadoTipoNoValido() {
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        boolean flag = false;
+
+        for (Empleado empleado : empleadoControlador.getAllUsers()) {
+            if (empleado.registrarEmpleado("David", "david2@gmail.com", "1234", "Admin")) {
+                flag = true;
+                break;
+            }
+        }
+
+        assertEquals(false, flag);
+    }
 
 
 }
