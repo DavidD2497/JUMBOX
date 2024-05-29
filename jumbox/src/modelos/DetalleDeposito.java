@@ -1,38 +1,50 @@
 package modelos;
 
 public class DetalleDeposito {
-	private int idDetalle;
-	private int idProducto;
-	private int cantidad;
-	
-	public DetalleDeposito(int idDetalle, int idProducto, int cantidad) {
-		super();
-		this.idDetalle = idDetalle;
-		this.idProducto = idProducto;
-		this.cantidad = cantidad;
-	}
+    private int idDetalle;
+    private int idDepositoGeneral;
+    private int idProducto;
+    private int cantidad;
 
-	public int getIdDetalle() {
-		return idDetalle;
-	}
+    public DetalleDeposito(int idDetalle, int idDepositoGeneral, int idProducto, int cantidad) {
+        super();
+        this.idDetalle = idDetalle;
+        this.idDepositoGeneral = idDepositoGeneral;
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+    }
 
-	public void setIdDetalle(int idDetalle) {
-		this.idDetalle = idDetalle;
-	}
+    public int getIdDetalle() {
+        return idDetalle;
+    }
 
-	public int getIdProducto() {
-		return idProducto;
-	}
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
+    }
 
-	public void setIdProducto(int idProducto) {
-		this.idProducto = idProducto;
-	}
+    public int getIdDepositoGeneral() {
+        return idDepositoGeneral;
+    }
 
-	public int getCantidad() {
-		return cantidad;
-	}
+    public void setIdDepositoGeneral(int idDepositoGeneral) {
+        this.idDepositoGeneral = idDepositoGeneral;
+    }
 
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+
 }

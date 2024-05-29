@@ -40,7 +40,7 @@ public class AdminSucursal_Test {
 	}
 
 	@Test
-	public void testEditarDescuento_DescuentoEditadoCorrectamente() {
+	public void testEditarDescuento() {
 		Descuento descuento = new Descuento(1, 10);
 		adminSucursal.getDescuentos().add(descuento);
 
@@ -51,7 +51,7 @@ public class AdminSucursal_Test {
 	}
 
 	@Test
-	public void testMostrarDescuento_ListaDescuentosNoVacia() {
+	public void testMostrarDescuento_ListaNoVacia() {
 		Descuento descuento = new Descuento(1, 10);
 		adminSucursal.getDescuentos().add(descuento);
 
@@ -59,7 +59,7 @@ public class AdminSucursal_Test {
 	}
 
 	@Test
-	public void testEliminarDescuento_DescuentoEliminadoCorrectamente() {
+	public void testEliminarDescuento() {
 		Descuento descuento = new Descuento(1, 10);
 		adminSucursal.getDescuentos().add(descuento);
 
