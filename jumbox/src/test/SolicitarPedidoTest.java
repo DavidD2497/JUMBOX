@@ -32,7 +32,7 @@ public class SolicitarPedidoTest {
 	}
 
 	@Test
-	public void testSolicitarPedido_PedidoNoExiste() {
+	public void testSolicitarPedido_ProductoNoExiste() {
 		LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
 		PedidoControlador pedidoControlador = new PedidoControlador();
 
@@ -41,7 +41,7 @@ public class SolicitarPedidoTest {
 		listaDetalle.add(new DetallePedido(3, 14, 0));
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
 		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
-		assertTrue(resultado);
+		assertFalse(resultado);
 
 	}
 
