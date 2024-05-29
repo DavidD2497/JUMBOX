@@ -4,9 +4,8 @@ package modelos;
 public class InventarioSucursal {
 	private int idInventario;
 	
-	public InventarioSucursal(int idInventario) {
+	public InventarioSucursal() {
 		super();
-		this.idInventario = idInventario;
 	}
 
 	public int getIdInventario() {

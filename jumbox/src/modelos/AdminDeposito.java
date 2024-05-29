@@ -18,8 +18,6 @@ public class AdminDeposito extends Empleado {
 		this.tipo = tipo;
 	}
 
-
-
 	public void registroEntradaSalida() {
 
 	}
