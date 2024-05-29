@@ -20,14 +20,15 @@ public class DetalleVentaControlador implements DetalleVentaRepository {
     public List<DetalleVenta> getAllDetalleVentas() {
         List<DetalleVenta> detalleVentas = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_ventas");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_venta");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int idProducto = resultSet.getInt("idProducto");
-                int idVenta = resultSet.getInt("idVenta");
+                int idProducto = resultSet.getInt("id_producto");
+                int idVenta = resultSet.getInt("id_venta");
                 double monto = resultSet.getDouble("monto");
                 int cantidad = resultSet.getInt("cantidad");
+
 
                 DetalleVenta detalleVenta = new DetalleVenta(idProducto, idVenta, monto, cantidad);
                 detalleVentas.add(detalleVenta);
@@ -42,13 +43,13 @@ public class DetalleVentaControlador implements DetalleVentaRepository {
     public DetalleVenta getDetalleVentaById(int id) {
         DetalleVenta detalleVenta = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_ventas WHERE idDetalle = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_venta WHERE id_detalle_venta = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                int idProducto = resultSet.getInt("idProducto");
-                int idVenta = resultSet.getInt("idVenta");
+                int idProducto = resultSet.getInt("id_producto");
+                int idVenta = resultSet.getInt("id_venta");
                 double monto = resultSet.getDouble("monto");
                 int cantidad = resultSet.getInt("cantidad");
 
@@ -63,7 +64,7 @@ public class DetalleVentaControlador implements DetalleVentaRepository {
     @Override
     public void addDetalleVenta(DetalleVenta detalleVenta) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_ventas (idProducto, idVenta, monto, cantidad) VALUES (?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_venta (id_producto, id_venta, monto, cantidad) VALUES (?, ?, ?, ?)");
             statement.setInt(1, detalleVenta.getIdProducto());
             statement.setInt(2, detalleVenta.getIdVenta());
             statement.setDouble(3, detalleVenta.getMonto());
@@ -81,12 +82,11 @@ public class DetalleVentaControlador implements DetalleVentaRepository {
     @Override
     public void updateDetalleVenta(DetalleVenta detalleVenta) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_ventas SET idProducto = ?, idVenta = ?, monto = ?, cantidad = ? WHERE idDetalle = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_venta SET id_producto = ?, id_venta = ?, monto = ?, cantidad = ? WHERE id_detalle_venta = ?");
             statement.setInt(1, detalleVenta.getIdProducto());
             statement.setInt(2, detalleVenta.getIdVenta());
             statement.setDouble(3, detalleVenta.getMonto());
             statement.setInt(4, detalleVenta.getCantidad());
-            statement.setInt(5, detalleVenta.getIdDetalle());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -100,7 +100,7 @@ public class DetalleVentaControlador implements DetalleVentaRepository {
     @Override
     public void deleteDetalleVenta(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_ventas WHERE idDetalle = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_venta WHERE id_detalle_venta = ?");
             statement.setInt(1, id);
 
             int rowsDeleted = statement.executeUpdate();

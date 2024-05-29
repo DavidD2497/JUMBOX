@@ -32,7 +32,7 @@ public class RegistrarVentaTest {
         List<DetalleVenta> detallesVenta = new ArrayList<>();
         
         detallesVenta.add(new DetalleVenta(1,idVenta,productoControlador.getPrecioProductoById(1), 2));
-        detallesVenta.add(new DetalleVenta(5,idVenta,productoControlador.getPrecioProductoById(2), 2));
+        detallesVenta.add(new DetalleVenta(5,idVenta,productoControlador.getPrecioProductoById(5), 4));
 
 
         resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago);

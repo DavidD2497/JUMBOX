@@ -87,7 +87,9 @@ public class Cajero extends Empleado {
 	        DetalleVentaControlador detalleVentaControlador = new DetalleVentaControlador();
 	        for (DetalleVenta detalle : detallesVenta) {
 	            montoTotal += (detalle.getMonto() * detalle.getCantidad());
-	            detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, detalle.getIdProducto(),detalle.getCantidad());
+	            int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
+	            int cantidadTotal = cantidadDisponible - detalle.getCantidad();
+	            detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, detalle.getIdProducto(),cantidadTotal);
 	            detalleVentaControlador.addDetalleVenta(detalle);
 	        }
 

@@ -20,12 +20,12 @@ public class VentaControlador implements VentaRepository {
     public List<Venta> getAllVentas() {
         List<Venta> ventas = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ventas");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM venta");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                double montoTotal = resultSet.getDouble("montoTotal");
-                String tipoPago = resultSet.getString("tipoPago");
+                double montoTotal = resultSet.getDouble("monto_total");
+                String tipoPago = resultSet.getString("tipo_pago");
 
                 Venta venta = new Venta(montoTotal, tipoPago);
                 ventas.add(venta);
@@ -40,13 +40,13 @@ public class VentaControlador implements VentaRepository {
     public Venta getVentaById(int id) {
         Venta venta = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ventas WHERE idVenta = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM venta WHERE id_venta = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                double montoTotal = resultSet.getDouble("montoTotal");
-                String tipoPago = resultSet.getString("tipoPago");
+                double montoTotal = resultSet.getDouble("monto_total");
+                String tipoPago = resultSet.getString("tipo_pago");
 
                 venta = new Venta(montoTotal, tipoPago);
             }
@@ -59,7 +59,7 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void addVenta(Venta venta) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO ventas (montoTotal, tipoPago) VALUES (?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO venta (monto_total, tipo_pago) VALUES (?, ?)");
             statement.setDouble(1, venta.getMontoTotal());
             statement.setString(2, venta.getTipoPago());
 
@@ -75,7 +75,7 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void updateVenta(Venta venta) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE ventas SET montoTotal = ?, tipoPago = ? WHERE idVenta = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE venta SET monto_total = ?, tipo_pago = ? WHERE id_venta = ?");
             statement.setDouble(1, venta.getMontoTotal());
             statement.setString(2, venta.getTipoPago());
             statement.setInt(3, venta.getIdVenta());
@@ -92,7 +92,7 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void deleteVenta(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM ventas WHERE idVenta = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM venta WHERE id_venta = ?");
             statement.setInt(1, id);
 
             int rowsDeleted = statement.executeUpdate();
@@ -109,7 +109,7 @@ public class VentaControlador implements VentaRepository {
         int ultimoIdVenta = -1;
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT MAX(idVenta) FROM ventas");
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_venta) FROM venta");
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
