@@ -1,33 +1,48 @@
 package test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.time.LocalDate;
-import java.util.LinkedList;
-
+import org.junit.Test;
+import controladores.DetallePedidoControlador;
+import controladores.PedidoControlador;
+import modelos.AdminDeposito;
 import modelos.DetallePedido;
 
 public class ConfirmarSolicitudDePedidoTest {
-	private LinkedList<DetallePedido> listaDetalle;
-	private LocalDate fechaEntrega;
+	PedidoControlador pedidoControlador = new PedidoControlador();
+	DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
 
 	@Test
-	public void RegistrarSalidaProductoInventarioSucCorrecto() {
-
+	public void PedidoAceptadoTest() {
+		AdminDeposito adminDeposito = new AdminDeposito("Vicky", "vicky@gmail.com", "1234", 1);
 		boolean flag = false;
+		int idPedido = 1;
+		DetallePedido detallePedido = new DetallePedido(1, 5, 10);
+		detallePedido.setIdPedido(idPedido);
 
-		if (Cajero.registrarSalidaProductoInventarioSuc(1, 1, 1)) {
+		detallePedidoControlador.addDetallePedido(detallePedido);
+
+		if (adminDeposito.SolicitudDePedido(idPedido)) {
 			flag = true;
 		}
-
-		assertEquals(true, flag);
+		assertTrue(flag);
 	}
 
-	public void setUp() {
-		listaDetalle = new LinkedList<>();
-		fechaEntrega = LocalDate.now().plusDays(3); 
+	@Test
+	public void pedidoEliminadoTest() {
+		AdminDeposito adminDeposito2 = new AdminDeposito("Pablo", "pablo@gmail.com", "5678", 2);
+		boolean flag = false;
+		int idPedido = 2;
+
+		DetallePedido detallePedido = new DetallePedido(2, 2, 0);
+		detallePedido.setIdPedido(idPedido);
+
+		detallePedidoControlador.addDetallePedido(detallePedido);
+
+		if (!adminDeposito2.SolicitudDePedido(idPedido)) {
+			flag = false;
+		}
+
+		assertFalse(flag);
 	}
-	
-	
 }

@@ -4,7 +4,8 @@ public class DetallePedido {
 	private int idDetalle;
 	private int idProducto;
 	private int cantidad;
-	
+	private int idPedido;
+
 	public DetallePedido(int idDetalle, int idProducto, int cantidad) {
 		super();
 		this.idDetalle = idDetalle;
@@ -34,5 +35,9 @@ public class DetallePedido {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
 	}
 }
