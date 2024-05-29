@@ -16,4 +16,7 @@ public interface PedidoRepository {
     void deletePedido(int id); // Elimina un pedido de la base de datos
     
     int obtenerUltimoIdPedido();
+    
+    void actualizarEstadoPedido(int codigoPedido, String estado);
+    
 }
