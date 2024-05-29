@@ -90,4 +90,22 @@ public class PedidoControlador implements PedidoRepository {
             e.printStackTrace();
         }
     }
+
+	@Override
+    public int obtenerUltimoIdPedido() {
+        int ultimoIdPedido = -1;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_pedido) FROM pedido");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                ultimoIdPedido = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ultimoIdPedido;
+    }
 }

@@ -63,12 +63,12 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
     }
 
     @Override
-    public void addDetallePedido( int idProducto, int cantidad, int idPedido) {
+    public void addDetallePedido(DetallePedido detallePedido) {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_pedido (id_producto, cantidad, id_pedido) VALUES (?, ?, ?)");
-            statement.setInt(1, idProducto);
-            statement.setInt(2, cantidad);
-            statement.setInt(3, idPedido);
+            statement.setInt(1, detallePedido.getIdProducto());
+            statement.setInt(2, detallePedido.getCantidad());
+            statement.setInt(3, detallePedido.getIdPedido());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -112,4 +112,12 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public void addDetallePedido(int idProducto, int cantidad, int idPedido) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

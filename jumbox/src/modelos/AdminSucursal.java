@@ -83,7 +83,7 @@ public class AdminSucursal extends Empleado {
 
 		}
 
-		if (fechaEntrega.isBefore(LocalDate.now())) {
+		if (fechaEntrega.isBefore(LocalDate.now().plusDays(2))) {
 			JOptionPane.showMessageDialog(null, "La fecha ingresada debe ser posterior a la fecha actual");
 			return false;
 		}
@@ -91,11 +91,11 @@ public class AdminSucursal extends Empleado {
 		Pedido nuevoPedido = new Pedido(fechaEntrega);
 		pedidoControlador.addPedido(nuevoPedido);
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
-
+		int idPedido= pedidoControlador.obtenerUltimoIdPedido();
 		for (DetallePedido detalle : listaDetalle) {
-			detalle.setIdPedido(nuevoPedido.getCodigoPedido());
-			detallePedidoControlador.addDetallePedido(detalle.getCantidad(), detalle.getIdProducto(),
-					detalle.getIdPedido());
+			detalle.setIdPedido(idPedido);
+			detallePedidoControlador.addDetallePedido(detalle);
+			
 		}
 		JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
 		return true;
