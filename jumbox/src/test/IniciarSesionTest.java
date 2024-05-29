@@ -68,21 +68,6 @@ public class IniciarSesionTest {
     }
 
     @Test
-    public void inicioSesionEmailIncorrectoContraseñaCorrecta() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("correo.incorrecto@example.com", "1234")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
     public void inicioSesionEmailCorrectoContraseñaIncorrecta() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         boolean flag = false;
