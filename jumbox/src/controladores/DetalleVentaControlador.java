@@ -29,7 +29,6 @@ public class DetalleVentaControlador implements DetalleVentaRepository {
                 double monto = resultSet.getDouble("monto");
                 int cantidad = resultSet.getInt("cantidad");
 
-
                 DetalleVenta detalleVenta = new DetalleVenta(idProducto, idVenta, monto, cantidad);
                 detalleVentas.add(detalleVenta);
             }
