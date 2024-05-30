@@ -14,4 +14,8 @@ public interface DetallePedidoRepository {
     void updateDetallePedido(DetallePedido detallePedido); // Actualiza un detalle de pedido en la base de datos
     
     void deleteDetallePedido(int id); // Elimina un detalle de pedido de la base de datos
+    
+    List<DetallePedido> getDetallePedidoByIdPedido(int idPedido);
+    
+    void deleteDetallesByIdPedido(int idPedido);
 }

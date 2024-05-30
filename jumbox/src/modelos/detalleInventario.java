@@ -7,12 +7,11 @@ public class DetalleInventario {
 	private int idDetalle;
 	private int cantidad;
 	
-	public DetalleInventario(int idProducto, int idInventarioSucursal, int idDescuento, int idDetalle, int cantidad) {
+	public DetalleInventario(int idProducto, int idInventarioSucursal, int idDescuento, int cantidad) {
 		super();
 		this.idProducto = idProducto;
 		this.idInventarioSucursal = idInventarioSucursal;
 		this.idDescuento = idDescuento;
-		this.idDetalle = idDetalle;
 		this.cantidad = cantidad;
 	}
 

@@ -2,14 +2,15 @@ package modelos;
 
 public class DetallePedido {
 	private int idDetalle;
+	private int idPedido;
 	private int idProducto;
 	private int cantidad;
 	
-	public DetallePedido(int idDetalle, int idProducto, int cantidad) {
+	public DetallePedido(int idProducto, int cantidad, int idPedido) {
 		super();
-		this.idDetalle = idDetalle;
 		this.idProducto = idProducto;
 		this.cantidad = cantidad;
+		this.idPedido = idPedido;
 	}
 
 	public int getIdDetalle() {
@@ -35,4 +36,13 @@ public class DetallePedido {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	public int getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
+	}
+	
 }

@@ -1,41 +1,38 @@
 package modelos;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
+
+import controladores.PedidoControlador;
 
 public class Pedido {
-	private int codigoPedido;
-	private LocalDate fechaEntrega;
-	private LinkedList<DetallePedido> listaPedidos = new LinkedList<>();
-	
-	public Pedido(int codigoPedido, LocalDate fechaEntrega, LinkedList<DetallePedido> listaPedidos) {
-		super();
-		this.codigoPedido = codigoPedido;
-		this.fechaEntrega = fechaEntrega;
-		this.listaPedidos = listaPedidos;
-	}
+    private int codigoPedido;
+    private LocalDate fechaEntrega;
 
-	public int getCodigoPedido() {
-		return codigoPedido;
-	}
+    public Pedido(LocalDate fechaEntrega) {
+        super();
+        this.fechaEntrega = fechaEntrega;
+    }
 
-	public void setCodigoPedido(int codigoPedido) {
-		this.codigoPedido = codigoPedido;
-	}
+    public int getCodigoPedido() {
+        return codigoPedido;
+    }
 
-	public LocalDate getFechaEntrega() {
-		return fechaEntrega;
-	}
+    public void setCodigoPedido(int codigoPedido) {
+        this.codigoPedido = codigoPedido;
+    }
 
-	public void setFechaEntrega(LocalDate fechaEntrega) {
-		this.fechaEntrega = fechaEntrega;
-	}
+    public LocalDate getFechaEntrega() {
+        return fechaEntrega;
+    }
 
-	public LinkedList<DetallePedido> getListaPedidos() {
-		return listaPedidos;
-	}
+    public void setFechaEntrega(LocalDate fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
 
-	public void setListaPedidos(LinkedList<DetallePedido> listaPedidos) {
-		this.listaPedidos = listaPedidos;
-	}
+    public void definirFechaEntrega(LocalDate nuevaFechaEntrega, PedidoControlador pedidoControlador) {
+        if (nuevaFechaEntrega != null && pedidoControlador != null) {
+            this.setFechaEntrega(nuevaFechaEntrega);
+            pedidoControlador.updatePedido(this);
+        }
+    }
 }

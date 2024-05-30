@@ -1,15 +1,12 @@
 package modelos;
 
-
-
 public class DepositoGeneral {
+	
 	private int idDeposito;
 
 	
-	public DepositoGeneral(int idDeposito) {
+	public DepositoGeneral() {
 		super();
-		this.idDeposito = idDeposito;
-
 	}
 
 	public int getIdDeposito() {
@@ -18,9 +15,6 @@ public class DepositoGeneral {
 
 	public void setIdDeposito(int idDeposito) {
 		this.idDeposito = idDeposito;
-	}
-
-
-	
+	}	
 	
 }

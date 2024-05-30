@@ -4,9 +4,8 @@ public class Descuento {
 	private int idDescuento;
 	private double porcentajeDesc;
 
-	public Descuento(int idDescuento, double porcentajeDesc) {
+	public Descuento(double porcentajeDesc) {
 		super();
-		this.idDescuento = idDescuento;
 		this.porcentajeDesc = porcentajeDesc;
 	}
 
