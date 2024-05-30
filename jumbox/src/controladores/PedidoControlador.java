@@ -138,4 +138,23 @@ public class PedidoControlador implements PedidoRepository {
 			e.printStackTrace();
 		}
 	}
+    @Override
+    public void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega) {
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE id_pedido = ?");
+            statement.setDate(1, java.sql.Date.valueOf(nuevaFechaEntrega));
+            statement.setInt(2, codigoPedido);
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Fecha de entrega del pedido actualizada exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
 }

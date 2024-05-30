@@ -79,7 +79,32 @@ public class AdminDeposito extends Empleado {
 			//JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado y eliminado");
 			return false;
 		}
+		
+		}
+	public static boolean definirFechaEntrega(int idPedido, LocalDate nuevaFechaEntrega) {
+        if (nuevaFechaEntrega == null) {
+            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser nula.");
+            return false;
+        }
 
-	}
+        LocalDate hoy = LocalDate.now();
+        if (nuevaFechaEntrega.isBefore(hoy)) {
+            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser anterior a la fecha actual.");
+            return false;
+        }
+
+        PedidoControlador pedidoControlador = new PedidoControlador();
+        Pedido pedido = pedidoControlador.getPedidoById(idPedido);
+
+        if (pedido == null) {
+            //JOptionPane.showMessageDialog(null, "El pedido con ID: " + idPedido + " no existe.");
+            return false;
+        }
+
+        pedidoControlador.actualizarFechaEntrega(idPedido, nuevaFechaEntrega);
+        //JOptionPane.showMessageDialog(null, "Fecha de entrega actualizada exitosamente.");
+        return true;
+    }
+	
 	
 }

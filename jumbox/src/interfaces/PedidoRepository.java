@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 import modelos.Pedido;
 
@@ -19,4 +20,5 @@ public interface PedidoRepository {
     
     void actualizarEstadoPedido(int codigoPedido, String estado);
     
+    void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega);
 }
