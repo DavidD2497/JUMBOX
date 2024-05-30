@@ -67,8 +67,7 @@ public class AdminDeposito extends Empleado {
 		}
 		//JOptionPane.showMessageDialog(null, mensaje);
 
-		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
+		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
 
 		if (respuesta == JOptionPane.YES_OPTION) {
 			
