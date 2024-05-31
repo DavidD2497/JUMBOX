@@ -61,13 +61,13 @@ public class AdminSucursal extends Empleado {
 	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle, LocalDate fechaEntrega) {
         ProductoControlador productoControlador = new ProductoControlador();
         if (listaDetalle.isEmpty() || fechaEntrega == null) {
-            //JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
+            JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
             return false;
         }
 
         for (DetallePedido detalle : listaDetalle) {
             if (productoControlador.getProductoById(detalle.getIdProducto()) == null) {
-                //JOptionPane.showMessageDialog(null, "El producto con ID " + detalle.getIdProducto() + " no existe.");
+                JOptionPane.showMessageDialog(null, "El producto con ID " + detalle.getIdProducto() + " no existe.");
 
                 return false;
             }
@@ -75,7 +75,7 @@ public class AdminSucursal extends Empleado {
         }
 
         if (fechaEntrega.isBefore(LocalDate.now().plusDays(2))) {
-            //JOptionPane.showMessageDialog(null, "La fecha ingresada debe ser posterior a la fecha actual");
+            JOptionPane.showMessageDialog(null, "La fecha ingresada debe ser posterior a la fecha actual");
             return false;
         }
         PedidoControlador pedidoControlador = new PedidoControlador();
@@ -88,7 +88,7 @@ public class AdminSucursal extends Empleado {
             detallePedidoControlador.addDetallePedido(detalle);
 
         }
-        //JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
+        JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
         return true;
 
     }

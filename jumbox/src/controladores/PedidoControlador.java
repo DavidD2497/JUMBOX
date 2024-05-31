@@ -63,6 +63,7 @@ public class PedidoControlador implements PedidoRepository {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO pedido (fecha_entrega) VALUES (?)");
             statement.setDate(1, java.sql.Date.valueOf(pedido.getFechaEntrega()));
 
+
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Pedido agregado exitosamente.");
@@ -115,7 +116,7 @@ public class PedidoControlador implements PedidoRepository {
     public void actualizarEstadoPedido(int codigoPedido, String estado) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigoPedido = ?");
+					.prepareStatement("UPDATE pedidos SET estado = ? WHERE id_pedido = ?");
 			statement.setString(1, estado);
 			statement.setInt(2, codigoPedido);
 
