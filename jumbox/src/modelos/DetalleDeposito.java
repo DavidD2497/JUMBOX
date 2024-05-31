@@ -2,12 +2,13 @@ package modelos;
 
 public class DetalleDeposito {
 	private int idDetalle;
+	private int idDepositoGeneral;
 	private int idProducto;
 	private int cantidad;
 	
-	public DetalleDeposito(int idDetalle, int idProducto, int cantidad) {
+	public DetalleDeposito(int idProducto, int idDepositoGeneral, int cantidad) {
 		super();
-		this.idDetalle = idDetalle;
+		this.idDepositoGeneral = idDepositoGeneral;
 		this.idProducto = idProducto;
 		this.cantidad = cantidad;
 	}
@@ -18,6 +19,14 @@ public class DetalleDeposito {
 
 	public void setIdDetalle(int idDetalle) {
 		this.idDetalle = idDetalle;
+	}
+
+	public int getIdDepositoGeneral() {
+		return idDepositoGeneral;
+	}
+
+	public void setIdDepositoGeneral(int idDepositoGeneral) {
+		this.idDepositoGeneral = idDepositoGeneral;
 	}
 
 	public int getIdProducto() {
@@ -35,4 +44,5 @@ public class DetalleDeposito {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+	
 }

@@ -19,62 +19,63 @@ public class AdminDepositoControlador implements AdminDepositoRepository {
 
     @Override
     public List<AdminDeposito> getAllUsers() {
-        List<AdminDeposito> users = new ArrayList<>();
+        List<AdminDeposito> adminsDeposito = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM adminDeposito");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM administrador_deposito");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                AdminDeposito user = new AdminDeposito(
-                    resultSet.getString("nombre"),
-                    resultSet.getString("email"),
-                    resultSet.getString("contraseña"),
-                    resultSet.getInt("idAdminDepo")
-                );
-                users.add(user);
+                int id = resultSet.getInt("id_admindep");
+                String nombre = resultSet.getString("nombre");
+                String email = resultSet.getString("email");
+                String contraseña = resultSet.getString("contraseña");
+                String tipo = resultSet.getString("tipo");
+
+                AdminDeposito adminDeposito = new AdminDeposito(nombre, email, contraseña);
+                adminDeposito.setTipo(tipo);
+                adminsDeposito.add(adminDeposito);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return users;
+        return adminsDeposito;
     }
 
     @Override
     public AdminDeposito getUserById(int id) {
-        AdminDeposito user = null;
+        AdminDeposito adminDeposito = null;
         try {
-            PreparedStatement statement = connection
-                    .prepareStatement("SELECT * FROM adminDeposito WHERE idAdminDepo = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM administrador_deposito WHERE id_admindep = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                user = new AdminDeposito(
-                    resultSet.getString("nombre"),
-                    resultSet.getString("email"),
-                    resultSet.getString("contraseña"),
-                    resultSet.getInt("idAdminDepo")
-                );
+                String nombre = resultSet.getString("nombre");
+                String email = resultSet.getString("email");
+                String contraseña = resultSet.getString("contraseña");
+                String tipo = resultSet.getString("tipo");
+
+                adminDeposito = new AdminDeposito(nombre, email, contraseña);
+                adminDeposito.setTipo(tipo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return adminDeposito;
     }
 
     @Override
     public void addUser(AdminDeposito user) {
         try {
-            PreparedStatement statement = connection
-                    .prepareStatement("INSERT INTO adminDeposito(nombre, email, contraseña, idAdminDepo) VALUES (?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO administrador_deposito (nombre, email, contraseña, tipo) VALUES (?, ?, ?, ?)");
             statement.setString(1, user.getNombre());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getContraseña());
-            statement.setInt(4, user.getIdAdminDepo());
+            statement.setString(4, user.getTipo());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Usuario insertado exitosamente");
+                System.out.println("Admin de depósito agregado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,16 +85,15 @@ public class AdminDepositoControlador implements AdminDepositoRepository {
     @Override
     public void updateUser(AdminDeposito user) {
         try {
-            PreparedStatement statement = connection
-                    .prepareStatement("UPDATE adminDeposito SET nombre = ?, email = ?, contraseña = ? WHERE idAdminDepo = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE administrador_deposito SET nombre = ?, email = ?, contraseña = ?, tipo = ? WHERE id_admindep = ?");
             statement.setString(1, user.getNombre());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getContraseña());
-            statement.setInt(4, user.getIdAdminDepo());
+            statement.setString(4, user.getTipo());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Usuario actualizado exitosamente");
+                System.out.println("Admin de depósito actualizado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,16 +103,16 @@ public class AdminDepositoControlador implements AdminDepositoRepository {
     @Override
     public void deleteUser(int id) {
         try {
-            PreparedStatement statement = connection
-                    .prepareStatement("DELETE FROM adminDeposito WHERE idAdminDepo = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM administrador_deposito WHERE id_admindep = ?");
             statement.setInt(1, id);
 
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Usuario eliminado exitosamente");
+                System.out.println("Admin de depósito eliminado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
+

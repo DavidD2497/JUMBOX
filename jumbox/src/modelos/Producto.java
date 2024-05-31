@@ -8,21 +8,14 @@ public class Producto {
 	private String categoria;
 	private double precio;
 	private LocalDate fechaVencimiento;
-
-	public Producto(int idProducto, String nombreProducto, String categoria, double precio,
+	
+	public Producto(String nombreProducto, String categoria, double precio,
 			LocalDate fechaVencimiento) {
 		super();
-		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
 		this.categoria = categoria;
 		this.precio = precio;
 		this.fechaVencimiento = fechaVencimiento;
-	}
-
-	public Producto(String nombreProducto, LocalDate fechaVencimiento, double precio) {
-		this.nombreProducto = nombreProducto;
-		this.fechaVencimiento = fechaVencimiento;
-		this.precio = precio;
 	}
 
 	public int getIdProducto() {

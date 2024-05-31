@@ -1,75 +1,77 @@
 package controladores;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import interfaces.DetalleInventarioRepository;
 import modelos.DetalleInventario;
-import modelos.Producto;
 
 public class DetalleInventarioControlador implements DetalleInventarioRepository {
-    private final Connection connection;
+
+    private Connection connection;
 
     public DetalleInventarioControlador() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
     public List<DetalleInventario> getAllDetalleInventarios() {
-        List<DetalleInventario> detallesInventario = new ArrayList<>();
+        List<DetalleInventario> detalles = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalles_inventario");
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Producto producto = obtenerProductoPorId(resultSet.getInt("idProducto"));
-                DetalleInventario detalleInventario = new DetalleInventario(producto, resultSet.getInt("idDescuento"),
-                        resultSet.getInt("idDetalle"), resultSet.getInt("cantidad"));
-                detallesInventario.add(detalleInventario);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_inventario");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                DetalleInventario detalle = new DetalleInventario(
+                    result.getInt("id_producto"),
+                    result.getInt("id_inventario_sucursal"),
+                    result.getInt("id_descuento"),
+                    result.getInt("cantidad")
+                );
+                detalle.setIdDetalle(result.getInt("id_detalle"));
+                detalles.add(detalle);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return detallesInventario;
+        return detalles;
     }
 
     @Override
     public DetalleInventario getDetalleInventarioById(int id) {
-        DetalleInventario detalleInventario = null;
+        DetalleInventario detalle = null;
         try {
-            PreparedStatement statement = connection
-                    .prepareStatement("SELECT * FROM detalles_inventario WHERE idDetalle = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_inventario WHERE id_detalle = ?");
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                Producto producto = obtenerProductoPorId(resultSet.getInt("idProducto"));
-                detalleInventario = new DetalleInventario(producto, resultSet.getInt("idDescuento"),
-                        resultSet.getInt("idDetalle"), resultSet.getInt("cantidad"));
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                detalle = new DetalleInventario(
+                    result.getInt("id_producto"),
+                    result.getInt("id_inventario_sucursal"),
+                    result.getInt("id_descuento"),
+                    result.getInt("cantidad")
+                );
+                detalle.setIdDetalle(result.getInt("id_detalle"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return detalleInventario;
+        return detalle;
     }
 
     @Override
     public void addDetalleInventario(DetalleInventario detalleInventario) {
         try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO `detalles_inventario`(`idProducto`, `idDescuento`, `cantidad`) VALUES (?, ?, ?)");
-            statement.setInt(1, detalleInventario.getProducto().getIdProducto());
-            statement.setInt(2, detalleInventario.getIdDescuento());
-            statement.setInt(3, detalleInventario.getCantidad());
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Detalle de Inventario insertado exitosamente");
-            }
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_inventario (id_producto, id_inventario_sucursal, id_descuento, cantidad) VALUES (?, ?, ?, ?)");
+            statement.setInt(1, detalleInventario.getIdProducto());
+            statement.setInt(2, detalleInventario.getIdInventarioSucursal());
+            statement.setInt(3, detalleInventario.getIdDescuento());
+            statement.setInt(4, detalleInventario.getCantidad());
+            statement.executeUpdate();
+            System.out.println("Detalle de inventario agregado correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,16 +80,17 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void updateDetalleInventario(DetalleInventario detalleInventario) {
         try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE `detalles_inventario` SET `idProducto` = ?, `idDescuento` = ?, `cantidad` = ? WHERE `idDetalle` = ?");
-            statement.setInt(1, detalleInventario.getProducto().getIdProducto());
-            statement.setInt(2, detalleInventario.getIdDescuento());
-            statement.setInt(3, detalleInventario.getCantidad());
-            statement.setInt(4, detalleInventario.getIdDetalle());
-
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_inventario SET id_producto = ?, id_inventario_sucursal = ?, id_descuento = ?, cantidad = ? WHERE id_detalle = ?");
+            statement.setInt(1, detalleInventario.getIdProducto());
+            statement.setInt(2, detalleInventario.getIdInventarioSucursal());
+            statement.setInt(3, detalleInventario.getIdDescuento());
+            statement.setInt(4, detalleInventario.getCantidad());
+            statement.setInt(5, detalleInventario.getIdDetalle());
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Detalle de Inventario actualizado exitosamente");
+                System.out.println("Detalle de inventario actualizado correctamente.");
+            } else {
+                System.out.println("No se encontró ningún detalle de inventario con el ID proporcionado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,43 +100,71 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void deleteDetalleInventario(int id) {
         try {
-            PreparedStatement statement = connection
-                    .prepareStatement("DELETE FROM `detalles_inventario` WHERE `idDetalle` = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_inventario WHERE id_detalle = ?");
             statement.setInt(1, id);
-
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Detalle de Inventario eliminado exitosamente");
+                System.out.println("Detalle de inventario eliminado exitosamente.");
+            } else {
+                System.out.println("No se encontró ningún detalle de inventario con el ID proporcionado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    private Producto obtenerProductoPorId(int idProducto) throws SQLException {
-        Producto producto = null;
+    
+    @Override
+    public int getCantidadDisponible(int idInventarioSucursal, int idProducto) {
+        int cantidadDisponible = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM productos WHERE idProducto = ?");
-            statement.setInt(1, idProducto);
+            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            statement.setInt(1, idInventarioSucursal);
+            statement.setInt(2, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                producto = mapResultSetToProducto(resultSet);
+                cantidadDisponible = resultSet.getInt("cantidad");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw e;
         }
-        return producto;
+        return cantidadDisponible;
     }
 
-    private Producto mapResultSetToProducto(ResultSet resultSet) throws SQLException {
-        int idProducto = resultSet.getInt("idProducto");
-        String nombreProducto = resultSet.getString("nombreProducto");
-        String categoria = resultSet.getString("categoria");
-        double precio = resultSet.getDouble("precio");
-        Date fechaVencimiento = resultSet.getDate("fechaVencimiento");
 
-        return new Producto(idProducto, nombreProducto, categoria, precio, fechaVencimiento.toLocalDate());
+    @Override
+    public void actualizarCantidadProducto(int idInventarioSucursal, int idProducto, int nuevaCantidad) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE `detalle_inventario` SET `cantidad` = ? WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            statement.setInt(1, nuevaCantidad);
+            statement.setInt(2, idInventarioSucursal);
+            statement.setInt(3, idProducto);
+            statement.executeUpdate();
+            System.out.println("Cantidad del producto actualizada correctamente.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+
+    @Override
+    public boolean existeProducto(int idInventarioSucursal, int idProducto) {
+        boolean existe = false;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            
+            statement.setInt(1, idInventarioSucursal); 
+            statement.setInt(2, idProducto); 
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                existe = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;
+    }
+
+
 }

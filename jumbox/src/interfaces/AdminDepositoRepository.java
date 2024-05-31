@@ -5,7 +5,7 @@ import java.util.List;
 import modelos.AdminDeposito;
 
 public interface AdminDepositoRepository {
-
+	
     List<AdminDeposito> getAllUsers();
     
     AdminDeposito getUserById(int id);
@@ -15,5 +15,4 @@ public interface AdminDepositoRepository {
     void updateUser(AdminDeposito user);
     
     void deleteUser(int id);
-	
 }

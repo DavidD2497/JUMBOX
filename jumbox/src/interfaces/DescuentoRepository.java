@@ -3,7 +3,6 @@ package interfaces;
 import java.util.List;
 
 import modelos.Descuento;
-import modelos.DetalleDeposito;
 
 public interface DescuentoRepository {
 

@@ -5,7 +5,7 @@ import java.util.List;
 import modelos.AdminSucursal;
 
 public interface AdminSucursalRepository {
-
+	
     List<AdminSucursal> getAllUsers();
     
     AdminSucursal getUserById(int id);
@@ -15,4 +15,5 @@ public interface AdminSucursalRepository {
     void updateUser(AdminSucursal user);
     
     void deleteUser(int id);
+
 }

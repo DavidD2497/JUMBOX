@@ -15,4 +15,5 @@ public interface CajeroRepository {
     void updateUser(Cajero user); 
     
     void deleteUser(int id);
+    
 }
