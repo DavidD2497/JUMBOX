@@ -118,13 +118,13 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
 		List<DetallePedido> detallesPedido = new ArrayList<>();
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("SELECT * FROM detalle_pedido WHERE idPedido = ?");
+					.prepareStatement("SELECT * FROM detalle_pedido WHERE id_pedido = ?");
 			statement.setInt(1, idPedido);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				DetallePedido detallePedido = new DetallePedido(resultSet.getInt("idDetalle"),
-						resultSet.getInt("idProducto"), resultSet.getInt("cantidad"));
+				DetallePedido detallePedido = new DetallePedido(resultSet.getInt("id_detalle_pedido"),
+						resultSet.getInt("id_producto"), resultSet.getInt("cantidad"));
 				detallesPedido.add(detallePedido);
 			}
 		} catch (SQLException e) {
@@ -136,7 +136,7 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
     @Override
     public void deleteDetallesByIdPedido(int idPedido) {
 	    try {
-	        PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_pedido WHERE idPedido = ?");
+	        PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_pedido WHERE id_pedido = ?");
 	        statement.setInt(1, idPedido);
 
 	        int rowsDeleted = statement.executeUpdate();
