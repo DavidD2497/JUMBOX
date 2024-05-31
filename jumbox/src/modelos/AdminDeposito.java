@@ -76,7 +76,7 @@ public class AdminDeposito extends Empleado {
 		} else {
 			detallePedidoControlador.deleteDetallesByIdPedido(idPedido);
 			pedidoControlador.deletePedido(idPedido);
-			//JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado y eliminado");
+		//	JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado y eliminado");
 			return false;
 		}
 
