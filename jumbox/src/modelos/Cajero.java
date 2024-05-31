@@ -1,14 +1,14 @@
 package modelos;
 
-import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JOptionPane;
-import controladores.VentaControlador;
-import controladores.InventarioSucursalControlador;
+import controladores.DetalleVentaControlador;
 import controladores.DetalleInventarioControlador;
+import controladores.VentaControlador;
+
 
 public class Cajero extends Empleado {
     private String tipo;
-
 
     public Cajero(String nombre, String email, String contraseña) {
         super(nombre, email, contraseña);
@@ -16,83 +16,90 @@ public class Cajero extends Empleado {
     }
 
     public String getTipo() {
-		return tipo;
-	}
+        return tipo;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
+    public static boolean registrarSalidaProductoInventarioSuc(int idInventarioSucursal, int idProducto, int cantidadSalida) {
+        if (cantidadSalida <= 0) {
+            return false;
+        }
 
+        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 
-	public boolean registrarSalidaProducto(int idInventarioSucursal, int idProducto, int cantidadSalida) {
-	    if (cantidadSalida <= 0) {
-	        JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
-	        return false;
-	    }
+        if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+            return false;
+        }
 
-	    DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+        int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
 
-	    if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-	        JOptionPane.showMessageDialog(null, "El ID del producto no existe en el inventario de la sucursal.");
-	        return false;
-	    }
+        if (cantidadDisponible >= cantidadSalida) {
+            int cantidadTotal = cantidadDisponible - cantidadSalida;
+            detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	    int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+    public static boolean registrarVenta(int idInventarioSucursal, List<DetalleVenta> detallesVenta, String tipoPago) {
+        if (idInventarioSucursal == 0 || detallesVenta.isEmpty() || tipoPago.isEmpty()) {
+            //JOptionPane.showMessageDialog(null, "Todos los campos deben ser completados.");
+            return false;
+        }
 
-	    if (cantidadDisponible >= cantidadSalida) {
-	        int cantidadTotal = cantidadDisponible - cantidadSalida;
-	        detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-	        JOptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
-	        return true;
-	    } else {
-	        JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
-	        return false;
-	    }
-	}
+        DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+        boolean todosDisponibles = true;
 
-	
-	
-    
-    public void registrarVenta(LinkedList<DetalleVenta> detalles, String tipoPago) {
-
-        InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
-        VentaControlador ventaControlador = new VentaControlador();
-
-        double montoTotal = 0;
-        boolean suficienteInventario = true;
-
-
-        for (DetalleVenta detalleVenta : detalles) {
-            int idProducto = detalleVenta.getIdProducto();
-            int cantidadVenta = detalleVenta.getCantidad();
-            int cantidadDisponible = inventarioSucursalControlador.getCantidadDisponible(idProducto);
-            if (cantidadDisponible < cantidadVenta) {
-                JOptionPane.showMessageDialog(null, "No hay suficiente inventario para el producto con ID: " + idProducto);
-                suficienteInventario = false;
+        for (DetalleVenta detalle : detallesVenta) {
+            if (detalle.getCantidad() <= 0) {
+                todosDisponibles = false;
+                //JOptionPane.showMessageDialog(null, "La cantidad de cada producto debe ser mayor que cero.");
                 break;
+            }
+            if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, detalle.getIdProducto())) {
+                todosDisponibles = false;
+                //JOptionPane.showMessageDialog(null, "No se puede registrar la venta porque no existe el producto en esta sucursal");
+                break;
+            } else {
+                int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
+                if (cantidadDisponible < detalle.getCantidad()) {
+                    todosDisponibles = false;
+                    //JOptionPane.showMessageDialog(null, "No se puede registrar la venta porque no están disponibles la cantidad requerida en el inventario de la sucursal, la cantidad total disponible es " + detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto()));
+                    break;
+                }
             }
         }
 
-
-        if (suficienteInventario) {
-            for (DetalleVenta detalleVenta : detalles) {
-                montoTotal += detalleVenta.getMonto();
-               
-                inventarioSucursalControlador.actualizarCantidadProducto(detalleVenta.getIdProducto(), detalleVenta.getCantidad());
+        if (todosDisponibles) {
+            double montoTotal = 0.0;
+            DetalleVentaControlador detalleVentaControlador = new DetalleVentaControlador();
+            for (DetalleVenta detalle : detallesVenta) {
+                montoTotal += (detalle.getMonto() * detalle.getCantidad());
+                int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
+                int cantidadTotal = cantidadDisponible - detalle.getCantidad();
+                detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, detalle.getIdProducto(), cantidadTotal);
             }
 
-
-            Venta nuevaVenta = new Venta(0, montoTotal, tipoPago, detalles);
+            Venta venta = new Venta(montoTotal, tipoPago);
+            VentaControlador ventaControlador = new VentaControlador();
+            ventaControlador.addVenta(venta);
             
-            ventaControlador.addVenta(nuevaVenta);
 
 
-            JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
+            for (DetalleVenta detalle : detallesVenta) {
+                detalleVentaControlador.addDetalleVenta(detalle);
+            }
+
+            //JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
+            return true;
+        } else {
+            return false;
         }
     }
 
 }
-
-
 

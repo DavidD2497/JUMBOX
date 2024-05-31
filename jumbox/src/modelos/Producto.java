@@ -9,10 +9,9 @@ public class Producto {
 	private double precio;
 	private LocalDate fechaVencimiento;
 	
-	public Producto(int idProducto, String nombreProducto, String categoria, double precio,
+	public Producto(String nombreProducto, String categoria, double precio,
 			LocalDate fechaVencimiento) {
 		super();
-		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
 		this.categoria = categoria;
 		this.precio = precio;

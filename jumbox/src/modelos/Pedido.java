@@ -6,11 +6,12 @@ import java.util.LinkedList;
 public class Pedido {
 	private int codigoPedido;
 	private LocalDate fechaEntrega;
+
 	
-	public Pedido( LocalDate fechaEntrega) {
+	public Pedido(LocalDate fechaEntrega) {
 		super();
 		this.fechaEntrega = fechaEntrega;
-	
+
 	}
 
 	public int getCodigoPedido() {
@@ -29,5 +30,4 @@ public class Pedido {
 		this.fechaEntrega = fechaEntrega;
 	}
 
-	
 }

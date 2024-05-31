@@ -9,14 +9,13 @@ public interface DetallePedidoRepository {
     
     DetallePedido getDetallePedidoById(int id); // Obtiene un detalle de pedido por su ID
     
-    void addDetallePedido( int idProducto, int cantidad, int idPedido); // Agrega un detalle de pedido a la base de datos
+    void addDetallePedido(DetallePedido detallePedido); // Agrega un detalle de pedido a la base de datos
     
     void updateDetallePedido(DetallePedido detallePedido); // Actualiza un detalle de pedido en la base de datos
     
     void deleteDetallePedido(int id); // Elimina un detalle de pedido de la base de datos
-
-	void addDetallePedido(DetallePedido detallePedido);
-
-
-	 
+    
+    List<DetallePedido> getDetallePedidoByIdPedido(int idPedido);
+    
+    void deleteDetallesByIdPedido(int idPedido);
 }

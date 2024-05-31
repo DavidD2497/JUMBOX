@@ -24,25 +24,25 @@ public class SolicitarPedidoTest {
 		listaDetalle.add(new DetallePedido(1, 100, 0));
 		listaDetalle.add(new DetallePedido(4, 18, 0));
 		listaDetalle.add(new DetallePedido(2, 12, 0));
-		listaDetalle.add(new DetallePedido(3, 14, 0));// Suponiendo que el producto con ID 1 existe
+		listaDetalle.add(new DetallePedido(3, 14, 0));
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
 		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
 		assertTrue(resultado);
-		// Verificar que se muestra el mensaje "Pedido creado correctamente"
+
 	}
 
 	@Test
-	public void testSolicitarPedido_PedidoNoExiste() {
+	public void testSolicitarPedido_ProductoNoExiste() {
 		LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
 		PedidoControlador pedidoControlador = new PedidoControlador();
 
 		listaDetalle.add(new DetallePedido(9, 18, 0));
 		listaDetalle.add(new DetallePedido(2, 12, 0));
-		listaDetalle.add(new DetallePedido(3, 14, 0));// Suponiendo que el producto con ID 1 existe
+		listaDetalle.add(new DetallePedido(3, 14, 0));
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
 		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
 		assertFalse(resultado);
-		// Verificar que se muestra el mensaje "Pedido creado correctamente"
+
 	}
 
 	@Test
@@ -51,8 +51,7 @@ public class SolicitarPedidoTest {
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
 		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
 		assertFalse(resultado);
-		// Verificar que se muestra el mensaje "Complete todos los datos para hacer el
-		// pedido"
+
 	}
 
 	@Test
@@ -62,22 +61,16 @@ public class SolicitarPedidoTest {
 		LocalDate fechaEntrega = null;
 		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
 		assertFalse(resultado);
-		// Verificar que se muestra el mensaje "Complete todos los datos para hacer el
-		// pedido"
+
 	}
 	
 	@Test
-	public void testSolicitarPedido_FechaAnterior() {
-		LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
-		listaDetalle.add(new DetallePedido(1, 2, 3));
-		  LocalDate fecha = LocalDate.of(2024, 5, 30);
-		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fecha);
-		assertFalse(resultado);
-		// Verificar que se muestra el mensaje "Complete todos los datos para hacer el
-		// pedido"
-	}
-	
-	
-	
+    public void testSolicitarPedido_FechaAnterior() {
+        LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
+        listaDetalle.add(new DetallePedido(1, 2, 3));
+          LocalDate fecha = LocalDate.of(2024, 5, 30);
+        boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fecha);
+        assertFalse(resultado);
+    }
 
 }

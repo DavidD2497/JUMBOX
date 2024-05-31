@@ -3,11 +3,8 @@ package modelos;
 public class Informe {
 	private int idInforme;
 	
-	
-	public Informe(int idInforme) {
+	public Informe() {
 		super();
-		this.idInforme = idInforme;
-	
 	}
 
 	public int getIdInforme() {
@@ -17,6 +14,5 @@ public class Informe {
 	public void setIdInforme(int idInforme) {
 		this.idInforme = idInforme;
 	}
-
 
 }

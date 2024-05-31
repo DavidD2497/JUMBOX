@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import modelos.Pedido;
+
 import interfaces.PedidoRepository;
 
 public class PedidoControlador implements PedidoRepository {
@@ -25,7 +26,7 @@ public class PedidoControlador implements PedidoRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int codigoPedido = resultSet.getInt("id_pedido");
+                int codigoPedido = resultSet.getInt("codigo_pedido");
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
                 Pedido pedido = new Pedido(fechaEntrega);
                 pedido.setCodigoPedido(codigoPedido);
@@ -90,8 +91,8 @@ public class PedidoControlador implements PedidoRepository {
             e.printStackTrace();
         }
     }
-
-	@Override
+    
+    @Override
     public int obtenerUltimoIdPedido() {
         int ultimoIdPedido = -1;
 
@@ -107,5 +108,40 @@ public class PedidoControlador implements PedidoRepository {
         }
 
         return ultimoIdPedido;
+    }
+    
+    
+    @Override
+    public void actualizarEstadoPedido(int codigoPedido, String estado) {
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigoPedido = ?");
+			statement.setString(1, estado);
+			statement.setInt(2, codigoPedido);
+
+			int rowsUpdated = statement.executeUpdate();
+			if (rowsUpdated > 0) {
+				System.out.println("Estado del pedido actualizado exitosamente");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    @Override
+    public void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega) {
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE id_pedido = ?");
+            statement.setDate(1, java.sql.Date.valueOf(nuevaFechaEntrega));
+            statement.setInt(2, codigoPedido);
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Fecha de entrega del pedido actualizada exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

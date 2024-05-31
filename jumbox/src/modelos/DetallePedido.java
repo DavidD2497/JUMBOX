@@ -6,18 +6,10 @@ public class DetallePedido {
 	private int idProducto;
 	private int cantidad;
 	
-	public DetallePedido( int idProducto, int cantidad, int idPedido) {
+	public DetallePedido(int idProducto, int cantidad, int idPedido) {
 		super();
-		this.idPedido = idPedido;
-		this.idProducto= idProducto;
+		this.idProducto = idProducto;
 		this.cantidad = cantidad;
-	}
-
-	public int getIdPedido() {
-		return idPedido;
-	}
-
-	public void setIdPedido(int idPedido) {
 		this.idPedido = idPedido;
 	}
 
@@ -44,4 +36,13 @@ public class DetallePedido {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	public int getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
+	}
+	
 }
