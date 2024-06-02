@@ -6,9 +6,8 @@ public class DetalleDeposito {
 	private int idProducto;
 	private int cantidad;
 	
-	public DetalleDeposito(int idDetalle, int idDepositoGeneral, int idProducto, int cantidad) {
+	public DetalleDeposito(int idProducto, int idDepositoGeneral, int cantidad) {
 		super();
-		this.idDetalle = idDetalle;
 		this.idDepositoGeneral = idDepositoGeneral;
 		this.idProducto = idProducto;
 		this.cantidad = cantidad;
@@ -45,6 +44,5 @@ public class DetalleDeposito {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
 	
 }

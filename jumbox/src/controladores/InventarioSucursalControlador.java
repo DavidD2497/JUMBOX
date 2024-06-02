@@ -11,22 +11,22 @@ import interfaces.InventarioSucursalRepository;
 import modelos.InventarioSucursal;
 
 public class InventarioSucursalControlador implements InventarioSucursalRepository {
-    private final Connection connection;
+
+    private Connection connection;
 
     public InventarioSucursalControlador() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
     public List<InventarioSucursal> getAllInventarioSucursal() {
         List<InventarioSucursal> inventarios = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM inventarios_sucursal");
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int idInventario = resultSet.getInt("idInventario");
-                InventarioSucursal inventario = new InventarioSucursal(idInventario);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM inventario_sucursal");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                InventarioSucursal inventario = new InventarioSucursal();
+                inventario.setIdInventario(result.getInt("id_inventario_sucursal"));
                 inventarios.add(inventario);
             }
         } catch (SQLException e) {
@@ -39,12 +39,12 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
     public InventarioSucursal getInventarioSucursalById(int id) {
         InventarioSucursal inventario = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM inventarios_sucursal WHERE idInventario = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM inventario_sucursal WHERE id_inventario_sucursal = ?");
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                inventario = new InventarioSucursal(id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                inventario = new InventarioSucursal();
+                inventario.setIdInventario(result.getInt("id_inventario_sucursal"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,13 +55,9 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
     @Override
     public void addInventarioSucursal(InventarioSucursal inventarioSucursal) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO inventarios_sucursal (idInventario) VALUES (?)");
-            statement.setInt(1, inventarioSucursal.getIdInventario());
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Inventario de sucursal insertado exitosamente");
-            }
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO inventario_sucursal VALUES (NULL)");
+            statement.executeUpdate();
+            System.out.println("Inventario de sucursal agregado correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,34 +65,24 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
 
     @Override
     public void updateInventarioSucursal(InventarioSucursal inventarioSucursal) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE inventarios_sucursal SET idInventario = ? WHERE idInventario = ?");
-            statement.setInt(1, inventarioSucursal.getIdInventario());
-            statement.setInt(2, inventarioSucursal.getIdInventario());
-
-            int rowsUpdated = statement.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Inventario de sucursal actualizado exitosamente");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void deleteInventarioSucursal(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM inventarios_sucursal WHERE idInventario = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM inventario_sucursal WHERE id_inventario_sucursal = ?");
             statement.setInt(1, id);
-
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Inventario de sucursal eliminado exitosamente");
+                System.out.println("Inventario de sucursal eliminado exitosamente.");
+            } else {
+                System.out.println("No se encontró ningún inventario de sucursal con el ID proporcionado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
+
 
 

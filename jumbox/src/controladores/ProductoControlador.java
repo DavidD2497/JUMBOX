@@ -1,7 +1,6 @@
 package controladores;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,10 +12,12 @@ import interfaces.ProductoRepository;
 import modelos.Producto;
 
 public class ProductoControlador implements ProductoRepository {
-    private final Connection connection;
 
+    private Connection connection;
+
+    
     public ProductoControlador() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+    	this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
@@ -24,16 +25,15 @@ public class ProductoControlador implements ProductoRepository {
         List<Producto> productos = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM producto");
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int idProducto = resultSet.getInt("id_producto");
-                String nombreProducto = resultSet.getString("nombre_producto");
-                String categoria = resultSet.getString("categoria");
-                double precio = resultSet.getDouble("precio");
-                LocalDate fechaVencimiento = resultSet.getDate("fecha_vencimiento").toLocalDate();
-
-                Producto producto = new Producto(idProducto, nombreProducto, categoria, precio, fechaVencimiento);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Producto producto = new Producto(
+                    result.getString("nombre_producto"),
+                    result.getString("categoria"),
+                    result.getDouble("precio"),
+                    result.getDate("fecha_vencimiento").toLocalDate()
+                );
+                producto.setIdProducto(result.getInt("id_producto"));
                 productos.add(producto);
             }
         } catch (SQLException e) {
@@ -48,15 +48,15 @@ public class ProductoControlador implements ProductoRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM producto WHERE id_producto = ?");
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                String nombreProducto = resultSet.getString("nombre_producto");
-                String categoria = resultSet.getString("categoria");
-                double precio = resultSet.getDouble("precio");
-                LocalDate fechaVencimiento = resultSet.getDate("fecha_vencimiento").toLocalDate();
-
-                producto = new Producto(id, nombreProducto, categoria, precio, fechaVencimiento);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                producto = new Producto(
+                    result.getString("nombre_producto"),
+                    result.getString("categoria"),
+                    result.getDouble("precio"),
+                    result.getDate("fecha_vencimiento").toLocalDate()
+                );
+                producto.setIdProducto(result.getInt("id_producto"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,16 +67,13 @@ public class ProductoControlador implements ProductoRepository {
     @Override
     public void addProducto(Producto producto) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO producto (nombre_producto, categoria, precio, fecha_vencimiento) VALUES (?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO producto (nombre_producto, fecha_vencimiento, categoria, precio) VALUES (?, ?, ?, ?)");
             statement.setString(1, producto.getNombreProducto());
-            statement.setString(2, producto.getCategoria());
-            statement.setDouble(3, producto.getPrecio());
-            statement.setDate(4, Date.valueOf(producto.getFechaVencimiento()));
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Producto insertado exitosamente");
-            }
+            statement.setDate(2, java.sql.Date.valueOf(producto.getFechaVencimiento()));
+            statement.setString(3, producto.getCategoria());
+            statement.setDouble(4, producto.getPrecio());
+            statement.executeUpdate();
+            System.out.println("Producto agregado correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,16 +82,17 @@ public class ProductoControlador implements ProductoRepository {
     @Override
     public void updateProducto(Producto producto) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE producto SET nombre_producto = ?, categoria = ?, precio = ?, fecha_vencimiento = ? WHERE id_producto = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE producto SET nombre_producto = ?, fecha_vencimiento = ?, categoria = ?, precio = ? WHERE id_producto = ?");
             statement.setString(1, producto.getNombreProducto());
-            statement.setString(2, producto.getCategoria());
-            statement.setDouble(3, producto.getPrecio());
-            statement.setDate(4, Date.valueOf(producto.getFechaVencimiento()));
+            statement.setDate(2, java.sql.Date.valueOf(producto.getFechaVencimiento()));
+            statement.setString(3, producto.getCategoria());
+            statement.setDouble(4, producto.getPrecio());
             statement.setInt(5, producto.getIdProducto());
-
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Producto actualizado exitosamente");
+                System.out.println("Producto actualizado correctamente.");
+            } else {
+                System.out.println("No se encontró ningún producto con el ID proporcionado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,10 +104,11 @@ public class ProductoControlador implements ProductoRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM producto WHERE id_producto = ?");
             statement.setInt(1, id);
-
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Producto eliminado exitosamente");
+                System.out.println("Producto eliminado exitosamente.");
+            } else {
+                System.out.println("No se encontró ningún producto con el ID proporcionado.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,10 +121,9 @@ public class ProductoControlador implements ProductoRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT precio FROM producto WHERE id_producto = ?");
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                precio = resultSet.getDouble("precio");
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                precio = result.getDouble("precio");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,3 +131,4 @@ public class ProductoControlador implements ProductoRepository {
         return precio;
     }
 }
+

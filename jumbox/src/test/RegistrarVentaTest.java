@@ -123,7 +123,7 @@ public class RegistrarVentaTest {
         VentaControlador ventaControlador = new VentaControlador();
         ProductoControlador	productoControlador = new ProductoControlador();
         
-        int idVenta = ventaControlador.obtenerUltimoIdVenta() + 1;
+        int idVenta = ventaControlador.obtenerUltimoIdVenta();
 
         List<DetalleVenta> detallesVenta = new ArrayList<>();
         
