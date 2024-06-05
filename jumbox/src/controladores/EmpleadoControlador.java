@@ -198,4 +198,22 @@ public class EmpleadoControlador implements EmpleadoRepository {
         }
         return empleado;
     }
+    
+    @Override
+    public String getUserTypeByEmail(String email) {
+        String tipo = null;
+        try {
+            String query = "SELECT tipo FROM empleado WHERE email = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                tipo = resultSet.getString("tipo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tipo;
+    }
 }

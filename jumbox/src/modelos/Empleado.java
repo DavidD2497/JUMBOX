@@ -39,10 +39,10 @@ public abstract class Empleado {
 	}
 	
 	
-    public boolean iniciarSesion(String email, String contraseña) {
+    public static String iniciarSesion(String email, String contraseña) {
         if (email.isEmpty() || contraseña.isEmpty()) {
             //JOptionPane.showMessageDialog(null, "Email y/o contraseña no pueden estar vacíos.");
-            return false;
+            return "Email y/o contraseña no pueden estar vacíos.";
         }
     	
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
@@ -50,10 +50,10 @@ public abstract class Empleado {
 
         if (empleado != null) {
             //JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
-            return true;
+            return "Inicio de sesión exitoso.";
         } else {
             //JOptionPane.showMessageDialog(null, "Error de inicio de sesión. Verifique sus credenciales.");
-            return false;
+            return "Error de inicio de sesión. Verifique sus credenciales.";
         }
     }
     
