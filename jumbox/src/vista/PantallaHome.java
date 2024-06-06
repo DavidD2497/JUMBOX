@@ -47,9 +47,9 @@ public class PantallaHome extends JFrame {
         lblIdentificacion.setHorizontalAlignment(SwingConstants.CENTER);
         lblIdentificacion.setFont(new Font("Consolas", Font.BOLD, 20));
         lblIdentificacion.setBounds(10, 31, 590, 68);
-        if (empleadoControlador.getUserTypeByEmail(mail) == "Cajero/a") {
+        if (empleadoControlador.getUserTypeByEmail(mail).equals("Cajero")) {
             lblIdentificacion.setText(empleado.getNombre() + " -  Cajero/a" );
-		} else if (empleadoControlador.getUserTypeByEmail(mail) == "AdminSucursal") {
+		} else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
 			lblIdentificacion.setText(empleado.getNombre() + " -  Administrador/a de Sucursal" );
 		} else {
 			lblIdentificacion.setText(empleado.getNombre() + " -  Administrador/a de Depósito" );
@@ -79,9 +79,9 @@ public class PantallaHome extends JFrame {
         btnFuncionPrincipal.setFont(new Font("Consolas", Font.BOLD, 15));
         btnFuncionPrincipal.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnFuncionPrincipal.setBounds(96, 110, 392, 33);
-        if (empleadoControlador.getUserTypeByEmail(mail) == "Cajero/a") {
+        if (empleadoControlador.getUserTypeByEmail(mail).equals("Cajero")) {
         	btnFuncionPrincipal.setText("Funciones Cajero/a" );
-		} else if (empleadoControlador.getUserTypeByEmail(mail) == "AdminSucursal") {
+		} else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
 			btnFuncionPrincipal.setText("Funciones Administrador/a de Sucursal" );
 		} else {
 			btnFuncionPrincipal.setText("Funciones Administrador/a de Depósito" );
