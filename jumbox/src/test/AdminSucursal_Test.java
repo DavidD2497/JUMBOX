@@ -18,7 +18,7 @@ public class AdminSucursal_Test {
 
 	@Before
 	public void setUp() {
-		adminSucursal = new AdminSucursal("Nombre", "email@example.com", "contraseña", 1);
+		adminSucursal = new AdminSucursal("Nombre", "email@example.com", "contraseña");
 	}
 
 	@Test

@@ -82,30 +82,29 @@ public class AdminDeposito extends Empleado {
 
 	}
 	
-    public static boolean definirFechaEntrega(int idPedido, LocalDate nuevaFechaEntrega) {
-        if (nuevaFechaEntrega == null) {
-            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser nula.");
-            return false;
-        }
+	 public static boolean definirFechaEntrega(int idPedido, LocalDate nuevaFechaEntrega) {
+	        if (nuevaFechaEntrega == null) {
+	            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser nula.");
+	            return false;
+	        }
 
-        LocalDate hoy = LocalDate.now();
-        if (nuevaFechaEntrega.isBefore(hoy)) {
-            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser anterior a la fecha actual.");
-            return false;
-        }
+	        LocalDate hoy = LocalDate.now();
+	        if (nuevaFechaEntrega.isBefore(hoy)) {
+	            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser anterior a la fecha actual.");
+	            return false;
+	        }
 
-        PedidoControlador pedidoControlador = new PedidoControlador();
-        Pedido pedido = pedidoControlador.getPedidoById(idPedido);
+	        PedidoControlador pedidoControlador = new PedidoControlador();
+	        Pedido pedido = pedidoControlador.getPedidoById(idPedido);
 
-        if (pedido == null) {
-            //JOptionPane.showMessageDialog(null, "El pedido con ID: " + idPedido + " no existe.");
-            return false;
-        }
+	        if (pedido == null) {
+	            //JOptionPane.showMessageDialog(null, "El pedido con ID: " + idPedido + " no existe.");
+	            return false;
+	        }
 
-        pedidoControlador.actualizarFechaEntrega(idPedido, nuevaFechaEntrega);
-        //JOptionPane.showMessageDialog(null, "Fecha de entrega actualizada exitosamente.");
-        return true;
-    }
-	
+	        pedidoControlador.actualizarFechaEntrega(idPedido, nuevaFechaEntrega);
+	        //JOptionPane.showMessageDialog(null, "Fecha de entrega actualizada exitosamente.");
+	        return true;
+	    }
 	
 }

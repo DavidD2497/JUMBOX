@@ -14,4 +14,6 @@ public interface VentaRepository {
     void updateVenta(Venta venta); // Actualiza una venta en la base de datos
 
     void deleteVenta(int id); // Elimina una venta de la base de datos
+    
+    int obtenerUltimoIdVenta();
 }

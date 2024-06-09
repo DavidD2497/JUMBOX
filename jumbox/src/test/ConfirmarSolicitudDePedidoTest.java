@@ -14,7 +14,7 @@ public class ConfirmarSolicitudDePedidoTest {
 
 	@Test
 	public void PedidoAceptadoTest() {
-		AdminDeposito adminDeposito = new AdminDeposito("Vicky", "vicky@gmail.com", "1234", 1);
+
 		boolean flag = false;
 		int idPedido = 1;
 		DetallePedido detallePedido = new DetallePedido(1, 5, 10);
@@ -22,27 +22,24 @@ public class ConfirmarSolicitudDePedidoTest {
 
 		detallePedidoControlador.addDetallePedido(detallePedido);
 
-		if (adminDeposito.SolicitudDePedido(idPedido)) {
-			flag = true;
-		}
-		assertTrue(flag);
+		boolean resultado = AdminDeposito.SolicitudDePedido(idPedido);
+
+		assertEquals(true,resultado);
 	}
 
 	@Test
 	public void pedidoEliminadoTest() {
-		AdminDeposito adminDeposito2 = new AdminDeposito("Pablo", "pablo@gmail.com", "5678", 2);
-		boolean flag = false;
+
 		int idPedido = 2;
 
 		DetallePedido detallePedido = new DetallePedido(2, 2, 0);
 		detallePedido.setIdPedido(idPedido);
 
 		detallePedidoControlador.addDetallePedido(detallePedido);
+		
+		boolean resultado = AdminDeposito.SolicitudDePedido(idPedido);
 
-		if (!adminDeposito2.SolicitudDePedido(idPedido)) {
-			flag = false;
-		}
 
-		assertFalse(flag);
+		assertEquals(false,resultado);
 	}
 }
