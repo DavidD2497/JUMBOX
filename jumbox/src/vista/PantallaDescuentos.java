@@ -39,7 +39,7 @@ public class PantallaDescuentos extends JFrame {
 		contentPane.setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 492, 329);
+		setBounds(100, 100, 625, 383);
 
 		JLabel Descuentos = new JLabel("Descuentos");
 		Descuentos.setFont(new Font("Consolas", Font.PLAIN, 35));
