@@ -8,27 +8,13 @@ import javax.swing.JOptionPane;
 import controladores.DetalleDepositoControlador;
 import controladores.DetallePedidoControlador;
 import controladores.PedidoControlador;
-import modelos.Pedido;
 
 public class AdminDeposito extends Empleado {
-	private int idAdminDepo;
 	private String tipo;
 
-	public AdminDeposito(String nombre, String email, String contraseña, int idAdminDepo) {
+	public AdminDeposito(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
-		this.idAdminDepo = idAdminDepo;
-	}
-
-	public int getIdAdminDepo() {
-		return idAdminDepo;
-	}
-
-	public void setIdAdminDepo(int idAdminDepo) {
-		this.idAdminDepo = idAdminDepo;
-	}
-
-	public int getId() {
-		return idAdminDepo;
+		this.tipo = "AdminDeposito";
 	}
 
 	public String getTipo() {
@@ -39,26 +25,35 @@ public class AdminDeposito extends Empleado {
 		this.tipo = tipo;
 	}
 
-	public void registroEntradaSalida() {
 
+
+	public static boolean registrarSalidaDepositoGeneral(int idDepositoGeneral, int idProducto, int cantidadSalida) {
+	    if (cantidadSalida <= 0) {
+	        //JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
+	        return false;
+	    }
+
+	    DetalleDepositoControlador detalleDepositoControlador = new DetalleDepositoControlador();
+
+	    if (!detalleDepositoControlador.existeProducto(idDepositoGeneral, idProducto)) {
+	        //JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
+	        return false;
+	    }
+
+	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible(idDepositoGeneral, idProducto);
+
+	    if (cantidadDisponible >= cantidadSalida) {
+	        int cantidadTotal = cantidadDisponible - cantidadSalida;
+	        detalleDepositoControlador.actualizarCantidadProducto(idDepositoGeneral, idProducto, cantidadTotal);
+	        //OptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+	        return true;
+	    } else {
+	        //JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
+	        return false;
+	    }
 	}
-
-	public void armarPedido() {
-
-	}
-
-	public void validarDatos() {
-
-	}
-
-	AdminDeposito admin = new AdminDeposito("Jumbox Max", "prueba@gmail.com", "1234", 1);
-
-	public void DatosDeposito() {
-		JOptionPane.showMessageDialog(null, "Datos del Deposito: " + "/n Nombre: " + this.getNombre()
-				+ "/n Contraseña: " + this.getContraseña() + "/n Id del Deposito: " + this.idAdminDepo);
-	}
-
-	public boolean SolicitudDePedido(int idPedido) {
+	
+	public static boolean SolicitudDePedido(int idPedido) {
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		Pedido pedido = pedidoControlador.getPedidoById(idPedido);
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
@@ -70,21 +65,47 @@ public class AdminDeposito extends Empleado {
 			mensaje += "Cantidad: " + detalle.getCantidad() + "\n";
 			mensaje += "ID Pedido: " + pedido.getCodigoPedido() + "\n";
 		}
-		JOptionPane.showMessageDialog(null, mensaje);
+		//JOptionPane.showMessageDialog(null, mensaje);
 
-		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
+		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
 
 		if (respuesta == JOptionPane.YES_OPTION) {
-			JOptionPane.showMessageDialog(null, "El pedido ha sido aceptado");
+			
+			//JOptionPane.showMessageDialog(null, "El pedido ha sido aceptado");
+			return true;
 		} else {
 			pedidoControlador.deletePedido(idPedido);
 			detallePedidoControlador.deleteDetallesByIdPedido(idPedido);
-			JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado y eliminado");
+			//JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado y eliminado");
 			return false;
 		}
 
-		return true;
 	}
+	
+    public static boolean definirFechaEntrega(int idPedido, LocalDate nuevaFechaEntrega) {
+        if (nuevaFechaEntrega == null) {
+            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser nula.");
+            return false;
+        }
 
+        LocalDate hoy = LocalDate.now();
+        if (nuevaFechaEntrega.isBefore(hoy)) {
+            //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser anterior a la fecha actual.");
+            return false;
+        }
+
+        PedidoControlador pedidoControlador = new PedidoControlador();
+        Pedido pedido = pedidoControlador.getPedidoById(idPedido);
+
+        if (pedido == null) {
+            //JOptionPane.showMessageDialog(null, "El pedido con ID: " + idPedido + " no existe.");
+            return false;
+        }
+
+        pedidoControlador.actualizarFechaEntrega(idPedido, nuevaFechaEntrega);
+        //JOptionPane.showMessageDialog(null, "Fecha de entrega actualizada exitosamente.");
+        return true;
+    }
+	
+	
 }

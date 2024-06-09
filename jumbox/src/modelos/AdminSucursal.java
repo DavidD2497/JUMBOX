@@ -13,10 +13,19 @@ public class AdminSucursal extends Empleado {
 	private Producto producto;
 	private Descuento descuento;
 	private LinkedList<Descuento> descuentos = new LinkedList<>();
+	private String tipo;
 
-	public AdminSucursal(String nombre, String email, String contraseña, int idAdminSuc) {
+	public AdminSucursal(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
-		this.idAdminSuc = idAdminSuc;
+		this.tipo = "AdminSucursal";
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public int getIdAdminSuc() {

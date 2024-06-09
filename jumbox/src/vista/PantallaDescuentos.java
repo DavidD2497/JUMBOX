@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -29,22 +30,20 @@ public class PantallaDescuentos extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public PantallaDescuentos() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 492, 329);
-		contentPane = new JPanel();
+		contentPane = new ImagePanel("/resources/supermercado.jpg");
+		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 492, 329);
+
 		JLabel Descuentos = new JLabel("Descuentos");
 		Descuentos.setFont(new Font("Consolas", Font.PLAIN, 35));
 		Descuentos.setBounds(140, 11, 190, 41);
 		contentPane.add(Descuentos);
 	}
-
 }
