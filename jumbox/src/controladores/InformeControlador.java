@@ -1,9 +1,11 @@
 package controladores;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +46,11 @@ public class InformeControlador implements InformeRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM informe WHERE id_informe = ?");
             statement.setInt(1, id);
+          
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                informe = new Informe();
+                informe = new Informe(null);
                 informe.setIdInforme(id);
             }
         } catch (SQLException e) {
@@ -59,9 +62,11 @@ public class InformeControlador implements InformeRepository {
     @Override
     public void addInforme(Informe informe) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe) VALUES (?)");
+        	
+        	 Date fecha = Date.valueOf(LocalDate.now());
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe,fecha_informe) VALUES (?,?)");
             statement.setInt(1, informe.getIdInforme());
-
+            statement.setDate(2, Date.valueOf(informe.getFechaInforme()));
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Informe agregado exitosamente.");

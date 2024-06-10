@@ -13,4 +13,6 @@ public interface InformeRepository {
     void updateInforme(Informe informe); // Actualiza un informe en la base de datos
 
     void deleteInforme(int id); // Elimina un informe de la base de datos
+
+	void addInforme(Informe informe);
 }
