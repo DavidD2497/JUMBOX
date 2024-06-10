@@ -47,23 +47,29 @@ public class PantallaDescuentos extends JFrame {
 		Descuentos.setFont(new Font("Consolas", Font.PLAIN, 35));
 		Descuentos.setBounds(216, 11, 190, 41);
 		contentPane.add(Descuentos);
-		
+
 		JButton btnCrearDescuento = new JButton("Crear Descuento");
-        btnCrearDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnCrearDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnCrearDescuento.setBounds(45, 143, 156, 33);
-        contentPane.add(btnCrearDescuento);
-        
-        JButton btnEditarDescuento = new JButton("Editar Descuento");
-        btnEditarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnEditarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnEditarDescuento.setBounds(234, 143, 156, 33);
-        contentPane.add(btnEditarDescuento);
-        
-        JButton btnEliminarDescuento = new JButton("Eliminar Descuento");
-        btnEliminarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnEliminarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnEliminarDescuento.setBounds(420, 143, 156, 33);
-        contentPane.add(btnEliminarDescuento);
+		btnCrearDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCrearDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		btnCrearDescuento.setBounds(103, 143, 156, 33);
+		contentPane.add(btnCrearDescuento);
+
+		JButton btnEditarDescuento = new JButton("Editar Descuento");
+		btnEditarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnEditarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		btnEditarDescuento.setBounds(365, 143, 156, 33);
+		contentPane.add(btnEditarDescuento);
+		
+		JButton btnMostrarDescuento = new JButton("Mostrar Descuentos");
+		btnMostrarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnMostrarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		btnMostrarDescuento.setBounds(103, 217, 156, 33);
+		contentPane.add(btnMostrarDescuento);
+
+		JButton btnEliminarDescuento = new JButton("Eliminar Descuento");
+		btnEliminarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnEliminarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		btnEliminarDescuento.setBounds(365, 217, 156, 33);
+		contentPane.add(btnEliminarDescuento);
 	}
 }
