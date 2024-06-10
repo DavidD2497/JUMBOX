@@ -17,6 +17,9 @@ import javax.swing.border.MatteBorder;
 
 import modelos.Empleado;
 import modelos.AdminSucursal;
+import modelos.Descuento;
+import controladores.AdminSucursalControlador;
+import controladores.DescuentoControlador;
 
 public class PantallaCrearDescuento extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -97,7 +100,8 @@ public class PantallaCrearDescuento extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String Id = inpProd.getText();
                 String Dto = inpDto.getText();
-                String respuesta = AdminSucursal.;
+                AdminSucursal nuevo = new AdminSucursal();
+                String respuesta = nuevo.crearDescuentoVencimiento(null, ABORT);
                 if (respuesta.equals("Inicio de sesión exitoso.")) {
                 	PantallaDescuentos frame = new PantallaDescuentos();
                 	PantallaDescuentos.setVisible(true);
