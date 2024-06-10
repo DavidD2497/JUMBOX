@@ -45,7 +45,7 @@ public class PantallaDescuentos extends JFrame {
 
 		JLabel Descuentos = new JLabel("Descuentos");
 		Descuentos.setFont(new Font("Consolas", Font.PLAIN, 35));
-		Descuentos.setBounds(216, 11, 190, 41);
+		Descuentos.setBounds(219, 24, 190, 41);
 		contentPane.add(Descuentos);
 
 		JButton btnCrearDescuento = new JButton("Crear Descuento");
