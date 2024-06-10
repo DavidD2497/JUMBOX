@@ -26,7 +26,7 @@ public class SolicitarPedidoTest {
 		listaDetalle.add(new DetallePedido(2, 12, 0));
 		listaDetalle.add(new DetallePedido(3, 14, 0));
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
-		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
+		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle);
 		assertTrue(resultado);
 
 	}
@@ -40,7 +40,7 @@ public class SolicitarPedidoTest {
 		listaDetalle.add(new DetallePedido(2, 12, 0));
 		listaDetalle.add(new DetallePedido(3, 14, 0));
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
-		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
+		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle);
 		assertFalse(resultado);
 
 	}
@@ -49,7 +49,7 @@ public class SolicitarPedidoTest {
 	public void testSolicitarPedido_ListaVacia() {
 		LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
 		LocalDate fechaEntrega = LocalDate.now().plusDays(5);
-		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
+		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle);
 		assertFalse(resultado);
 
 	}
@@ -59,7 +59,7 @@ public class SolicitarPedidoTest {
 		LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
 		listaDetalle.add(new DetallePedido(1, 2, 3));
 		LocalDate fechaEntrega = null;
-		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fechaEntrega);
+		boolean resultado = AdminSucursal.solicitarPedido(listaDetalle);
 		assertFalse(resultado);
 
 	}
@@ -69,7 +69,7 @@ public class SolicitarPedidoTest {
         LinkedList<DetallePedido> listaDetalle = new LinkedList<>();
         listaDetalle.add(new DetallePedido(1, 2, 3));
           LocalDate fecha = LocalDate.of(2024, 5, 30);
-        boolean resultado = AdminSucursal.solicitarPedido(listaDetalle, fecha);
+        boolean resultado = AdminSucursal.solicitarPedido(listaDetalle);
         assertFalse(resultado);
     }
 

@@ -58,9 +58,11 @@ public class AdminSucursal extends Empleado {
 	}
 	
 
-	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle, LocalDate fechaEntrega) {
+	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
         ProductoControlador productoControlador = new ProductoControlador();
-        if (listaDetalle.isEmpty() || fechaEntrega == null) {
+        LocalDate fechaEntrega=LocalDate.now();
+        JOptionPane.showMessageDialog(null, fechaEntrega);
+        if (listaDetalle.isEmpty()) {
             //JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
             return false;
         }
@@ -74,10 +76,10 @@ public class AdminSucursal extends Empleado {
 
         }
 
-        if (fechaEntrega.isBefore(LocalDate.now().plusDays(2))) {
+     //   if (fechaEntrega.isBefore(LocalDate.now().plusDays(2))) {
             //JOptionPane.showMessageDialog(null, "La fecha ingresada debe ser posterior a la fecha actual");
-            return false;
-        }
+         //   return false;
+      //  }
         PedidoControlador pedidoControlador = new PedidoControlador();
         Pedido nuevoPedido = new Pedido(fechaEntrega);
         pedidoControlador.addPedido(nuevoPedido);int idPedido= pedidoControlador.obtenerUltimoIdPedido();
@@ -92,6 +94,15 @@ public class AdminSucursal extends Empleado {
         return true;
 
     }
+	
+	
+	
+	public void crearInforme() {
+		
+		
+		
+		
+	}
 	
 	public void mostrarPedido() {
         PedidoControlador pedidoControlador= new PedidoControlador();

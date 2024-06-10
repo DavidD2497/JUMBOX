@@ -5,12 +5,22 @@ public class DetalleInforme {
 	private int idVenta;
 	private int idInforme;
 	private int idInventario;
+	private int idPedido;
 	
-	public DetalleInforme(int idVenta, int idInventario, int idInforme) {
+	public int getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
+	}
+
+	public DetalleInforme(int idVenta, int idInventario, int idInforme, int idPedido) {
 		super();
 		this.idVenta = idVenta;
 		this.idInventario = idInventario;
 		this.idInforme = idInforme;
+		this.idPedido = idPedido;
 	}
 
 	public int getIdDetalle() {
