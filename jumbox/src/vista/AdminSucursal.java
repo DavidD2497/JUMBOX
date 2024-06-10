@@ -7,12 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.JScrollBar;
 
 public class AdminSucursal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -37,16 +38,10 @@ public class AdminSucursal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.RED);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane);
-		
-		textField = new JTextField("dsdsdsdsdsdd");
-		contentPane.add(textField);
-		textField.setColumns(10);
 	}
 
 }
