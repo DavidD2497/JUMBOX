@@ -41,7 +41,6 @@ public abstract class Empleado {
 	
     public static String iniciarSesion(String email, String contraseña) {
         if (email.isEmpty() || contraseña.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Email y/o contraseña no pueden estar vacíos.");
             return "Email y/o contraseña no pueden estar vacíos.";
         }
     	
@@ -49,32 +48,29 @@ public abstract class Empleado {
         Empleado empleado = empleadoControlador.getUserByEmailAndPassword(email, contraseña);
 
         if (empleado != null) {
-            //JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
             return "Inicio de sesión exitoso.";
         } else {
-            //JOptionPane.showMessageDialog(null, "Error de inicio de sesión. Verifique sus credenciales.");
             return "Error de inicio de sesión. Verifique sus credenciales.";
         }
     }
     
-    public boolean registrarEmpleado(String nombre, String email, String contraseña, String tipo) {
+    public static String registrarEmpleado(String nombre, String email, String contraseña, String tipo) {
 
         if (nombre.isEmpty() || email.isEmpty() || contraseña.isEmpty() || tipo.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-            return false;
+            return "Todos los campos son obligatorios.";
+
         }
 
 
         if (!email.contains("@")) {
-            //JOptionPane.showMessageDialog(null, "Email no válido. Debe contener un '@'.");
-            return false;
+            return "Email no válido. Debe contener un '@'.";
+
         }
 
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
 
         if (empleadoControlador.getUserByEmail(email) != null) {
-            //JOptionPane.showMessageDialog(null, "Ya existe un usuario con este email.");
-            return false;
+            return "Ya existe un usuario con este email.";
         }
 
         Empleado nuevoEmpleado;
@@ -89,13 +85,12 @@ public abstract class Empleado {
                 nuevoEmpleado = new Cajero(nombre, email, contraseña);
                 break;
             default:
-                //JOptionPane.showMessageDialog(null, "Tipo de usuario no válido.");
-                return false;
+                return "Tipo de usuario no válido.";
+
         }
 
         empleadoControlador.addUser(nuevoEmpleado);
-        //JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente.");
-        return true;
+        return "Usuario registrado exitosamente.";
     }
     
     public boolean editarEmpleado(String email, String nuevoNombre, String nuevoEmail, String nuevaContraseña, String nuevoTipo) {

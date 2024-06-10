@@ -61,12 +61,27 @@ public class PantallaHome extends JFrame {
         btnCrearUsuario.setFont(new Font("Consolas", Font.BOLD, 15));
         btnCrearUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnCrearUsuario.setBounds(10, 189, 156, 33);
+        btnCrearUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PantallaRegistroEmpleado pantallaRegistroEmpleado = new PantallaRegistroEmpleado(empleado.getEmail());
+                pantallaRegistroEmpleado.setVisible(true);
+                dispose();
+            }
+        });
         contentPane.add(btnCrearUsuario);
+        
         
         JButton btnEditarUsuario = new JButton("Editar Usuario");
         btnEditarUsuario.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEditarUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnEditarUsuario.setBounds(433, 189, 156, 33);
+        btnEditarUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PantallaEditarEmpleado pantallaEditarEmpleado = new PantallaEditarEmpleado(empleado.getEmail());
+                pantallaEditarEmpleado.setVisible(true);
+                dispose();
+            }
+        });
         contentPane.add(btnEditarUsuario);
         
         JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
