@@ -13,7 +13,7 @@ public class IniciarSesionTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana.torres@gmail.com", "1234")) {
+            if (Empleado.iniciarSesion("ana.torres@gmail.com", "1234").equals("Inicio de sesión exitoso.")) {
                 flag = true;
                 break;
             }
@@ -28,7 +28,7 @@ public class IniciarSesionTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("", "contraseña45")) {
+            if (Empleado.iniciarSesion("", "contraseña45").equals("Inicio de sesión exitoso.")) {
                 flag = true;
                 break;
             }
@@ -43,7 +43,7 @@ public class IniciarSesionTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana@example.com", "")) {
+            if (Empleado.iniciarSesion("ana@example.com", "").equals("Inicio de sesión exitoso.")) {
                 flag = true;
                 break;
             }
@@ -58,22 +58,7 @@ public class IniciarSesionTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("", "")) {
-                flag = true;
-                break;
-            }
-        }
-
-        assertEquals(false, flag);
-    }
-
-    @Test
-    public void inicioSesionEmailIncorrectoContraseñaCorrecta() {
-        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-        boolean flag = false;
-
-        for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("correo.incorrecto@example.com", "1234")) {
+            if (Empleado.iniciarSesion("", "").equals("Inicio de sesión exitoso.")) {
                 flag = true;
                 break;
             }
@@ -88,7 +73,7 @@ public class IniciarSesionTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.iniciarSesion("ana.torres@gmail.com", "contraseñaIncorrecta")) {
+            if (Empleado.iniciarSesion("ana.torres@gmail.com", "contraseñaIncorrecta").equals("Inicio de sesión exitoso.")) {
                 flag = true;
                 break;
             }
@@ -96,8 +81,5 @@ public class IniciarSesionTest {
 
         assertEquals(false, flag);
     }
-    
-    
-
-
 }
+

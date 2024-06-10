@@ -15,10 +15,9 @@ public interface DetalleInventarioRepository {
     
     void deleteDetalleInventario(int id); // Elimina un detalle del inventario de la base de datos
     
-    int getCantidadDisponible(int idInventarioSucursal, int idProducto);
+    int getCantidadDisponible(int idInventarioSucursal,int idProducto);
     
-    void actualizarCantidadProducto( int idInventarioSucursal, int idProducto, int nuevaCantidad);
+    void actualizarCantidadProducto(int idInventarioSucursal, int idProducto, int nuevaCantidad);
     
-    boolean existeProducto(int idInventarioSucursal,int idProducto);
-    public String getNombreProducto( int idProducto) ;
+    boolean existeProducto(int idInventarioSucursal, int idProducto);
 }

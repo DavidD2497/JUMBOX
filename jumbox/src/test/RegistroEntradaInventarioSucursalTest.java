@@ -3,8 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import modelos.AdminSucursal;
-import modelos.DetalleInventario;
-import controladores.DetalleInventarioControlador;
+
 
 public class RegistroEntradaInventarioSucursalTest {
 
@@ -14,7 +13,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	
 	@Test
 	public void EntradaCorrecto() {
-		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
 		boolean flag = false;
 
 		if (AdminSucursal.registroEntradaProducto(1, 1, 20)) {
@@ -30,7 +29,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	
 	@Test
 	public void Cantidad0() {
-		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
 		boolean flag = false;
 
 		if (AdminSucursal.registroEntradaProducto(2, 2, 0)) {
@@ -46,7 +45,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	
 	@Test
 	public void ProductoInexistente() {
-		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
 		boolean flag = false;
 
 		if (AdminSucursal.registroEntradaProducto(10, 10, 20)) {
@@ -62,7 +61,7 @@ public class RegistroEntradaInventarioSucursalTest {
 	
 	@Test
 	public void CantidadMayor1000() {
-		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+
 		boolean flag = false;
 
 		if (AdminSucursal.registroEntradaProducto(10, 10, 1000)) {

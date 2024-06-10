@@ -17,5 +17,7 @@ public interface EmpleadoRepository {
     Empleado getUserByEmail(String email);
     
     Empleado getUserByEmailAndPassword(String email, String contraseña);
+    
+    String getUserTypeByEmail(String email);
 	
 }

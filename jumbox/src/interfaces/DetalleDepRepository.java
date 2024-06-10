@@ -14,4 +14,10 @@ public interface DetalleDepRepository {
     void updateDetalleDeposito(DetalleDeposito detalle); // Actualiza un detalle de depósito en la base de datos
 
     void deleteDetalleDeposito(int id); // Elimina un detalle de depósito de la base de datos
+    
+    int getCantidadDisponible(int idDepositoGeneral,int idProducto);
+    
+    void actualizarCantidadProducto(int idDepositoGeneral, int idProducto, int nuevaCantidad);
+    
+    boolean existeProducto(int idDepositoGeneral, int idProducto);
 }

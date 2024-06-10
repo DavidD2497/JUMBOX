@@ -15,9 +15,4 @@ public interface InventarioSucursalRepository {
 
     void deleteInventarioSucursal(int id);
     
-    int getCantidadDisponible(int idProducto);
-    
-    void actualizarCantidadProducto(int idProducto, int nuevaCantidad);
-    
-    boolean existeProducto(int idProducto);
 }

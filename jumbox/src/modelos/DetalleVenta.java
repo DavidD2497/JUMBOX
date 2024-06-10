@@ -7,13 +7,12 @@ public class DetalleVenta {
 	private int cantidad;
 	private int idDetalle;
 	
-	public DetalleVenta(int idProducto, int idVenta, double monto, int cantidad, int idDetalle) {
+	public DetalleVenta(int idProducto, int idVenta, double monto, int cantidad) {
 		super();
 		this.idProducto = idProducto;
 		this.idVenta = idVenta;
 		this.monto = monto;
 		this.cantidad = cantidad;
-		this.idDetalle = idDetalle;
 	}
 
 	public int getIdProducto() {

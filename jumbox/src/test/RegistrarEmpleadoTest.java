@@ -13,7 +13,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "david@gmail.com", "1234","Cajero")) {
+            if (empleado.registrarEmpleado("David", "david@gmail.com", "1234","Cajero").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -28,7 +28,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("", "david@gmail.com", "1234","Cajero")) {
+            if (empleado.registrarEmpleado("", "david@gmail.com", "1234","Cajero").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -43,7 +43,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "", "1234","Cajero")) {
+            if (empleado.registrarEmpleado("David", "", "1234","Cajero").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -58,7 +58,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "david@gmail.com", "","Cajero")) {
+            if (empleado.registrarEmpleado("David", "david@gmail.com", "","Cajero").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -73,7 +73,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "david@gmail.com", "1234","")) {
+            if (empleado.registrarEmpleado("David", "david@gmail.com", "1234","").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -88,7 +88,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "davidgmail.com", "1234","Cajero")) {
+            if (empleado.registrarEmpleado("David", "davidgmail.com", "1234","Cajero").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -103,7 +103,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "ana.torres@gmail.com", "1234","Cajero")) {
+            if (empleado.registrarEmpleado("David", "ana.torres@gmail.com", "1234","Cajero").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -118,7 +118,7 @@ public class RegistrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.registrarEmpleado("David", "david2@gmail.com", "1234", "Admin")) {
+            if (empleado.registrarEmpleado("David", "david2@gmail.com", "1234", "Admin").equals("Usuario registrado exitosamente.")) {
                 flag = true;
                 break;
             }
