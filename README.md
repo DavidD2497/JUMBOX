@@ -8,7 +8,7 @@
     <h1>JUMBOX - SUPERMERCADO</h1>
     <h2>SRS(Especificación de requisitos)</h2>
     <a href="https://docs.google.com/document/d/1w_qEuUtHDcTaklRvwdihYMyGGhndH649JtvnWkO6w-4/edit" target="_blank">Ver Documento SRS</a>
- <h2>Diagrama Entidad - Relación</h2>
+    <h2>Diagrama Entidad - Relación</h2>
     <img src="diagrama-er.png" alt="">
     <h2>Diagrama de Clases</h2>
     <img src="diagrama-clases.png" alt="">
