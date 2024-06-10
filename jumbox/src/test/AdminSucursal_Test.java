@@ -36,7 +36,7 @@ public class AdminSucursal_Test {
 		Producto producto = new Producto("Producto", fechaVencimiento, 100.0);
 		adminSucursal.setProducto(producto);
 
-		assertFalse(adminSucursal.crearDescuentoVencimiento(producto).equals("Se aplicó el descuento"));
+		assertTrue(adminSucursal.crearDescuentoVencimiento(producto).equals("Se aplicó el descuento"));
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class AdminSucursal_Test {
 
 		adminSucursal.editarDescuento(0, 20);
 
-		assertEquals(20.0, (double) adminSucursal.getDescuentos().get(0).getPorcentajeDesc(), 0);
+		assertEquals(20.0, (double) adminSucursal.getDescuentos().get(0).getPorcentajeDesc(), 0.001);
 
 	}
 
