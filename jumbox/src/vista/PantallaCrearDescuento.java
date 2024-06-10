@@ -3,7 +3,10 @@ package vista;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,6 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import modelos.Empleado;
+import modelos.AdminSucursal;
 
 public class PantallaCrearDescuento extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -62,18 +68,45 @@ public class PantallaCrearDescuento extends JFrame {
 		inpProd.setBounds(155, 130, 301, 31);
 		inpProd.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		contentPane.add(inpProd);
-		
+
 		JLabel lblPorc = new JLabel("Ingrese porcentaje de descuento");
 		lblPorc.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblPorc.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPorc.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblPorc.setBounds(10, 203, 611, 55);
+		lblPorc.setBounds(10, 184, 611, 55);
 		contentPane.add(lblPorc);
 
 		inpDto = new JTextField();
 		inpDto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		inpDto.setBounds(155, 262, 301, 31);
+		inpDto.setBounds(155, 234, 301, 31);
 		inpDto.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		contentPane.add(inpDto);
+
+		JButton btnCrear = new JButton("CREAR");
+		btnCrear.setFont(new Font("Consolas", Font.BOLD, 13));
+		btnCrear.setBounds(193, 302, 99, 31);
+		contentPane.add(btnCrear);
+
+		JButton btnVolver = new JButton("VOLVER");
+		btnVolver.setBackground(new Color(255, 255, 255));
+		btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
+		btnVolver.setBounds(317, 302, 99, 31);
+		contentPane.add(btnVolver);
+		
+		btnCrear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String Id = inpProd.getText();
+                String Dto = inpDto.getText();
+                String respuesta = AdminSucursal.;
+                if (respuesta.equals("Inicio de sesión exitoso.")) {
+                	PantallaDescuentos frame = new PantallaDescuentos();
+                	PantallaDescuentos.setVisible(true);
+                    dispose();
+                } else {
+                	lblAviso.setText(respuesta);
+                	lblAviso.setVisible(true);
+                }
+            }
+        });
 	}
 }
