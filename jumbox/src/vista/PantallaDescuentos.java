@@ -53,6 +53,7 @@ public class PantallaDescuentos extends JFrame {
 		btnCrearDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnCrearDescuento.setBounds(103, 143, 156, 33);
 		contentPane.add(btnCrearDescuento);
+		
 
 		JButton btnEditarDescuento = new JButton("Editar Descuento");
 		btnEditarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));

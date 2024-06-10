@@ -66,12 +66,11 @@ public class AdminSucursal extends Empleado {
 		return descuentos;
 	}
 
-	public String crearDescuentoVencimiento(Producto productoa) {
+	public String crearDescuentoVencimiento(Producto productoa, int cantDescuento) {
 		LocalDate fechaActual = LocalDate.now();
 		long diasHastaVencimiento = productoa.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
 
 		if (diasHastaVencimiento <= 14) {
-			int cantDescuento;
 			do {
 				try {
 					cantDescuento = Integer.parseInt(
@@ -138,13 +137,13 @@ public class AdminSucursal extends Empleado {
 		return "Error al editar el descuento";
 	}
 
-	public void mostrarDescuento() {
+	public void mostrarDescuento(String mensaje) {
 		if (descuentos.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No hay descuentos disponibles.");
 			return;
 		}
 
-		String mensaje = "Descuentos aplicados:\n";
+		 mensaje = "Descuentos aplicados:\n";
 		for (Descuento descuento : descuentos) {
 			mensaje += "Porcentaje: " + descuento.getPorcentajeDesc() + "%\n";
 		}
