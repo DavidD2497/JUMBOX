@@ -28,10 +28,10 @@ public class InformeControlador implements InformeRepository {
 
             while (resultSet.next()) {
                 int idInforme = resultSet.getInt("id_informe");
+                LocalDate fechaInforme = resultSet.getDate("fecha_informe").toLocalDate();
 
-                Informe informe = new Informe();
+                Informe informe = new Informe(fechaInforme);
                 informe.setIdInforme(idInforme);
-
                 informes.add(informe);
             }
         } catch (SQLException e) {
@@ -46,11 +46,11 @@ public class InformeControlador implements InformeRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM informe WHERE id_informe = ?");
             statement.setInt(1, id);
-          
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                informe = new Informe(null);
+                LocalDate fechaInforme = resultSet.getDate("fecha_informe").toLocalDate();
+                informe = new Informe(fechaInforme);
                 informe.setIdInforme(id);
             }
         } catch (SQLException e) {
@@ -62,9 +62,7 @@ public class InformeControlador implements InformeRepository {
     @Override
     public void addInforme(Informe informe) {
         try {
-        	
-        	 Date fecha = Date.valueOf(LocalDate.now());
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe,fecha_informe) VALUES (?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe, fecha_informe) VALUES (?, ?)");
             statement.setInt(1, informe.getIdInforme());
             statement.setDate(2, Date.valueOf(informe.getFechaInforme()));
             int rowsInserted = statement.executeUpdate();
@@ -78,7 +76,7 @@ public class InformeControlador implements InformeRepository {
 
     @Override
     public void updateInforme(Informe informe) {
-
+        // Implementar lógica de actualización si es necesario
     }
 
     @Override
@@ -86,7 +84,6 @@ public class InformeControlador implements InformeRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM informe WHERE id_informe = ?");
             statement.setInt(1, id);
-
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Informe eliminado exitosamente.");

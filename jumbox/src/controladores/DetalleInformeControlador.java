@@ -31,7 +31,7 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
                 int idInforme = resultSet.getInt("id_informe");
                 int idPedido = resultSet.getInt("id_pedido");
 
-                DetalleInforme detalleInforme = new DetalleInforme(idVenta, idInventario, idInforme,idPedido);
+                DetalleInforme detalleInforme = new DetalleInforme(idVenta, idInventario, idInforme, idPedido);
                 detalleInforme.setIdDetalle(idDetalle);
 
                 detallesInformes.add(detalleInforme);
@@ -56,7 +56,8 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
                 int idInventario = resultSet.getInt("id_inventario_sucursal");
                 int idInforme = resultSet.getInt("id_informe");
                 int idPedido = resultSet.getInt("id_pedido");
-                detalleInforme = new DetalleInforme(idVenta, idInventario, idInforme,idPedido);
+
+                detalleInforme = new DetalleInforme(idVenta, idInventario, idInforme, idPedido);
                 detalleInforme.setIdDetalle(idDetalle);
             }
         } catch (SQLException e) {
@@ -89,8 +90,8 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
             statement.setInt(1, detalleInforme.getIdVenta());
             statement.setInt(2, detalleInforme.getIdInventario());
             statement.setInt(3, detalleInforme.getIdInforme());
-            statement.setInt(5, detalleInforme.getIdDetalle());
             statement.setInt(4, detalleInforme.getIdPedido());
+            statement.setInt(5, detalleInforme.getIdDetalle());
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Detalle de informe actualizado exitosamente.");
@@ -99,7 +100,6 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void deleteDetalleInforme(int id) {
