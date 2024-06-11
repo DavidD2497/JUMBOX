@@ -11,13 +11,19 @@ import controladores.PedidoControlador;
 import controladores.ProductoControlador;
 import controladores.InformeControlador;
 import controladores.VentaControlador;
+import controladores.DetalleInformeControlador;
+import controladores.EntradaInventarioControlador;
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
 	int cantidadEntrada;
 	private String tipo;
+	private static PedidoControlador pedidoControlador = new PedidoControlador();
+	private static VentaControlador ventaControlador = new VentaControlador();
+	private static InformeControlador informeControlador = new InformeControlador();
+	private static DetalleInformeControlador detalleControlador = new DetalleInformeControlador();
+	private static EntradaInventarioControlador entradaControlador= new EntradaInventarioControlador();
 	
-
 	public AdminSucursal(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
 		this.tipo = "AdminSucursal";
@@ -32,7 +38,7 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public static boolean registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
-
+		LocalDate fechaEntrega = LocalDate.now();
 		if (cantidadEntrada >= 1000) {
 			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
 			// 1000.");
@@ -47,7 +53,7 @@ public class AdminSucursal extends Empleado {
 		}
 
 		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
-
+		EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
 		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
 			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
 			// inventario de la sucursal.");
@@ -57,6 +63,8 @@ public class AdminSucursal extends Empleado {
 		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
 
 		int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		EntradaInventario entrada= new EntradaInventario(idProducto, idInventarioSucursal, fechaEntrega, cantidadEntrada);
+		entradaControlador.addEntradaInventario(entrada);
 		detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
 		// JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + "
 		// unidades al producto "
@@ -107,36 +115,26 @@ public class AdminSucursal extends Empleado {
 
 	}
 
-	public void crearInforme() {
-		PedidoControlador pedidoControlador = new PedidoControlador();
-		VentaControlador ventaControlador = new VentaControlador();
-		InformeControlador informeControlador = new InformeControlador();
-		LinkedList<Object> listaDetalle = new LinkedList();
+	public static void crearInforme() {
 		LocalDate fechaInforme = LocalDate.now();
 		Informe informe = new Informe(fechaInforme);
 		informeControlador.addInforme(informe);
 		for (int i = 0; i < pedidoControlador.getAllPedidos().size(); i++) {
 			pedidoControlador.getPedidoById(i).getFechaEntrega().equals(informe.getFechaInforme());
-			listaDetalle.add("Pedido");
-			listaDetalle.add(pedidoControlador.getPedidoById(i));
-			
-		}
-		for (int i = 0; i < pedidoControlador.getAllPedidos().size(); i++) {
-			pedidoControlador.getPedidoById(i).getFechaEntrega().equals(informe.getFechaInforme());
-			listaDetalle.add(pedidoControlador.getPedidoById(i));
+			detalleControlador.addDetalleInforme(new DetalleInforme(informe.getIdInforme(), "Pedido", i));
+
 		}
 		for (int i = 0; i < ventaControlador.getAllVentas().size(); i++) {
 			ventaControlador.getVentaById(i).getFechaVenta().equals(informe.getFechaInforme());
-			listaDetalle.add(pedidoControlador.getPedidoById(i));
+			detalleControlador.addDetalleInforme(new DetalleInforme(informe.getIdInforme(), "Venta", i));
 		}
-		
-		
-		
-		
-
+		for (int i = 0; i < entradaControlador.getAllEntradasInventario().size(); i++) {
+			entradaControlador.getEntradaInventarioById(i).getFechaEntrada().equals(informe.getFechaInforme());
+			detalleControlador.addDetalleInforme(new DetalleInforme(informe.getIdInforme(), "Entrada", i));
+		}
 	}
 
-	public void mostrarPedido() {
+	public static void mostrarPedido() {
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
 	}
