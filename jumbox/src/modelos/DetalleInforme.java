@@ -1,48 +1,47 @@
 package modelos;
 
 public class DetalleInforme {
-	private int idDetalle;
-	private int idVenta;
-	private int idInforme;
-	private int idInventario;
-	
-	public DetalleInforme(int idVenta, int idInventario, int idInforme) {
-		super();
-		this.idVenta = idVenta;
-		this.idInventario = idInventario;
-		this.idInforme = idInforme;
-	}
+    private int idDetalle;
+    private int idInforme;
+    private String tipo;
+    private int idTipo;
 
-	public int getIdDetalle() {
-		return idDetalle;
-	}
+    public DetalleInforme(int idInforme, String tipo, int idTipo) {
+        this.idInforme = idInforme;
+        this.tipo = tipo;
+        this.idTipo = idTipo;
+    }
 
-	public void setIdDetalle(int idDetalle) {
-		this.idDetalle = idDetalle;
-	}
+    // Getters y setters
+    public int getIdDetalle() {
+        return idDetalle;
+    }
 
-	public int getIdVenta() {
-		return idVenta;
-	}
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
+    }
 
-	public void setIdVenta(int idVenta) {
-		this.idVenta = idVenta;
-	}
+    public int getIdInforme() {
+        return idInforme;
+    }
 
-	public int getIdInventario() {
-		return idInventario;
-	}
+    public void setIdInforme(int idInforme) {
+        this.idInforme = idInforme;
+    }
 
-	public void setIdInventario(int idInventario) {
-		this.idInventario = idInventario;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public int getIdInforme() {
-		return idInforme;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public void setIdInforme(int idInforme) {
-		this.idInforme = idInforme;
-	}
-	
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
 }
