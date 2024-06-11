@@ -98,6 +98,14 @@ public class PantallaHome extends JFrame {
         	btnFuncionPrincipal.setText("Funciones Cajero/a" );
 		} else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
 			btnFuncionPrincipal.setText("Funciones Administrador/a de Sucursal" );
+			  btnFuncionPrincipal.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+		                
+		                AdminSucursal adminSucursal = new AdminSucursal(empleado.getEmail());
+		                adminSucursal.setVisible(true);
+		                dispose();
+		            }
+		        });
 		} else {
 			btnFuncionPrincipal.setText("Funciones Administrador/a de Depósito" );
 		}
