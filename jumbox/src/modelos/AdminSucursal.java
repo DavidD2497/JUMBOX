@@ -1,12 +1,14 @@
 package modelos;
 
 import java.time.LocalDate;
+
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
 import controladores.InventarioSucursalControlador;
+import controladores.ProductoControlador;
 
 public class AdminSucursal extends Empleado {
 	private int idAdminSuc;
@@ -19,11 +21,10 @@ public class AdminSucursal extends Empleado {
 		super(nombre, email, contraseña);
 		this.tipo = "AdminSucursal";
 	}
-	
+
 	public AdminSucursal() {
 		super("", "", "");
 	}
-
 
 	public String getTipo() {
 		return tipo;
@@ -71,9 +72,9 @@ public class AdminSucursal extends Empleado {
 		return descuentos;
 	}
 
-	public String crearDescuentoVencimiento(Producto productoa, int cantDescuento) {
+	public String crearDescuentoVencimiento(Producto producto, int cantDescuento) {
 		LocalDate fechaActual = LocalDate.now();
-		long diasHastaVencimiento = productoa.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
+		long diasHastaVencimiento = producto.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
 
 		if (diasHastaVencimiento <= 14) {
 			do {
@@ -83,16 +84,18 @@ public class AdminSucursal extends Empleado {
 					if (cantDescuento > 95 || cantDescuento < 5) {
 						JOptionPane.showMessageDialog(null, "El porcentaje de descuento debe estar entre 5% y 95%");
 					} else {
-						Descuento desc = new Descuento(1, cantDescuento);
+						Descuento desc = new Descuento(cantDescuento, producto);
 
 						DescuentoControlador descuentoControlador = new DescuentoControlador();
 						descuentoControlador.addDescuento(desc);
 
-						double precioDescuentoVencimiento = this.producto.getPrecio()
+						double precioDescuentoVencimiento = producto.getPrecio()
 								* (1 - (desc.getPorcentajeDesc() / 100.0));
-						this.producto.setPrecio(precioDescuentoVencimiento);
+						ProductoControlador productoControlador = new ProductoControlador();
+						productoControlador.updateProducto(producto.getIdProducto(),
+								precioDescuentoVencimiento);
 
-						descuentos.add(desc);
+						descuentoControlador.addDescuento(desc);
 
 						JOptionPane.showMessageDialog(null,
 								"Se ha aplicado un descuento al producto " + this.producto.getNombreProducto()
@@ -148,7 +151,7 @@ public class AdminSucursal extends Empleado {
 			return;
 		}
 
-		 mensaje = "Descuentos aplicados:\n";
+		mensaje = "Descuentos aplicados:\n";
 		for (Descuento descuento : descuentos) {
 			mensaje += "Porcentaje: " + descuento.getPorcentajeDesc() + "%\n";
 		}

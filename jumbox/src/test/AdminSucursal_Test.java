@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertFalse;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 import modelos.AdminSucursal;
 import modelos.Producto;
 import modelos.Descuento;
+import controladores.DescuentoControlador;
 
 public class AdminSucursal_Test {
 	private AdminSucursal adminSucursal;
@@ -43,7 +45,8 @@ public class AdminSucursal_Test {
 
 	@Test
 	public void testEditarDescuento() {
-		Descuento descuento = new Descuento(1, 10);
+		Descuento descuento = new Descuento(15, 1);
+		DescuentoControlador descuentoControlador = new DescuentoControlador();
 		adminSucursal.getDescuentos().add(descuento);
 
 		adminSucursal.editarDescuento(0, 20);

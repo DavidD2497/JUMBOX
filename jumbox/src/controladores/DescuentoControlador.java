@@ -21,13 +21,15 @@ public class DescuentoControlador implements DescuentoRepository {
 	public List<Descuento> getAllDescuentos() {
 		List<Descuento> descuentos = new ArrayList<>();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM descuentos ");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM descuento ");
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				Descuento descuento = new Descuento(resultSet.getInt("id"), resultSet.getDouble("porcentaje"));
+				Descuento descuento = new Descuento(resultSet.getInt("porcentaje_descuento"),
+						resultSet.getInt("id_descuento"));
 				descuentos.add(descuento);
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -39,12 +41,12 @@ public class DescuentoControlador implements DescuentoRepository {
 		Descuento descuento = null;
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("SELECT * FROM `descuentos` WHERE `idDescuento` = ?");
+					.prepareStatement("SELECT * FROM `descuento` WHERE `idDescuento` = ?");
 			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
-				descuento = new Descuento(resultSet.getInt("idDescuento"), resultSet.getDouble("porcentajeDesc"));
+				descuento = new Descuento(resultSet.getInt("porcentaje_descuento"), resultSet.getInt("id_descuento"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,7 +58,7 @@ public class DescuentoControlador implements DescuentoRepository {
 	public void addDescuento(Descuento descuento) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("INSERT INTO `descuentos`(`porcentaje`) VALUES (?)");
+					.prepareStatement("INSERT INTO `descuento`(`porcentaje`) VALUES (?)");
 			statement.setDouble(1, descuento.getPorcentajeDesc());
 
 			int rowsInserted = statement.executeUpdate();
@@ -72,7 +74,7 @@ public class DescuentoControlador implements DescuentoRepository {
 	public void updateDescuento(Descuento descuento) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE `descuentos` SET `porcentaje` = ? WHERE `idDescuento` = ?");
+					.prepareStatement("UPDATE `descuento` SET `porcentaje` = ? WHERE `idDescuento` = ?");
 			statement.setDouble(1, descuento.getPorcentajeDesc());
 			statement.setInt(2, descuento.getIdDescuento());
 

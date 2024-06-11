@@ -59,7 +59,7 @@ public class PantallaCrearDescuento extends JFrame {
 		crearDescuento.setBounds(171, 21, 285, 41);
 		contentPane.add(crearDescuento);
 
-		JLabel lblId = new JLabel("Ingrese el ID del producto");
+		JLabel lblId = new JLabel("Seleccione el ID del producto");
 		lblId.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblId.setHorizontalAlignment(SwingConstants.CENTER);
 		lblId.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -101,8 +101,8 @@ public class PantallaCrearDescuento extends JFrame {
                 String Id = inpProd.getText();
                 String Dto = inpDto.getText();
                 AdminSucursal nuevo = new AdminSucursal();
-                String respuesta = nuevo.crearDescuentoVencimiento(null, ABORT);
-                if (respuesta.equals("Inicio de sesión exitoso.")) {
+                String respuesta = nuevo.crearDescuentoVencimiento(Id,Dto);
+                if (respuesta.equals("Descuento creado exitosamente")) {
                 	PantallaDescuentos frame = new PantallaDescuentos();
                 	PantallaDescuentos.setVisible(true);
                     dispose();

@@ -2,12 +2,18 @@ package modelos;
 
 public class Descuento {
 	private int idDescuento;
-	private double porcentajeDesc;
+	private int porcentajeDesc;
+	private Producto producto;
+	int idProducto;
 
-	public Descuento(int idDescuento, double porcentajeDesc) {
-		super();
-		this.idDescuento = idDescuento;
+	public Descuento(int porcentajeDescuento, int idProducto) {
 		this.porcentajeDesc = porcentajeDesc;
+		this.idProducto = idProducto;
+	}
+
+	public Descuento(int porcentajeDescuento, Producto producto) {
+		this.porcentajeDesc = porcentajeDescuento;
+		this.producto = producto;
 	}
 
 	public int getIdDescuento() {
@@ -22,7 +28,7 @@ public class Descuento {
 		return porcentajeDesc;
 	}
 
-	public void setPorcentajeDesc(double porcentajeDesc) {
+	public void setPorcentajeDesc(int porcentajeDesc) {
 		this.porcentajeDesc = porcentajeDesc;
 	}
 }
