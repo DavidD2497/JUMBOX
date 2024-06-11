@@ -88,6 +88,13 @@ public class PantallaHome extends JFrame {
         btnEliminarUsuario.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEliminarUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnEliminarUsuario.setBounds(219, 189, 156, 33);
+        btnEliminarUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PantallaEliminarEmpleado pantallaEliminarEmpleado = new PantallaEliminarEmpleado(empleado.getEmail());
+                pantallaEliminarEmpleado.setVisible(true);
+                dispose();
+            }
+        });
         contentPane.add(btnEliminarUsuario);
         
         JButton btnFuncionPrincipal = new JButton("");
