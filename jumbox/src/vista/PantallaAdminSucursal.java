@@ -18,12 +18,12 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AdminSucursal extends JFrame {
+public class PantallaAdminSucursal extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 
-    public AdminSucursal(String mail) {
+    public PantallaAdminSucursal(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 626, 383);
         

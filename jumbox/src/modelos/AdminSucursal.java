@@ -31,19 +31,19 @@ public class AdminSucursal extends Empleado {
 		this.tipo = tipo;
 	}
 
-	public static boolean registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
+	public static String registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
 
 		if (cantidadEntrada >= 1000) {
 			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
 			// 1000.");
 
-			return false;
+			return "La cantidad de Entrada debe ser menor que 1000.";
 		}
 
 		if (cantidadEntrada <= 0) {
 			// JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor
 			// que cero.");
-			return false;
+			return "La cantidad de Entrada debe ser mayor que cero";
 		}
 
 		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
@@ -51,7 +51,7 @@ public class AdminSucursal extends Empleado {
 		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
 			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
 			// inventario de la sucursal.");
-			return false;
+			return "El ID no existe en el inventario de la sucursal.";
 		}
 
 		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
@@ -62,7 +62,7 @@ public class AdminSucursal extends Empleado {
 		// unidades al producto "
 		// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
 		// con éxito.");
-		return true;
+		return "Registro con éxito";
 
 	}
 
@@ -139,5 +139,10 @@ public class AdminSucursal extends Empleado {
 	public void mostrarPedido() {
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }

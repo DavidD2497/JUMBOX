@@ -116,7 +116,7 @@ public class PantallaDescuento extends JFrame {
         JButton btnVolveralHome = new JButton("Volver");
         btnVolveralHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	AdminSucursal adminsucursal = new AdminSucursal(empleado.getEmail());
+            	PantallaAdminSucursal adminsucursal = new PantallaAdminSucursal(empleado.getEmail());
                 adminsucursal.setVisible(true);
                 dispose();
             }

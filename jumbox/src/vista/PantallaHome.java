@@ -101,7 +101,7 @@ public class PantallaHome extends JFrame {
 			  btnFuncionPrincipal.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent e) {
 		                
-		                AdminSucursal adminSucursal = new AdminSucursal(empleado.getEmail());
+		                PantallaAdminSucursal adminSucursal = new PantallaAdminSucursal(empleado.getEmail());
 		                adminSucursal.setVisible(true);
 		                dispose();
 		            }
