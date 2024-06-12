@@ -74,7 +74,7 @@ public class PantallaMostrarPedido extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
         scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        scrollPane.setBounds(41, 109, 810, 264);
+        scrollPane.setBounds(51, 80, 761, 177);
         contentPane.add(scrollPane);
 
         
