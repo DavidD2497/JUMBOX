@@ -57,16 +57,16 @@ public class PantallaPedido extends JFrame {
 
         contentPane.add(lblIdentificacion);
         
-        JButton btnMostrarPedido = new JButton("Mostrar Pedido");
+        JButton btnMostrarPedido = new JButton("Mostrar Pedidos");
         btnMostrarPedido.setFont(new Font("Consolas", Font.BOLD, 15));
         btnMostrarPedido.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnMostrarPedido.setBounds(40, 162, 173, 33);
         btnMostrarPedido.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Lógica para el botón de Registro de entrada
-                // PantallaRegistroEntrada pantallaRegistroEntrada = new PantallaRegistroEntrada(empleado.getEmail());
-              //  pantallaRegistroEntrada.setVisible(true);
-                // dispose();
+                
+                PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(empleado.getEmail());
+                pantallaMostrarPedido.setVisible(true);
+                 dispose();
             }
         });
         contentPane.add(btnMostrarPedido);
