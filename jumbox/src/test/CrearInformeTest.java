@@ -1,37 +1,40 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import java.time.LocalDate;
-
+import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
+import controladores.*;
+import modelos.*;
 
-import modelos.AdminSucursal;
-import modelos.DetallePedido;
-import modelos.Empleado;
-import modelos.Informe;
-import controladores.EmpleadoControlador;
-import controladores.EntradaInventarioControlador;
-import controladores.EntradaInventarioControlador;
-public class CrearInformeTest{
-	
-	
-	    @Test
-	    public void EmpleadoBorradoCorrecto() {
-	        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
-	        EntradaInventarioControlador entradaControlador= new EntradaInventarioControlador();
-	        boolean flag = false;
+public class CrearInformeTest {
 
-	        
-	        LocalDate fechaInforme = LocalDate.now();
-	        Informe informe = new Informe(fechaInforme);
-			boolean resultado = AdminSucursal.crearInforme();;
-			assertTrue(resultado);
-	        assertEquals(true, flag);
-	    }
-	    
-	   
-	}
+    private InformeControlador informeControlador;
+    private PedidoControlador pedidoControlador;
+    private VentaControlador ventaControlador;
+    private EntradaInventarioControlador entradaControlador;
+    private DetalleInformeControlador detalleControlador;
+    private DetallePedidoControlador detPedidoControlador;
 
+    @Before
+    public void setUp() {
+        informeControlador = new InformeControlador();
+        pedidoControlador = new PedidoControlador();
+        ventaControlador = new VentaControlador();
+        entradaControlador = new EntradaInventarioControlador();
+        detalleControlador = new DetalleInformeControlador();
+    }
 
+    @Test
+    public void informeCreadoCorrectamente() {
+        // Crear y agregar el informe
+       
+        
+    	boolean resultado = AdminSucursal.crearInforme();
+
+        assertEquals(true,resultado);
+    }
+}

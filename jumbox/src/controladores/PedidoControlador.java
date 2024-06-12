@@ -42,7 +42,7 @@ public class PedidoControlador implements PedidoRepository {
     public Pedido getPedidoById(int id) {
         Pedido pedido = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE id_pedido = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE codigo_pedido = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 

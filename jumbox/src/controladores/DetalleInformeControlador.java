@@ -19,9 +19,21 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
 
     @Override
     public List<DetalleInforme> getAllDetalleInformes() {
+        return getDetalleInformes("SELECT * FROM detalle_informe", -1);
+    }
+
+    @Override
+    public List<DetalleInforme> getAllDetalleInformesByInformeId(int informeId) {
+        return getDetalleInformes("SELECT * FROM detalle_informe WHERE id_informe = ?", informeId);
+    }
+
+    private List<DetalleInforme> getDetalleInformes(String query, int informeId) {
         List<DetalleInforme> detallesInformes = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_informe");
+            PreparedStatement statement = connection.prepareStatement(query);
+            if (informeId != -1) {
+                statement.setInt(1, informeId);
+            }
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -113,4 +125,21 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
             e.printStackTrace();
         }
     }
+
+    public int obtenerUltimoIdDetalle() {
+        int ultimoIdDetalle = -1;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_detalle_informe) AS max_id FROM detalle_informe");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                ultimoIdDetalle = resultSet.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ultimoIdDetalle;
+    }
+
 }
+
