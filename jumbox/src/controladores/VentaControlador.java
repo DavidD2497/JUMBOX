@@ -1,9 +1,11 @@
 package controladores;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import interfaces.VentaRepository;
@@ -24,10 +26,13 @@ public class VentaControlador implements VentaRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                int idVenta = resultSet.getInt("id_venta");
                 double montoTotal = resultSet.getDouble("monto_total");
                 String tipoPago = resultSet.getString("tipo_pago");
+                LocalDate fechaVenta = resultSet.getDate("fecha_venta").toLocalDate();
 
-                Venta venta = new Venta(montoTotal, tipoPago);
+                Venta venta = new Venta(montoTotal, tipoPago, fechaVenta);
+                venta.setIdVenta(idVenta);
                 ventas.add(venta);
             }
         } catch (SQLException e) {
@@ -45,10 +50,13 @@ public class VentaControlador implements VentaRepository {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                int idVenta = resultSet.getInt("id_venta");
                 double montoTotal = resultSet.getDouble("monto_total");
                 String tipoPago = resultSet.getString("tipo_pago");
+                LocalDate fechaVenta = resultSet.getDate("fecha_venta").toLocalDate();
 
-                venta = new Venta(montoTotal, tipoPago);
+                venta = new Venta(montoTotal, tipoPago, fechaVenta);
+                venta.setIdVenta(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,9 +67,10 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void addVenta(Venta venta) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO venta (monto_total, tipo_pago) VALUES (?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO venta (monto_total, tipo_pago, fecha_venta) VALUES (?, ?, ?)");
             statement.setDouble(1, venta.getMontoTotal());
             statement.setString(2, venta.getTipoPago());
+            statement.setDate(3, Date.valueOf(venta.getFechaVenta()));
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -75,10 +84,11 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void updateVenta(Venta venta) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE venta SET monto_total = ?, tipo_pago = ? WHERE id_venta = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE venta SET monto_total = ?, tipo_pago = ?, fecha_venta = ? WHERE id_venta = ?");
             statement.setDouble(1, venta.getMontoTotal());
             statement.setString(2, venta.getTipoPago());
-            statement.setInt(3, venta.getIdVenta());
+            statement.setDate(3, Date.valueOf(venta.getFechaVenta()));
+            statement.setInt(4, venta.getIdVenta());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -103,6 +113,7 @@ public class VentaControlador implements VentaRepository {
             e.printStackTrace();
         }
     }
+
     
     @Override
     public int obtenerUltimoIdVenta() {

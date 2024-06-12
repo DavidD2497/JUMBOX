@@ -50,9 +50,9 @@ public class PantallaCajero extends JFrame {
         btnRegistrarVenta.setBounds(219, 94, 156, 33);
         btnRegistrarVenta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //PantallaRegistroEmpleado pantallaRegistroEmpleado = new PantallaRegistroEmpleado(empleado.getEmail());
-                //pantallaRegistroEmpleado.setVisible(true);
-                //dispose();
+            	PantallaRegistrarVenta pantallaRegistrarVenta = new PantallaRegistrarVenta(empleado.getEmail());
+            	pantallaRegistrarVenta.setVisible(true);
+                dispose();
             }
         });
         contentPane.add(btnRegistrarVenta);

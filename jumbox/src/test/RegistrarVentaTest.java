@@ -35,7 +35,7 @@ public class RegistrarVentaTest {
         detallesVenta.add(new DetalleVenta(5,idVenta,productoControlador.getPrecioProductoById(5), 4));
 
 
-        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago);
+        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago).equals("Venta registrada con éxito");
 
         assertEquals(true, resultado);
     }
@@ -59,7 +59,7 @@ public class RegistrarVentaTest {
         detallesVenta.add(new DetalleVenta(5,idVenta,productoControlador.getPrecioProductoById(5), 4));
 
 
-        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago);
+        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago).equals("Venta registrada con éxito");
 
         assertEquals(false, resultado);
     }
@@ -83,7 +83,7 @@ public class RegistrarVentaTest {
         detallesVenta.add(new DetalleVenta(4,idVenta,productoControlador.getPrecioProductoById(5), 4));
 
 
-        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago);
+        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago).equals("Venta registrada con éxito");
 
         assertEquals(false, resultado);
     }
@@ -107,10 +107,11 @@ public class RegistrarVentaTest {
         detallesVenta.add(new DetalleVenta(5,idVenta,productoControlador.getPrecioProductoById(5), 400));
 
 
-        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago);
+        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago).equals("Venta registrada con éxito");
 
         assertEquals(false, resultado);
     }
+
     
     @Test
     public void RegistrarVentaProductoCantidadMenorOIgualACero() {
@@ -131,7 +132,7 @@ public class RegistrarVentaTest {
         detallesVenta.add(new DetalleVenta(5,idVenta,productoControlador.getPrecioProductoById(5), 0));
 
 
-        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago);
+        resultado = Cajero.registrarVenta(idInventarioSucursal, detallesVenta, tipoPago).equals("Venta registrada con éxito");
 
         assertEquals(false, resultado);
     }

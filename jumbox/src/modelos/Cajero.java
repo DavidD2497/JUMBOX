@@ -1,5 +1,6 @@
 package modelos;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import controladores.DetalleVentaControlador;
@@ -45,10 +46,9 @@ public class Cajero extends Empleado {
         }
     }
 
-    public static boolean registrarVenta(int idInventarioSucursal, List<DetalleVenta> detallesVenta, String tipoPago) {
+    public static String registrarVenta(int idInventarioSucursal, List<DetalleVenta> detallesVenta, String tipoPago) {
         if (idInventarioSucursal == 0 || detallesVenta.isEmpty() || tipoPago.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Todos los campos deben ser completados.");
-            return false;
+            return "Todos los campos deben ser completados.";
         }
 
         DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
@@ -57,19 +57,16 @@ public class Cajero extends Empleado {
         for (DetalleVenta detalle : detallesVenta) {
             if (detalle.getCantidad() <= 0) {
                 todosDisponibles = false;
-                //JOptionPane.showMessageDialog(null, "La cantidad de cada producto debe ser mayor que cero.");
-                break;
+                return "La cantidad de cada producto debe ser mayor que cero.";
             }
             if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, detalle.getIdProducto())) {
                 todosDisponibles = false;
-                //JOptionPane.showMessageDialog(null, "No se puede registrar la venta porque no existe el producto en esta sucursal");
-                break;
+                return "No se puede registrar la venta porque no existe el producto en esta sucursal";
             } else {
                 int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
                 if (cantidadDisponible < detalle.getCantidad()) {
                     todosDisponibles = false;
-                    //JOptionPane.showMessageDialog(null, "No se puede registrar la venta porque no están disponibles la cantidad requerida en el inventario de la sucursal, la cantidad total disponible es " + detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto()));
-                    break;
+                    return "No se puede registrar la venta porque no están disponibles la cantidad requerida en el inventario de la sucursal, la cantidad total disponible es " + detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
                 }
             }
         }
@@ -83,8 +80,8 @@ public class Cajero extends Empleado {
                 int cantidadTotal = cantidadDisponible - detalle.getCantidad();
                 detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, detalle.getIdProducto(), cantidadTotal);
             }
-
-            Venta venta = new Venta(montoTotal, tipoPago);
+            LocalDate fechaVenta = LocalDate.now();
+            Venta venta = new Venta(montoTotal, tipoPago, fechaVenta);
             VentaControlador ventaControlador = new VentaControlador();
             ventaControlador.addVenta(venta);
             
@@ -94,10 +91,9 @@ public class Cajero extends Empleado {
                 detalleVentaControlador.addDetalleVenta(detalle);
             }
 
-            //JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
-            return true;
+            return "Venta registrada con éxito";
         } else {
-            return false;
+            return "No todos los productos estan disponibles en el inventario";
         }
     }
 

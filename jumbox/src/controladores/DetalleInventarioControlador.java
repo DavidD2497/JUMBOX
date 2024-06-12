@@ -65,7 +65,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void addDetalleInventario(DetalleInventario detalleInventario) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_inventario (id_producto, id_inventario_sucursal, id_descuento, cantidad) VALUES (?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_inventario (id_producto, id_inventario, id_descuento, cantidad) VALUES (?, ?, ?, ?)");
             statement.setInt(1, detalleInventario.getIdProducto());
             statement.setInt(2, detalleInventario.getIdInventarioSucursal());
             statement.setInt(3, detalleInventario.getIdDescuento());
@@ -80,7 +80,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void updateDetalleInventario(DetalleInventario detalleInventario) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_inventario SET id_producto = ?, id_inventario_sucursal = ?, id_descuento = ?, cantidad = ? WHERE id_detalle = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_inventario SET id_producto = ?, id_inventario = ?, id_descuento = ?, cantidad = ? WHERE id_detalle = ?");
             statement.setInt(1, detalleInventario.getIdProducto());
             statement.setInt(2, detalleInventario.getIdInventarioSucursal());
             statement.setInt(3, detalleInventario.getIdDescuento());
@@ -117,7 +117,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     public int getCantidadDisponible(int idInventarioSucursal, int idProducto) {
         int cantidadDisponible = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalle_inventario` WHERE `id_inventario` = ? AND `id_producto` = ?");
             statement.setInt(1, idInventarioSucursal);
             statement.setInt(2, idProducto);
             ResultSet resultSet = statement.executeQuery();
@@ -135,7 +135,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void actualizarCantidadProducto(int idInventarioSucursal, int idProducto, int nuevaCantidad) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE `detalle_inventario` SET `cantidad` = ? WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE `detalle_inventario` SET `cantidad` = ? WHERE `id_inventario` = ? AND `id_producto` = ?");
             statement.setInt(1, nuevaCantidad);
             statement.setInt(2, idInventarioSucursal);
             statement.setInt(3, idProducto);
@@ -151,7 +151,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     public boolean existeProducto(int idInventarioSucursal, int idProducto) {
         boolean existe = false;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalle_inventario` WHERE `id_inventario` = ? AND `id_producto` = ?");
             
             statement.setInt(1, idInventarioSucursal); 
             statement.setInt(2, idProducto); 
