@@ -129,10 +129,10 @@ public class AdminSucursal extends Empleado {
 			if (pedido.getFechaEntrega().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Pedido", 0);
 				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
-				detalle.setIdDetalle(detalleControlador.obtenerUltimoIdDetalle());
+				detalle.setIdTipo(pedido.getCodigoPedido());
 				detalleControlador.addDetalleInforme(detalle);
 				JOptionPane.showMessageDialog(null,
-						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdDetalle());
+						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdTipo());
 
 				j++;
 			}
@@ -142,10 +142,10 @@ public class AdminSucursal extends Empleado {
 			if (venta.getFechaVenta().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Venta", 0);
 				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
-				detalle.setIdDetalle(detalleControlador.obtenerUltimoIdDetalle() + 1);
+				detalle.setIdTipo(venta.getIdVenta());
 				detalleControlador.addDetalleInforme(detalle);
 				JOptionPane.showMessageDialog(null,
-						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdDetalle());
+						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdTipo());
 
 				j++;
 			}
@@ -157,10 +157,10 @@ public class AdminSucursal extends Empleado {
 			if (entrada.getFechaEntrada().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Entrada", 0);
 				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
-				detalle.setIdDetalle(detalleControlador.obtenerUltimoIdDetalle() + 1);
+				detalle.setIdTipo(entrada.getIdEntrada());
 				detalleControlador.addDetalleInforme(detalle);
 				JOptionPane.showMessageDialog(null,
-						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdDetalle());
+						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdTipo());
 
 				j++;
 			}

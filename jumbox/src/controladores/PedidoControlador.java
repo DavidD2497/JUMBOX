@@ -97,7 +97,7 @@ public class PedidoControlador implements PedidoRepository {
         int ultimoIdPedido = -1;
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_pedido) FROM pedido");
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(codigo_pedido) FROM pedido");
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -115,7 +115,7 @@ public class PedidoControlador implements PedidoRepository {
     public void actualizarEstadoPedido(int codigoPedido, String estado) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigoPedido = ?");
+					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigo_Pedido = ?");
 			statement.setString(1, estado);
 			statement.setInt(2, codigoPedido);
 

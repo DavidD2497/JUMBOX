@@ -15,4 +15,7 @@ public interface EntradaInventarioRepository {
     void updateEntradaInventario(EntradaInventario entrada); // Actualiza una entrada de inventario en la base de datos
 
     void deleteEntradaInventario(int id); // Elimina una entrada de inventario de la base de datos
+
+
+	int obtenerUltimoIdEntrada();
 }

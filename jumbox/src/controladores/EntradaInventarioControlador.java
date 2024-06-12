@@ -114,4 +114,20 @@ public class EntradaInventarioControlador implements EntradaInventarioRepository
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public int obtenerUltimoIdEntrada() {
+        int ultimoIdDetalle = -1;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_entrada) AS max_id FROM entrada_inventario");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                ultimoIdDetalle = resultSet.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ultimoIdDetalle;
+    }
 }
