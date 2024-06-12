@@ -117,7 +117,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     public int getCantidadDisponible(int idInventarioSucursal, int idProducto) {
         int cantidadDisponible = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM `detalle_inventario` WHERE `id_inventario` = ? AND `id_producto` = ?");
             statement.setInt(1, idInventarioSucursal);
             statement.setInt(2, idProducto);
             ResultSet resultSet = statement.executeQuery();
@@ -135,7 +135,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void actualizarCantidadProducto(int idInventarioSucursal, int idProducto, int nuevaCantidad) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE `detalle_inventario` SET `cantidad` = ? WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE `detalle_inventario` SET `cantidad` = ? WHERE `id_inventario` = ? AND `id_producto` = ?");
             statement.setInt(1, nuevaCantidad);
             statement.setInt(2, idInventarioSucursal);
             statement.setInt(3, idProducto);
@@ -151,7 +151,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     public boolean existeProducto(int idInventarioSucursal, int idProducto) {
         boolean existe = false;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalle_inventario` WHERE `id_inventario_sucursal` = ? AND `id_producto` = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `detalle_inventario` WHERE `id_inventario` = ? AND `id_producto` = ?");
             
             statement.setInt(1, idInventarioSucursal); 
             statement.setInt(2, idProducto); 

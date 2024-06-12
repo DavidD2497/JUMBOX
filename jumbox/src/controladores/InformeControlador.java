@@ -64,7 +64,7 @@ public class InformeControlador implements InformeRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe, fecha_informe) VALUES (?, ?)");
             statement.setInt(1, informe.getIdInforme());
-            statement.setDate(2, Date.valueOf(informe.getFechaInforme()));
+            statement.setDate(2, Date.valueOf(LocalDate.now()));
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Informe agregado exitosamente.");
@@ -77,6 +77,24 @@ public class InformeControlador implements InformeRepository {
     @Override
     public void updateInforme(Informe informe) {
         // Implementar lógica de actualización si es necesario
+    }
+    
+    @Override
+    public int obtenerUltimoIdInforme() {
+        int ultimoIdInforme = -1;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_informe) FROM informe");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                ultimoIdInforme = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ultimoIdInforme;
     }
 
     @Override

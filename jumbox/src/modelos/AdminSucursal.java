@@ -11,12 +11,18 @@ import controladores.PedidoControlador;
 import controladores.ProductoControlador;
 import controladores.InformeControlador;
 import controladores.VentaControlador;
+import controladores.DetalleInformeControlador;
+import controladores.EntradaInventarioControlador;
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
 	int cantidadEntrada;
 	private String tipo;
-	
+	private static PedidoControlador pedidoControlador = new PedidoControlador();
+	private static VentaControlador ventaControlador = new VentaControlador();
+	private static InformeControlador informeControlador = new InformeControlador();
+	private static DetalleInformeControlador detalleControlador = new DetalleInformeControlador();
+	private static EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
 
 	public AdminSucursal(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
@@ -32,37 +38,40 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public static String registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
-
+		LocalDate fechaEntrega = LocalDate.now();
 		if (cantidadEntrada >= 1000) {
 			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
 			// 1000.");
 
-			return "La cantidad de Entrada debe ser menor que 1000.";
+			return "Error";
 		}
 
 		if (cantidadEntrada <= 0) {
 			// JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor
 			// que cero.");
-			return "La cantidad de Entrada debe ser mayor que cero";
+			return "Error";
 		}
 
 		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
-
+		EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
 		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
 			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
 			// inventario de la sucursal.");
-			return "El ID no existe en el inventario de la sucursal.";
+			return "Error";
 		}
 
 		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
 
 		int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		EntradaInventario entrada = new EntradaInventario(idProducto, idInventarioSucursal, fechaEntrega,
+				cantidadEntrada);
+		entradaControlador.addEntradaInventario(entrada);
 		detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
 		// JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + "
 		// unidades al producto "
 		// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
 		// con éxito.");
-		return "Registro con éxito";
+		return "correcto";
 
 	}
 
@@ -107,42 +116,44 @@ public class AdminSucursal extends Empleado {
 
 	}
 
-	public void crearInforme() {
-		PedidoControlador pedidoControlador = new PedidoControlador();
-		VentaControlador ventaControlador = new VentaControlador();
-		InformeControlador informeControlador = new InformeControlador();
-		LinkedList<Object> listaDetalle = new LinkedList();
+	public static boolean crearInforme() {
 		LocalDate fechaInforme = LocalDate.now();
 		Informe informe = new Informe(fechaInforme);
 		informeControlador.addInforme(informe);
-		for (int i = 0; i < pedidoControlador.getAllPedidos().size(); i++) {
-			pedidoControlador.getPedidoById(i).getFechaEntrega().equals(informe.getFechaInforme());
-			listaDetalle.add("Pedido");
-			listaDetalle.add(pedidoControlador.getPedidoById(i));
-			
-		}
-		for (int i = 0; i < pedidoControlador.getAllPedidos().size(); i++) {
-			pedidoControlador.getPedidoById(i).getFechaEntrega().equals(informe.getFechaInforme());
-			listaDetalle.add(pedidoControlador.getPedidoById(i));
-		}
-		for (int i = 0; i < ventaControlador.getAllVentas().size(); i++) {
-			ventaControlador.getVentaById(i).getFechaVenta().equals(informe.getFechaInforme());
-			listaDetalle.add(pedidoControlador.getPedidoById(i));
-		}
-		
-		
-		
-		
+		JOptionPane.showMessageDialog(null, fechaInforme);
+		for (Pedido pedido : pedidoControlador.getAllPedidos()) {
+			pedidoControlador.getPedidoById(j);
+			JOptionPane.showMessageDialog(null, pedido.getFechaEntrega());
 
+			if (pedido.getFechaEntrega().equals(fechaInforme)) {
+				DetalleInforme detalle = new DetalleInforme(0, "Pedido", 0);
+				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
+				detalle.setIdTipo(pedido.getCodigoPedido());
+				detalleControlador.addDetalleInforme(detalle);
+			}
+		}
+		for (Venta venta : ventaControlador.getAllVentas()) {
+			if (venta.getFechaVenta().equals(fechaInforme)) {
+				DetalleInforme detalle = new DetalleInforme(0, "Venta", 0);
+				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
+				detalle.setIdTipo(venta.getIdVenta());
+				detalleControlador.addDetalleInforme(detalle);
+			}
+		}
+		for (EntradaInventario entrada : entradaControlador.getAllEntradasInventario()) {
+			if (entrada.getFechaEntrada().equals(fechaInforme)) {
+				DetalleInforme detalle = new DetalleInforme(0, "Entrada", 0);
+				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
+				detalle.setIdTipo(entrada.getIdEntrada());
+				detalleControlador.addDetalleInforme(detalle);
+			}
+		}
+
+		return true;
 	}
 
-	public void mostrarPedido() {
+	public static void mostrarPedido() {
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
-	}
-
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
 	}
 }
