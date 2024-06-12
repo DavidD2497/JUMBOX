@@ -71,7 +71,7 @@ public class AdminSucursal extends Empleado {
 		// unidades al producto "
 		// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
 		// con éxito.");
-	return "correcto";
+		return "correcto";
 
 	}
 
@@ -118,7 +118,6 @@ public class AdminSucursal extends Empleado {
 
 	public static boolean crearInforme() {
 		LocalDate fechaInforme = LocalDate.now();
-		int j = 1;
 		Informe informe = new Informe(fechaInforme);
 		informeControlador.addInforme(informe);
 		JOptionPane.showMessageDialog(null, fechaInforme);
@@ -131,38 +130,22 @@ public class AdminSucursal extends Empleado {
 				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
 				detalle.setIdTipo(pedido.getCodigoPedido());
 				detalleControlador.addDetalleInforme(detalle);
-				JOptionPane.showMessageDialog(null,
-						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdTipo());
-
-				j++;
 			}
 		}
-		j = 1;
 		for (Venta venta : ventaControlador.getAllVentas()) {
 			if (venta.getFechaVenta().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Venta", 0);
 				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
 				detalle.setIdTipo(venta.getIdVenta());
 				detalleControlador.addDetalleInforme(detalle);
-				JOptionPane.showMessageDialog(null,
-						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdTipo());
-
-				j++;
 			}
 		}
-		j = 1;
-		JOptionPane.showMessageDialog(null, "hola");
-
 		for (EntradaInventario entrada : entradaControlador.getAllEntradasInventario()) {
 			if (entrada.getFechaEntrada().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Entrada", 0);
 				detalle.setIdInforme(informeControlador.obtenerUltimoIdInforme());
 				detalle.setIdTipo(entrada.getIdEntrada());
 				detalleControlador.addDetalleInforme(detalle);
-				JOptionPane.showMessageDialog(null,
-						detalle.getTipo() + " " + detalle.getIdInforme() + " " + detalle.getIdTipo());
-
-				j++;
 			}
 		}
 
