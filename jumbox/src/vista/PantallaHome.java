@@ -103,6 +103,14 @@ public class PantallaHome extends JFrame {
         btnFuncionPrincipal.setBounds(96, 110, 392, 33);
         if (empleadoControlador.getUserTypeByEmail(mail).equals("Cajero")) {
         	btnFuncionPrincipal.setText("Funciones Cajero/a" );
+            btnFuncionPrincipal.addActionListener(new ActionListener() {
+                  public void actionPerformed(ActionEvent e) {
+
+                      PantallaCajero pantallaCajero = new PantallaCajero(empleado.getEmail());
+                      pantallaCajero.setVisible(true);
+                      dispose();
+                  }
+              });
 		} else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
 			btnFuncionPrincipal.setText("Funciones Administrador/a de Sucursal" );
 		} else {

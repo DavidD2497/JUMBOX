@@ -23,15 +23,15 @@ public class Cajero extends Empleado {
         this.tipo = tipo;
     }
 
-    public static boolean registrarSalidaProductoInventarioSuc(int idInventarioSucursal, int idProducto, int cantidadSalida) {
+    public static String registrarSalidaProductoInventarioSuc(int idInventarioSucursal, int idProducto, int cantidadSalida) {
         if (cantidadSalida <= 0) {
-            return false;
+            return "No puedes registrar salidas menores a 0";
         }
 
         DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 
         if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-            return false;
+            return "No existe ese producto en esta sucursal";
         }
 
         int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
@@ -39,9 +39,9 @@ public class Cajero extends Empleado {
         if (cantidadDisponible >= cantidadSalida) {
             int cantidadTotal = cantidadDisponible - cantidadSalida;
             detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-            return true;
+            return "Salida registrada correctamente";
         } else {
-            return false;
+            return "No hay suficiente cantidad, la cantidad total actual es " + cantidadDisponible;
         }
     }
 
