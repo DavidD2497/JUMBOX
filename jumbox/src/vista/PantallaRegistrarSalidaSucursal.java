@@ -94,7 +94,7 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         lblSeleccion.setVerticalAlignment(SwingConstants.BOTTOM);
         lblSeleccion.setHorizontalAlignment(SwingConstants.CENTER);
         lblSeleccion.setFont(new Font("Consolas", Font.BOLD, 16));
-        lblSeleccion.setBounds(0, 230, 796, 29);
+        lblSeleccion.setBounds(0, 210, 796, 29);
         contentPane.add(lblSeleccion);
 
         tableModel = new DefaultTableModel(
@@ -110,7 +110,7 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        scrollPane.setBounds(51, 79, 683, 142);
+        scrollPane.setBounds(51, 91, 683, 90);
         contentPane.add(scrollPane);
 
         cargarProducto();
