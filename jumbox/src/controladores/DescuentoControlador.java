@@ -1,6 +1,7 @@
 package controladores;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,8 +26,10 @@ public class DescuentoControlador implements DescuentoRepository {
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				Descuento descuento = new Descuento(resultSet.getInt("porcentaje_descuento"),
-						resultSet.getInt("id_descuento"));
+				int idDescuento = resultSet.getInt("id_descuento");
+                int porcentajeDesc = resultSet.getInt("porcentaje_descuento");
+                int idProducto = resultSet.getInt("id_producto");
+				Descuento descuento = new Descuento(porcentajeDesc, idDescuento, idProducto);
 				descuentos.add(descuento);
 			}
 
@@ -46,7 +49,7 @@ public class DescuentoControlador implements DescuentoRepository {
 			ResultSet resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
-				descuento = new Descuento(resultSet.getInt("porcentaje_descuento"), resultSet.getInt("id_descuento"));
+				descuento = new Descuento(resultSet.getInt("porcentaje_descuento"), resultSet.getInt("id_descuento"), resultSet.getInt("id_producto"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

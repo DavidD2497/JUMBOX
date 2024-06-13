@@ -1,8 +1,5 @@
 package vista;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -18,6 +15,7 @@ public class PantallaMostrarDescuentos extends JFrame {
 	private DefaultTableModel tableModel;
 	private int selectedRow = -1;
 	private JTable table;
+	private JScrollPane scrollPane;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -40,7 +38,7 @@ public class PantallaMostrarDescuentos extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblMostrarDescuento = new JLabel("Mostrar Descuentos");
-		lblMostrarDescuento.setBounds(185, 11, 496, 40);
+		lblMostrarDescuento.setBounds(172, 11, 304, 40);
 		lblMostrarDescuento.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMostrarDescuento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMostrarDescuento.setFont(new Font("Consolas", Font.BOLD, 28));
@@ -54,6 +52,17 @@ public class PantallaMostrarDescuentos extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
+		table.getSelectionModel().addListSelectionListener(event -> {
+		    if (!event.getValueIsAdjusting()) {
+		        int selectedRow = table.getSelectedRow();
+		        if (selectedRow != -1) {
+		            int idDescuento = (int) table.getValueAt(selectedRow, 0);
+		            cargarDescuentos();
+		            scrollPane.setVisible(true);
+		        }
+		    }
+		});
+
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
@@ -61,8 +70,9 @@ public class PantallaMostrarDescuentos extends JFrame {
 		contentPane.add(scrollPane);
 
 		JButton btnVolver = new JButton("VOLVER");
+		btnVolver.setBackground(new Color(255, 255, 255));
 		btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnVolver.setBounds(413, 462, 99, 31);
+		btnVolver.setBounds(508, 305, 99, 31);
 		contentPane.add(btnVolver);
 
 		btnVolver.addActionListener(e -> {
@@ -80,13 +90,16 @@ public class PantallaMostrarDescuentos extends JFrame {
 			tableModel.addRow(new Object[] { descuento.getPorcentajeDesc(), descuento.getIdDescuento(),
 					descuento.getIdProducto() });
 		}
-		this.ajustarAlturaDescuentoTable();
+		//this.ajustarAlturaDescuentoTable();
 	}
 
-	private void ajustarAlturaDescuentoTable() {
-		int rowCount = tableModel.getRowCount();
-		int rowHeight = tableModel.getRowHeight();
-		int tableHeight = rowCount * rowHeight;
-		detalleScrollPane.setBounds(51, 273, 761, tableHeight + 22); // 24 es para el header
-	}
+	//private void ajustarAlturaDescuentoTable() {
+	    //int rowCount = tableModel.getRowCount();
+	   // int rowHeight = table.getRowHeight();
+	   // int tableHeight = rowCount * rowHeight;
+	   // table.setPreferredScrollableViewportSize(new Dimension(761, tableHeight));
+	   // table.revalidate();
+	//}
+
+
 }

@@ -6,7 +6,8 @@ public class Descuento {
 	private Producto producto;
 	int idProducto;
 
-	public Descuento(int porcentajeDescuento, int idProducto) {
+	public Descuento(int idDescuento, int porcentajeDesc, int idProducto) {
+		
 		this.porcentajeDesc = porcentajeDesc;
 		this.idProducto = idProducto;
 	}
