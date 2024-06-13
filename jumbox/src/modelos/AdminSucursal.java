@@ -122,8 +122,8 @@ public class AdminSucursal extends Empleado {
 		informeControlador.addInforme(informe);
 		JOptionPane.showMessageDialog(null, fechaInforme);
 		for (Pedido pedido : pedidoControlador.getAllPedidos()) {
-			pedidoControlador.getPedidoById(j);
-			JOptionPane.showMessageDialog(null, pedido.getFechaEntrega());
+			
+		
 
 			if (pedido.getFechaEntrega().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Pedido", 0);

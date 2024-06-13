@@ -109,7 +109,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblAprobado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAprobado.setFont(new Font("Consolas", Font.BOLD, 18));
 		lblAprobado.setBackground(new Color(0, 128, 0));
-		lblAprobado.setBounds(52, 411, 573, 29);
+		lblAprobado.setBounds(10, 411, 858, 29);
 		contentPane.add(lblAprobado);
 		
 		tableModel = new DefaultTableModel(

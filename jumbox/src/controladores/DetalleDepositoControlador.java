@@ -50,7 +50,7 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
 
             if (resultSet.next()) {
                 int idProducto = resultSet.getInt("id_producto");
-                int idDepositoGeneral = resultSet.getInt("id_deposito");
+                int idDepositoGeneral = resultSet.getInt("id_detalle_deposito");
                 int cantidad = resultSet.getInt("cantidad");
 
                 detalle = new DetalleDeposito(idProducto, idDepositoGeneral, cantidad);
@@ -113,12 +113,11 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
     }
 
     @Override
-    public int getCantidadDisponible(int idDepositoGeneral, int idProducto) {
+    public int getCantidadDisponible( int idProducto) {
         int cantidadDisponible = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM detalle_deposito WHERE id_deposito = ? AND id_producto = ?");
-            statement.setInt(1, idDepositoGeneral);
-            statement.setInt(2, idProducto);
+            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM detalle_deposito WHERE id_producto = ?");
+            statement.setInt(1, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -131,12 +130,12 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
     }
 
     @Override
-    public void actualizarCantidadProducto(int idDepositoGeneral, int idProducto, int nuevaCantidad) {
+    public void actualizarCantidadProducto( int idProducto, int nuevaCantidad) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET cantidad = ? WHERE id_deposito = ? AND id_producto = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET cantidad = ? WHERE id_producto = ?");
             statement.setInt(1, nuevaCantidad);
-            statement.setInt(2, idDepositoGeneral);
-            statement.setInt(3, idProducto);
+           
+            statement.setInt(2, idProducto);
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -148,12 +147,12 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
     }
 
     @Override
-    public boolean existeProducto(int idDepositoGeneral, int idProducto) {
+    public boolean existeProducto(int idProducto) {
         boolean existe = false;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito WHERE id_deposito = ? AND id_producto = ?");
-            statement.setInt(1, idDepositoGeneral);
-            statement.setInt(2, idProducto);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito WHERE id_producto = ?");
+            
+            statement.setInt(1, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
             existe = resultSet.next();
