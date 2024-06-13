@@ -38,7 +38,7 @@ public class PantallaMostrarDescuentos extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblMostrarDescuento = new JLabel("Mostrar Descuentos");
-		lblMostrarDescuento.setBounds(172, 11, 304, 40);
+		lblMostrarDescuento.setBounds(143, 11, 304, 40);
 		lblMostrarDescuento.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblMostrarDescuento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMostrarDescuento.setFont(new Font("Consolas", Font.BOLD, 28));
@@ -66,13 +66,13 @@ public class PantallaMostrarDescuentos extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-		scrollPane.setBounds(51, 80, 761, 177);
+		scrollPane.setBounds(30, 62, 504, 220);
 		contentPane.add(scrollPane);
 
 		JButton btnVolver = new JButton("VOLVER");
 		btnVolver.setBackground(new Color(255, 255, 255));
 		btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnVolver.setBounds(508, 305, 99, 31);
+		btnVolver.setBounds(442, 293, 99, 31);
 		contentPane.add(btnVolver);
 
 		btnVolver.addActionListener(e -> {
