@@ -5,20 +5,17 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
-import controladores.DetalleInventarioControlador;
-import controladores.DetallePedidoControlador;
-import controladores.PedidoControlador;
-import controladores.ProductoControlador;
-import controladores.InformeControlador;
-import controladores.VentaControlador;
-import controladores.DetalleInformeControlador;
-import controladores.EntradaInventarioControlador;
+import controladores.*;
+import modelos.*;
+import interfaces.*;
+
 
 public class AdminSucursal extends Empleado {
 	int idProducto;
 	int cantidadEntrada;
 	private String tipo;
 	private static PedidoControlador pedidoControlador = new PedidoControlador();
+	private static ProductoControlador productoControlador = new ProductoControlador();
 	private static VentaControlador ventaControlador = new VentaControlador();
 	private static InformeControlador informeControlador = new InformeControlador();
 	private static DetalleInformeControlador detalleControlador = new DetalleInformeControlador();
@@ -55,9 +52,11 @@ public class AdminSucursal extends Empleado {
 		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 		EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
 		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
-			// inventario de la sucursal.");
+			if (!productoControlador.existeProducto(idProducto)) 
 			return "Error";
+		}else {
+			detalleInventarioControlador.addDetalleInventario(new DetalleInventario(idProducto, idInventarioSucursal,0, cantidadEntrada));
+			return "Correcto";
 		}
 
 		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
@@ -74,7 +73,6 @@ public class AdminSucursal extends Empleado {
 		return "correcto";
 
 	}
-
 	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
 		ProductoControlador productoControlador = new ProductoControlador();
 		LocalDate fechaEntrega = LocalDate.now();

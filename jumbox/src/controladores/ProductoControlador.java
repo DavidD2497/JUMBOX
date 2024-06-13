@@ -130,5 +130,23 @@ public class ProductoControlador implements ProductoRepository {
         }
         return precio;
     }
+    @Override
+    public boolean existeProducto( int idProducto) {
+        boolean existe = false;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `producto` WHERE `id_producto` = ?");
+            
+           
+            statement.setInt(1, idProducto); 
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                existe = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;
+    }
 }
 
