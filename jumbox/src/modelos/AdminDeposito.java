@@ -27,29 +27,29 @@ public class AdminDeposito extends Empleado {
 
 
 
-	public static boolean registrarSalidaDepositoGeneral(int idDepositoGeneral, int idProducto, int cantidadSalida) {
+	public static String registrarSalidaDepositoGeneral( int idProducto, int cantidadSalida) {
 	    if (cantidadSalida <= 0) {
 	        //JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
-	        return false;
+	        return "La cantidad de salida debe ser mayor que cero.";
 	    }
 
 	    DetalleDepositoControlador detalleDepositoControlador = new DetalleDepositoControlador();
 
-	    if (!detalleDepositoControlador.existeProducto(idDepositoGeneral, idProducto)) {
+	    if (!detalleDepositoControlador.existeProducto( idProducto)) {
 	        //JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
-	        return false;
+	        return "no existe en el inventario de la sucursal";
 	    }
 
-	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible(idDepositoGeneral, idProducto);
+	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible( idProducto);
 
 	    if (cantidadDisponible >= cantidadSalida) {
 	        int cantidadTotal = cantidadDisponible - cantidadSalida;
-	        detalleDepositoControlador.actualizarCantidadProducto(idDepositoGeneral, idProducto, cantidadTotal);
+	        detalleDepositoControlador.actualizarCantidadProducto( idProducto, cantidadTotal);
 	        //OptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
-	        return true;
+	        return "registrada con éxito.";
 	    } else {
 	        //JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
-	        return false;
+	        return "No hay suficiente inventario para sacar unidades del producto";
 	    }
 	}
 	
@@ -79,9 +79,10 @@ public class AdminDeposito extends Empleado {
 			//JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado y eliminado");
 			return false;
 		}
-		
-		}
-	public static boolean definirFechaEntrega(int idPedido, LocalDate nuevaFechaEntrega) {
+
+	}
+	
+    public static boolean definirFechaEntrega(int idPedido, LocalDate nuevaFechaEntrega) {
         if (nuevaFechaEntrega == null) {
             //JOptionPane.showMessageDialog(null, "La nueva fecha de entrega no puede ser nula.");
             return false;

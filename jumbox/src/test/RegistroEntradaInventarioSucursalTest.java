@@ -16,7 +16,7 @@ public class RegistroEntradaInventarioSucursalTest {
 
 		boolean flag = false;
 
-		if (AdminSucursal.registroEntradaProducto(1, 1, 20)) {
+		if (AdminSucursal.registroEntradaProducto(1, 1, 20).equals("Entrada correcta")) {
 			flag = true;
 
 		}
@@ -32,7 +32,7 @@ public class RegistroEntradaInventarioSucursalTest {
 
 		boolean flag = false;
 
-		if (AdminSucursal.registroEntradaProducto(2, 2, 0)) {
+		if (AdminSucursal.registroEntradaProducto(2, 2, 0).equals("Entrada cantidad 0 ")) {
 			flag = true;
 
 		}
@@ -48,7 +48,7 @@ public class RegistroEntradaInventarioSucursalTest {
 
 		boolean flag = false;
 
-		if (AdminSucursal.registroEntradaProducto(10, 10, 20)) {
+		if (AdminSucursal.registroEntradaProducto(10, 10, 20).equals("El id de producto no existe")) {
 			flag = true;
 
 		}
@@ -64,7 +64,7 @@ public class RegistroEntradaInventarioSucursalTest {
 
 		boolean flag = false;
 
-		if (AdminSucursal.registroEntradaProducto(10, 10, 1000)) {
+		if (AdminSucursal.registroEntradaProducto(10, 10, 1000).equals("Incorrecto, entrada mayor a 1000 ")) {
 			flag = true;
 
 		}

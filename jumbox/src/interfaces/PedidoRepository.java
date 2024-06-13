@@ -21,4 +21,5 @@ public interface PedidoRepository {
     void actualizarEstadoPedido(int codigoPedido, String estado);
     
     void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega);
+    
 }

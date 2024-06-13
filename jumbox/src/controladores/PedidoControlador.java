@@ -42,7 +42,7 @@ public class PedidoControlador implements PedidoRepository {
     public Pedido getPedidoById(int id) {
         Pedido pedido = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE id_pedido = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE codigo_pedido = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -56,7 +56,7 @@ public class PedidoControlador implements PedidoRepository {
         }
         return pedido;
     }
-    
+
     @Override
     public void addPedido(Pedido pedido) {
         try {
@@ -74,18 +74,7 @@ public class PedidoControlador implements PedidoRepository {
 
     @Override
     public void updatePedido(Pedido pedido) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE id_pedido = ?");
-            statement.setDate(1, java.sql.Date.valueOf(pedido.getFechaEntrega()));
-            statement.setInt(2, pedido.getCodigoPedido());
-
-            int rowsUpdated = statement.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Pedido actualizado exitosamente.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        // No se actualizan los pedidos en esta implementación
     }
 
     @Override
@@ -108,7 +97,7 @@ public class PedidoControlador implements PedidoRepository {
         int ultimoIdPedido = -1;
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_pedido) FROM pedido");
+            PreparedStatement statement = connection.prepareStatement("SELECT MAX(codigo_pedido) FROM pedido");
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -126,7 +115,7 @@ public class PedidoControlador implements PedidoRepository {
     public void actualizarEstadoPedido(int codigoPedido, String estado) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigoPedido = ?");
+					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigo_Pedido = ?");
 			statement.setString(1, estado);
 			statement.setInt(2, codigoPedido);
 
@@ -138,6 +127,7 @@ public class PedidoControlador implements PedidoRepository {
 			e.printStackTrace();
 		}
 	}
+    
     @Override
     public void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega) {
         try {
@@ -154,7 +144,4 @@ public class PedidoControlador implements PedidoRepository {
             e.printStackTrace();
         }
     }
-    
-    
-    
 }
