@@ -18,4 +18,6 @@ public interface DetallePedidoRepository {
     List<DetallePedido> getDetallePedidoByIdPedido(int idPedido);
     
     void deleteDetallesByIdPedido(int idPedido);
+
+	List<DetallePedido> getAllDetallePedidosByIdPedido(int idPedido);
 }
