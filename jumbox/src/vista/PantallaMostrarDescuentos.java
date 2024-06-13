@@ -45,7 +45,7 @@ public class PantallaMostrarDescuentos extends JFrame {
 		contentPane.add(lblMostrarDescuento);
 
 		tableModel = new DefaultTableModel(new Object[][] {},
-				new String[] { "Porcentaje Dto.", "ID Dto.", "ID producto" });
+				new String[] { "ID Dto.","Porcentaje Dto.", "ID producto" });
 		cargarDescuentos();
 
 		table = new JTable(tableModel);

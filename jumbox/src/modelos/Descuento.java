@@ -7,7 +7,7 @@ public class Descuento {
 	int idProducto;
 
 	public Descuento(int idDescuento, int porcentajeDesc, int idProducto) {
-		
+		this.idDescuento = idDescuento;
 		this.porcentajeDesc = porcentajeDesc;
 		this.idProducto = idProducto;
 	}
@@ -25,7 +25,7 @@ public class Descuento {
 		this.idDescuento = idDescuento;
 	}
 
-	public double getPorcentajeDesc() {
+	public int getPorcentajeDesc() {
 		return porcentajeDesc;
 	}
 
@@ -48,6 +48,5 @@ public class Descuento {
 	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
-	
-	
+
 }

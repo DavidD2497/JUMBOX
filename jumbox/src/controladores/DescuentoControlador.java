@@ -26,8 +26,8 @@ public class DescuentoControlador implements DescuentoRepository {
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				int idDescuento = resultSet.getInt("id_descuento");
                 int porcentajeDesc = resultSet.getInt("porcentaje_descuento");
+                int idDescuento = resultSet.getInt("id_descuento");
                 int idProducto = resultSet.getInt("id_producto");
 				Descuento descuento = new Descuento(porcentajeDesc, idDescuento, idProducto);
 				descuentos.add(descuento);
@@ -94,7 +94,7 @@ public class DescuentoControlador implements DescuentoRepository {
 	public void deleteDescuento(int id) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("DELETE FROM `descuentos` WHERE `idDescuento` = ?");
+					.prepareStatement("DELETE FROM `descuento` WHERE `idDescuento` = ?");
 			statement.setInt(1, id);
 
 			int rowsDeleted = statement.executeUpdate();
