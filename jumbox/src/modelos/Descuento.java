@@ -31,4 +31,22 @@ public class Descuento {
 	public void setPorcentajeDesc(int porcentajeDesc) {
 		this.porcentajeDesc = porcentajeDesc;
 	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public int getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(int idProducto) {
+		this.idProducto = idProducto;
+	}
+	
+	
 }

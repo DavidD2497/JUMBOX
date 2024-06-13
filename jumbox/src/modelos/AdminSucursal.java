@@ -77,40 +77,26 @@ public class AdminSucursal extends Empleado {
 		long diasHastaVencimiento = producto.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
 
 		if (diasHastaVencimiento <= 14) {
-			do {
-				try {
-					cantDescuento = Integer.parseInt(
-							JOptionPane.showInputDialog("Ingrese el porcentaje de descuento (entre 5% y 95%)"));
-					if (cantDescuento > 95 || cantDescuento < 5) {
-						JOptionPane.showMessageDialog(null, "El porcentaje de descuento debe estar entre 5% y 95%");
-					} else {
-						Descuento desc = new Descuento(cantDescuento, producto);
+			try {
+				Descuento desc = new Descuento(cantDescuento, producto);
 
-						DescuentoControlador descuentoControlador = new DescuentoControlador();
-						descuentoControlador.addDescuento(desc);
+				DescuentoControlador descuentoControlador = new DescuentoControlador();
+				descuentoControlador.addDescuento(desc);
 
-						double precioDescuentoVencimiento = producto.getPrecio()
-								* (1 - (desc.getPorcentajeDesc() / 100.0));
-						ProductoControlador productoControlador = new ProductoControlador();
-						productoControlador.updateProducto(producto.getIdProducto(),
-								precioDescuentoVencimiento);
+				double precioDescuentoVencimiento = producto.getPrecio() * (1 - (desc.getPorcentajeDesc() / 100.0));
+				ProductoControlador productoControlador = new ProductoControlador();
+				productoControlador.updateProducto(producto.getIdProducto(), precioDescuentoVencimiento);
 
-						descuentoControlador.addDescuento(desc);
+				descuentoControlador.addDescuento(desc);
 
-						JOptionPane.showMessageDialog(null,
-								"Se ha aplicado un descuento al producto " + this.producto.getNombreProducto()
-										+ " por su fecha de vencimiento que está cerca de la actual");
-						return "Se aplicó el descuento";
-					}
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Ingrese un valor válido");
-					cantDescuento = -1;
-				}
-			} while (cantDescuento < 95 && cantDescuento > 5);
-		} else {
-			JOptionPane.showMessageDialog(null, "El producto " + this.producto.getNombreProducto()
-					+ " no cumple con los requisitos de tiempo para aplicar un descuento en este momento");
-			return "No cumple con los requisitos";
+				JOptionPane.showMessageDialog(null,
+						"Se ha aplicado un descuento al producto " + this.producto.getNombreProducto()
+								+ " por su fecha de vencimiento que está cerca de la actual");
+
+				return "Se aplicó el descuento";
+			} catch (Exception e) {
+				return "Error al aplicar el descuento";
+			}
 		}
 		return "Error al aplicar el descuento";
 	}
