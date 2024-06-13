@@ -41,7 +41,6 @@ public class PantallaRegistroEntrada extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField inpCANTIDAD;
-	private JTextField  inpIDINVENTARIOSUCURSAL;
 	private DefaultTableModel tableModel;
 	private JTextField intIDsuc;
 	private int selectedRow = -1;
@@ -92,7 +91,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblSeleccionado.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblSeleccionado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeleccionado.setFont(new Font("Consolas", Font.BOLD, 18));
-		lblSeleccionado.setBounds(254, 274, 385, 29);
+		lblSeleccionado.setBounds(149, 288, 530, 29);
 		contentPane.add(lblSeleccionado);
 		
 		
@@ -142,7 +141,7 @@ public class PantallaRegistroEntrada extends JFrame {
         });
 
 		JLabel lblCANTIDAD = new JLabel("Cantidad:");
-		lblCANTIDAD.setBounds(493, 321, 200, 40);
+		lblCANTIDAD.setBounds(493, 360, 200, 40);
 		lblCANTIDAD.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblCANTIDAD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCANTIDAD.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -150,22 +149,23 @@ public class PantallaRegistroEntrada extends JFrame {
 
 		inpCANTIDAD = new JTextField();
 		inpCANTIDAD.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		inpCANTIDAD.setBounds(460, 355, 261, 31);
+		inpCANTIDAD.setBounds(460, 394, 261, 31);
 		inpCANTIDAD.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		contentPane.add(inpCANTIDAD);
-
-		JLabel lblIDINVENTARIOSUCURSAL = new JLabel("ID Inventario Sucursal:");
-		lblIDINVENTARIOSUCURSAL.setBounds(65, 321, 301, 40);
-		lblIDINVENTARIOSUCURSAL.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblIDINVENTARIOSUCURSAL.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIDINVENTARIOSUCURSAL.setHorizontalTextPosition(SwingConstants.CENTER);
-		contentPane.add(lblIDINVENTARIOSUCURSAL);
 		
-		inpIDINVENTARIOSUCURSAL = new JTextField();
-		inpIDINVENTARIOSUCURSAL.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		inpIDINVENTARIOSUCURSAL.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		inpIDINVENTARIOSUCURSAL.setBounds(52, 355, 301, 31);
-		contentPane.add(inpIDINVENTARIOSUCURSAL);
+		JLabel lblIdsucursal = new JLabel("Id Inventario Sucursal:");
+		lblIdsucursal.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblIdsucursal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIdsucursal.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblIdsucursal.setBounds(111, 371, 288, 29);
+        contentPane.add(lblIdsucursal);
+
+        String[] Idinventarios = {"1","2","3","4","5","6","7","8","9","10"};
+        JComboBox<String> comboBoxIdinventario = new JComboBox<>(Idinventarios);
+        comboBoxIdinventario.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        comboBoxIdinventario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        comboBoxIdinventario.setBounds(111, 395, 301, 29);
+        contentPane.add(comboBoxIdinventario);
 
 		JButton btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.setFont(new Font("Consolas", Font.BOLD, 13));
@@ -175,7 +175,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		        if (selectedRow != -1) {
 		            try {
-		                int idSucursal = Integer.parseInt(inpIDINVENTARIOSUCURSAL.getText());
+		            	int Idinventarios = Integer.parseInt((String) comboBoxIdinventario.getSelectedItem()) ;
 		                int cantidad = Integer.parseInt(inpCANTIDAD.getText());
 		                Object valueAt = table.getValueAt(selectedRow, 0);
 
@@ -188,7 +188,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		                    throw new NumberFormatException("Tipo de datos inesperado en la celda seleccionada.");
 		                }
 
-		                String respuesta = AdminSucursal.registroEntradaProducto(idSucursal, idProducto, cantidad);
+		                String respuesta = AdminSucursal.registroEntradaProducto(Idinventarios, idProducto, cantidad);
 		                if (respuesta.equals("Registro con éxito")) {
 		                    lblAprobado.setText(respuesta);
 		                    lblAprobado.setVisible(true);
@@ -213,28 +213,11 @@ public class PantallaRegistroEntrada extends JFrame {
 		    }
 		});
 		contentPane.add(btnRegistrar);
-
-
-
 		
-		
-
-		
-		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnVolver.setBounds(460, 462, 99, 31);
-		contentPane.add(btnVolver);
-		
-		
-
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PantallaAdminSucursal adminsucursal = new PantallaAdminSucursal(mail);
-				adminsucursal.setVisible(true);
-				dispose();
-			}
-		});
+		JButton btnVolver_1 = new JButton("Volver");
+		btnVolver_1.setFont(new Font("Consolas", Font.BOLD, 13));
+		btnVolver_1.setBounds(460, 462, 99, 31);
+		contentPane.add(btnVolver_1);
 
 		
 		

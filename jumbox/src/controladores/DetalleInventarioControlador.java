@@ -166,5 +166,11 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
         return existe;
     }
 
+	@Override
+	public boolean existeProducto(int idInventarioSucursal) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

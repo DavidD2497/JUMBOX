@@ -20,4 +20,6 @@ public interface DetalleInventarioRepository {
     void actualizarCantidadProducto(int idInventarioSucursal, int idProducto, int nuevaCantidad);
     
     boolean existeProducto(int idInventarioSucursal, int idProducto);
+
+	boolean existeProducto(int idInventarioSucursal);
 }
