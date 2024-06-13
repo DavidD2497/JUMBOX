@@ -25,7 +25,7 @@ public class PantallaMostrarPedido extends JFrame {
 	private JTable pedidoTable;
 	private JTable detalleTable;
 	private JScrollPane detalleScrollPane;
-
+	private JScrollPane pedidoScrollPane;
 	/**
 	 * Lanzar la aplicación.
 	 */
@@ -83,7 +83,7 @@ public class PantallaMostrarPedido extends JFrame {
 			}
 		});
 
-		JScrollPane pedidoScrollPane = new JScrollPane(pedidoTable);
+		pedidoScrollPane = new JScrollPane(pedidoTable);
 		pedidoScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		pedidoScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
 		pedidoScrollPane.setBounds(51, 80, 761, 167);
@@ -115,6 +115,13 @@ public class PantallaMostrarPedido extends JFrame {
 		});
 	}
 
+	private void ajustarAlturaPedidoTable() {
+		int rowCount = pedidoTableModel.getRowCount();
+		int rowHeight = pedidoTable.getRowHeight();
+		int tableHeight = rowCount * rowHeight;
+		pedidoScrollPane.setBounds(51, 273, 761, tableHeight + 20); // 24 es para el header
+	}
+
 	private void cargarPedidos() {
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		List<Pedido> pedidos = pedidoControlador.getAllPedidos();
@@ -123,16 +130,27 @@ public class PantallaMostrarPedido extends JFrame {
 			pedidoTableModel.addRow(new Object[] { pedido.getCodigoPedido(), pedido.getFechaEntrega() });
 		}
 	}
+	
 
 	private void cargarDetallesPedido(int idPedido) {
-		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
-		List<DetallePedido> detalles = detallePedidoControlador.getAllDetallePedidosByIdPedido(idPedido);
-		ProductoControlador productoControlador = new ProductoControlador();
-		detalleTableModel.setRowCount(0);
-		for (DetallePedido detalle : detalles) {
-			detalleTableModel.addRow(new Object[] { detalle.getIdProducto(),
-					productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(),
-					detalle.getCantidad() });
-		}
+	    DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+	    List<DetallePedido> detalles = detallePedidoControlador.getAllDetallePedidosByIdPedido(idPedido);
+	    ProductoControlador productoControlador = new ProductoControlador();
+	    detalleTableModel.setRowCount(0);
+	    for (DetallePedido detalle : detalles) {
+	        detalleTableModel.addRow(new Object[]{
+	            detalle.getIdProducto(),
+	            productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(),
+	            detalle.getCantidad()
+	        });
+	    }
+	this.ajustarAlturaDetalleTable();}
+
+	private void ajustarAlturaDetalleTable() {
+		int rowCount = detalleTableModel.getRowCount();
+		int rowHeight = detalleTable.getRowHeight();
+		int tableHeight = rowCount * rowHeight;
+		detalleScrollPane.setBounds(51, 273, 761, tableHeight + 22); // 24 es para el header
 	}
+
 }
