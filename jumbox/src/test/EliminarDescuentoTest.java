@@ -12,7 +12,7 @@ public class EliminarDescuentoTest {
 
 	@Test
 	public void testEliminarDescuento() {
-		Descuento descuento = new Descuento(1, 10);
+		Descuento descuento = new Descuento(1, 10,3);
 		adminSucursal.getDescuentos().add(descuento);
 
 		adminSucursal.eliminarDescuento(0);

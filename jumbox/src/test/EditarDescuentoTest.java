@@ -14,7 +14,7 @@ public class EditarDescuentoTest {
 
 	@Test
 	public void testEditarDescuento() {
-		Descuento descuento = new Descuento(15, 1);
+		Descuento descuento = new Descuento(15, 1,2);
 		DescuentoControlador descuentoControlador = new DescuentoControlador();
 		adminSucursal.getDescuentos().add(descuento);
 

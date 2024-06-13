@@ -12,7 +12,7 @@ public class MostrarDescuentoTest {
 
 	@Test
 	public void testMostrarDescuento_ListaNoVacia() {
-		Descuento descuento = new Descuento(1, 10);
+		Descuento descuento = new Descuento(1, 10,4);
 		adminSucursal.getDescuentos().add(descuento);
 
 		assertFalse(adminSucursal.getDescuentos().isEmpty());
