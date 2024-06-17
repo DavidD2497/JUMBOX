@@ -23,6 +23,7 @@ public class AdminSucursal extends Empleado {
 	private static InformeControlador informeControlador = new InformeControlador();
 	private static DetalleInformeControlador detalleControlador = new DetalleInformeControlador();
 	private static EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
+	private static ProductoControlador productoControlador = new ProductoControlador();
 
 	public AdminSucursal(String nombre, String email, String contraseña) {
 		super(nombre, email, contraseña);
@@ -76,7 +77,7 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
-		ProductoControlador productoControlador = new ProductoControlador();
+
 		LocalDate fechaEntrega = LocalDate.now();
 		JOptionPane.showMessageDialog(null, fechaEntrega);
 		if (listaDetalle.isEmpty()) {
@@ -113,6 +114,67 @@ public class AdminSucursal extends Empleado {
 		}
 		// JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
 		return true;
+
+	}
+
+	public String editarDetallePedido(int idDetalle, int idPedido, int idProducto, int cantidad) {
+		PedidoControlador pedidoControlador = new PedidoControlador();
+		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+		if (productoControlador.getProductoById(idProducto) == null) {
+			// JOptionPane.showMessageDialog(null, "El producto con ID " +
+			// detalle.getIdProducto() + " no existe.");
+
+			return "El producto con ID " + idProducto + " no existe";
+		}
+		if (cantidad >= 1000) {
+			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
+			// 1000.");
+
+			return "La cantidad de Entrada debe ser menor que 1000.";
+		}
+
+		if (cantidad <= 0) {
+			// JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor
+			// que cero.");
+			return "La cantidad de Entrada debe ser mayor que cero.";
+		}
+
+		DetallePedido detallePedido = new DetallePedido(idProducto, cantidad, idPedido);
+
+		detallePedidoControlador.updateDetallePedido(detallePedido);
+
+		// JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
+		return "Producto Modificado";
+
+	}
+	public String AgregarDetallePedido( int idPedido, int idProducto, int cantidad) {
+		PedidoControlador pedidoControlador = new PedidoControlador();
+		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+		if (productoControlador.getProductoById(idProducto) == null) {
+			// JOptionPane.showMessageDialog(null, "El producto con ID " +
+			// detalle.getIdProducto() + " no existe.");
+
+			return "El producto con ID " + idProducto + " no existe";
+		}
+		if (cantidad >= 1000) {
+			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
+			// 1000.");
+
+			return "La cantidad solicitada debe ser menor que 1000.";
+		}
+
+		if (cantidad <= 0) {
+			// JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor
+			// que cero.");
+			return "La cantidad solicitada debe ser mayor que cero.";
+		}
+
+		DetallePedido detallePedido = new DetallePedido(idProducto, cantidad, idPedido);
+
+		detallePedidoControlador.addDetallePedido(detallePedido);
+
+		// JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
+		return "Producto Agregado";
 
 	}
 

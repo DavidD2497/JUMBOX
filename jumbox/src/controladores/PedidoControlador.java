@@ -144,4 +144,10 @@ public class PedidoControlador implements PedidoRepository {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public boolean editarPedido(int idDetalle, int idPedido) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

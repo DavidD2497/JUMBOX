@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class PantallaMostrarPedido extends JFrame {
+public class PantallaEditarPedido extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -49,7 +49,7 @@ public class PantallaMostrarPedido extends JFrame {
     /**
      * Crear el frame.
      */
-    public PantallaMostrarPedido(String mail) {
+    public PantallaEditarPedido(String mail) {
         JLabel lblNewLabel_2_1 = new JLabel("Tabla Pedidos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 894, 563);
