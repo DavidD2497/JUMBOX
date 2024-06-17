@@ -93,7 +93,7 @@ public class PantallaEditarPedido extends JFrame {
         pedidoScrollPane = new JScrollPane(pedidoTable);
         pedidoScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
         pedidoScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        pedidoScrollPane.setBounds(51, 62, 761, 149);
+        pedidoScrollPane.setBounds(51, 62, 761, 45);
         contentPane.add(pedidoScrollPane);
 
         detalleTableModel = new DefaultTableModel(new Object[][] {},
@@ -106,7 +106,7 @@ public class PantallaEditarPedido extends JFrame {
         detalleScrollPane = new JScrollPane(detalleTable);
         detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
         detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        detalleScrollPane.setBounds(51, 284, 761, 167);
+        detalleScrollPane.setBounds(51, 178, 761, 167);
         detalleScrollPane.setVisible(false);// Inicialmente invisible
         contentPane.add(detalleScrollPane);
 
@@ -118,7 +118,7 @@ public class PantallaEditarPedido extends JFrame {
         lblNewLabel_2_1.setHorizontalTextPosition(SwingConstants.CENTER);
         lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
-        lblNewLabel_2_1.setBounds(219, 240, 496, 40);
+        lblNewLabel_2_1.setBounds(199, 129, 496, 40);
         lblNewLabel_2_1.setVisible(false);
         contentPane.add(lblNewLabel_2_1);
         
@@ -128,7 +128,7 @@ public class PantallaEditarPedido extends JFrame {
         	}
         });
         btnEliminar.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnEliminar.setBounds(512, 462, 99, 31);
+        btnEliminar.setBounds(509, 442, 99, 31);
         contentPane.add(btnEliminar);
         
         JButton btnEditar = new JButton("Editar");
@@ -137,7 +137,7 @@ public class PantallaEditarPedido extends JFrame {
         	}
         });
         btnEditar.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnEditar.setBounds(356, 462, 99, 31);
+        btnEditar.setBounds(301, 442, 99, 31);
         contentPane.add(btnEditar);
 
         btnVolver.addActionListener(e -> {
