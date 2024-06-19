@@ -13,7 +13,7 @@ public class RegistrarSalidasDepositoTest {
     	
         boolean flag = false;
         
-        if (AdminDeposito.registrarSalidaDepositoGeneral(1,1,1)) {
+        if (AdminDeposito.registrarSalidaDepositoGeneral(1,1)) {
         	flag = true;
 		}
 

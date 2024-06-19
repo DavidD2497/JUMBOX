@@ -9,7 +9,6 @@ import controladores.*;
 import modelos.*;
 import interfaces.*;
 
-
 public class AdminSucursal extends Empleado {
 	int idProducto;
 	int cantidadEntrada;
@@ -51,28 +50,33 @@ public class AdminSucursal extends Empleado {
 
 		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 		EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
-		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-			if (!productoControlador.existeProducto(idProducto)) 
+		if (!productoControlador.existeProducto(idProducto)) {
 			return "Error";
-		}else {
-			detalleInventarioControlador.addDetalleInventario(new DetalleInventario(idProducto, idInventarioSucursal,0, cantidadEntrada));
-			return "Correcto";
+		} else {
+			if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+				detalleInventarioControlador.addDetalleInventario(
+						new DetalleInventario(idProducto, idInventarioSucursal, 1, cantidadEntrada));
+			return "Correcto";}
+			else {
+				int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+				int cantidadTotal = cantidadDisponible + cantidadEntrada;
+				EntradaInventario entrada = new EntradaInventario(idProducto, idInventarioSucursal, fechaEntrega,
+						cantidadEntrada);
+				entradaControlador.addEntradaInventario(entrada);
+				detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+				// JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + "
+				// unidades al producto "
+				// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
+				// con éxito.");
+				return "correcto";
+
+				
+			}}
 		}
 
-		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+	
 
-		int cantidadTotal = cantidadDisponible + cantidadEntrada;
-		EntradaInventario entrada = new EntradaInventario(idProducto, idInventarioSucursal, fechaEntrega,
-				cantidadEntrada);
-		entradaControlador.addEntradaInventario(entrada);
-		detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-		// JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + "
-		// unidades al producto "
-		// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
-		// con éxito.");
-		return "correcto";
-
-	}
 	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
 		ProductoControlador productoControlador = new ProductoControlador();
 		LocalDate fechaEntrega = LocalDate.now();
@@ -120,8 +124,6 @@ public class AdminSucursal extends Empleado {
 		informeControlador.addInforme(informe);
 		JOptionPane.showMessageDialog(null, fechaInforme);
 		for (Pedido pedido : pedidoControlador.getAllPedidos()) {
-			
-		
 
 			if (pedido.getFechaEntrega().equals(fechaInforme)) {
 				DetalleInforme detalle = new DetalleInforme(0, "Pedido", 0);
