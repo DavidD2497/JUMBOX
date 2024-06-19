@@ -1,129 +1,202 @@
 package vista;
 
 import modelos.Empleado;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.border.MatteBorder;
-import vista.PantallaRegistroEntrada;
-
+import modelos.Pedido;
+import modelos.AdminSucursal;
+import modelos.DetallePedido;
 import controladores.EmpleadoControlador;
+import controladores.PedidoControlador;
+import controladores.DetallePedidoControlador;
+import controladores.ProductoControlador;
 
-import java.awt.Color;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 
 public class PantallaInforme extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    private DefaultTableModel pedidoTableModel;
+    private DefaultTableModel detalleTableModel;
+    private int selectedRow = -1;
+    public static JTable pedidoTable;
+    private JTable detalleTable;
+    private JScrollPane detalleScrollPane;
+    private JScrollPane pedidoScrollPane;
 
+    /**
+     * Lanzar la aplicaciÃ³n.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    PantallaLogueo frame = new PantallaLogueo();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Crear el frame.
+     */
     public PantallaInforme(String mail) {
+        JLabel lblNewLabel_2_1 = new JLabel("Tabla Informe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 626, 383);
-        
+        setBounds(100, 100, 894, 563);
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         Empleado empleado = empleadoControlador.getUserByEmail(mail);
-        
+
+        // Reemplazar contentPane por una instancia de ImagePanel con la ruta correcta
         contentPane = new ImagePanel("/resources/supermercado.jpg");
         contentPane.setToolTipText("");
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        
+
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        
-        JLabel lblNewLabel = new JLabel("Informe");
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 25));
-        lblNewLabel.setBounds(10, 0, 590, 68);
-        contentPane.add(lblNewLabel);
-        
-        JLabel lblIdentificacion = new JLabel("");
-        lblIdentificacion.setHorizontalAlignment(SwingConstants.CENTER);
-        lblIdentificacion.setFont(new Font("Consolas", Font.BOLD, 20));
-        lblIdentificacion.setBounds(10, 31, 590, 68);
-        if (empleadoControlador.getUserTypeByEmail(mail).equals("Cajero")) {
-            lblIdentificacion.setText(empleado.getNombre() + " -  Cajero/a" );
-        } else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
-            lblIdentificacion.setText(empleado.getNombre() + " -  Administrador/a de Sucursal" );
-        } else {
-            lblIdentificacion.setText(empleado.getNombre() + " -  Administrador/a de Depósito" );
-        } 
 
-        contentPane.add(lblIdentificacion);
-        
-        JButton btnMostrarInforme = new JButton("Mostrar Informe");
-        btnMostrarInforme.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnMostrarInforme.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnMostrarInforme.setBounds(40, 162, 173, 33);
-        btnMostrarInforme.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para el botón de Registro de entrada
-                // PantallaRegistroEntrada pantallaRegistroEntrada = new PantallaRegistroEntrada(empleado.getEmail());
-              //  pantallaRegistroEntrada.setVisible(true);
-                // dispose();
+        JLabel lblNewLabel_2 = new JLabel("Tabla Informe");
+        lblNewLabel_2.setBounds(185, 11, 496, 40);
+        lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
+        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2.setFont(new Font("Consolas", Font.BOLD, 28));
+        contentPane.add(lblNewLabel_2);
+
+        pedidoTableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Id Pedido", "Fecha de Solicitud" });
+        cargarPedidos();
+        JLabel lblNewLabel_3 = new JLabel("Detalle del Pedido");
+        pedidoTable = new JTable(pedidoTableModel);
+        pedidoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        pedidoTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        pedidoTable.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting()) {
+
+                int selectedRow = pedidoTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    int idPedido = (int) pedidoTableModel.getValueAt(selectedRow, 0);
+                    cargarDetallesPedido(idPedido);
+                    detalleScrollPane.setVisible(true);
+                    lblNewLabel_2_1.setVisible(true);
+                }
             }
         });
-        contentPane.add(btnMostrarInforme);
+
+        pedidoScrollPane = new JScrollPane(pedidoTable);
+        pedidoScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+        pedidoScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
+        pedidoScrollPane.setBounds(51, 62, 761, 149);
+        contentPane.add(pedidoScrollPane);
+
+        detalleTableModel = new DefaultTableModel(new Object[][] {},
+                new String[] { "Id Producto", "Producto Solicitado", "Cantidad Solicitada" });
+
+        detalleTable = new JTable(detalleTableModel);
+        detalleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        detalleTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+        detalleScrollPane = new JScrollPane(detalleTable);
+        detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+        detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
+        detalleScrollPane.setBounds(51, 284, 761, 167);
+        detalleScrollPane.setVisible(false);// Inicialmente invisible
+        contentPane.add(detalleScrollPane);
+
+        JButton btnVolver = new JButton("Volver");
+        btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
+        btnVolver.setBounds(0, 0, 99, 31);
+        contentPane.add(btnVolver);
+
+        lblNewLabel_2_1.setHorizontalTextPosition(SwingConstants.CENTER);
+        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
+        lblNewLabel_2_1.setBounds(217, 233, 496, 40);
+        lblNewLabel_2_1.setVisible(false);
+        contentPane.add(lblNewLabel_2_1);
         
-        JButton btnCrearInforme = new JButton("Crear Informe");
-        btnCrearInforme.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnCrearInforme.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnCrearInforme.setBounds(230, 105, 173, 33);
-        btnCrearInforme.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para el botón de Pedido
-              //  PantallaPedido pantallaPedido = new PantallaPedido(empleado.getEmail());
-              //  pantallaPedido.setVisible(true);
-             //   dispose();
-            }
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
         });
-        contentPane.add(btnCrearInforme);
+        btnEliminar.setFont(new Font("Consolas", Font.BOLD, 13));
+        btnEliminar.setBounds(542, 482, 99, 31);
+        contentPane.add(btnEliminar);
         
-        JButton btnEditarInforme = new JButton("Editar Informe");
-        btnEditarInforme.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnEditarInforme.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnEditarInforme.setBounds(230, 218, 173, 33);
-        btnEditarInforme.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para el botón de Informe
-               //  PantallaInforme pantallaInforme = new PantallaInforme(empleado.getEmail());
-                // pantallaInforme.setVisible(true);
-               //  dispose();
-            }
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		JOptionPane.showMessageDialog(btnEditar,"Hola, se borro todo");
+        		
+        	}
         });
-        contentPane.add(btnEditarInforme);
+        btnEditar.setFont(new Font("Consolas", Font.BOLD, 13));
+        btnEditar.setBounds(406, 482, 99, 31);
+        contentPane.add(btnEditar);
         
-        JButton btnEliminarInforme = new JButton("Eliminar Informe");
-        btnEliminarInforme.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnEliminarInforme.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnEliminarInforme.setBounds(410, 162, 173, 33);
-        btnEliminarInforme.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para el botón de Descuento
-             //   PantallaDescuento pantallaDescuento = new PantallaDescuento(empleado.getEmail());
-              //  pantallaDescuento.setVisible(true);
-                // dispose();
-            }
-        });
-        contentPane.add(btnEliminarInforme);
+        JButton btnCrear = new JButton("Crear");
+        btnCrear.setFont(new Font("Consolas", Font.BOLD, 13));
+        btnCrear.setBounds(275, 482, 99, 31);
+        contentPane.add(btnCrear);
         
-        JButton btnVolveralHome = new JButton("Volver");
-        btnVolveralHome.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	PantallaAdminSucursal adminsucursal = new PantallaAdminSucursal(empleado.getEmail());
-                adminsucursal.setVisible(true);
-                dispose();
-            }
+        btnCrear.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		AdminSucursal.crearInforme();
+        		JOptionPane.showMessageDialog(btnEditar,"Hola, se creo");
+        		
+        		
+        	}
         });
-        btnVolveralHome.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnVolveralHome.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        btnVolveralHome.setBounds(444, 300, 156, 33);
-        contentPane.add(btnVolveralHome);
+
+        btnVolver.addActionListener(e -> {
+            PantallaPedido pantallaPedido = new PantallaPedido(mail);
+            pantallaPedido.setVisible(true);
+            dispose();
+        });
+    }
+
+    private void cargarPedidos() {
+        PedidoControlador pedidoControlador = new PedidoControlador();
+        List<Pedido> pedidos = pedidoControlador.getAllPedidos();
+        pedidoTableModel.setRowCount(0);
+        for (Pedido pedido : pedidos) {
+            pedidoTableModel.addRow(new Object[] { pedido.getCodigoPedido(), pedido.getFechaEntrega() });
+        }
+    }
+
+    private void cargarDetallesPedido(int idPedido) {
+        DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+        List<DetallePedido> detalles = detallePedidoControlador.getAllDetallePedidosByIdPedido(idPedido);
+        ProductoControlador productoControlador = new ProductoControlador();
+        detalleTableModel.setRowCount(0);
+        for (DetallePedido detalle : detalles) {
+            detalleTableModel.addRow(new Object[] { detalle.getIdProducto(),
+                    productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(),
+                    detalle.getCantidad()+" unidades" });
+        }
+        this.ajustarAlturaDetalleTable();
+    }
+
+    private void ajustarAlturaPedidoTable() {
+        int rowCount = pedidoTableModel.getRowCount();
+        int rowHeight = pedidoTable.getRowHeight();
+        int tableHeight = rowCount * rowHeight + pedidoTable.getTableHeader().getHeight();
+        pedidoScrollPane.setBounds(51, 62, 761, tableHeight + 20); // Ajustar la altura de la tabla de pedidos
+    }
+
+    private void ajustarAlturaDetalleTable() {
+    	int rowCount = detalleTableModel.getRowCount();
+    	int rowHeight = detalleTable.getRowHeight();
+    	int tableHeight = rowCount * rowHeight;
+    	detalleScrollPane.setBounds(51, 273, 761, tableHeight + 22); // 24 es para el header
     }
 }

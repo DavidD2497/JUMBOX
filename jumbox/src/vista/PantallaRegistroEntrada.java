@@ -160,7 +160,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblIdsucursal.setBounds(111, 371, 288, 29);
         contentPane.add(lblIdsucursal);
 
-        String[] Idinventarios = {"1","2","3","4","5","6","7","8","9","10"};
+        String[] Idinventarios = {"1","2","3","4","5"};
         JComboBox<String> comboBoxIdinventario = new JComboBox<>(Idinventarios);
         comboBoxIdinventario.setFont(new Font("Tahoma", Font.PLAIN, 15));
         comboBoxIdinventario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -169,7 +169,7 @@ public class PantallaRegistroEntrada extends JFrame {
 
 		JButton btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnRegistrar.setBounds(330, 462, 99, 31);
+		btnRegistrar.setBounds(321, 465, 99, 31);
 
 		btnRegistrar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -214,13 +214,19 @@ public class PantallaRegistroEntrada extends JFrame {
 		});
 		contentPane.add(btnRegistrar);
 		
-		JButton btnVolver_1 = new JButton("Volver");
-		btnVolver_1.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnVolver_1.setBounds(460, 462, 99, 31);
-		contentPane.add(btnVolver_1);
-
-		
-		
+		  
+        JButton btnVolveralHome = new JButton("Volver");
+        btnVolveralHome.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	PantallaAdminSucursal adminsucursal = new PantallaAdminSucursal(empleado.getEmail());
+                adminsucursal.setVisible(true);
+                dispose();
+            }
+        });
+        btnVolveralHome.setFont(new Font("Consolas", Font.BOLD, 15));
+        btnVolveralHome.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        btnVolveralHome.setBounds(484, 463, 99, 33);
+        contentPane.add(btnVolveralHome);
 		
 		
 	
