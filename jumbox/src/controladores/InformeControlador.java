@@ -32,6 +32,7 @@ public class InformeControlador implements InformeRepository {
 
                 Informe informe = new Informe(fechaInforme);
                 informe.setIdInforme(idInforme);
+                informe.setFechaInforme(fechaInforme);
                 informes.add(informe);
             }
         } catch (SQLException e) {
@@ -52,6 +53,7 @@ public class InformeControlador implements InformeRepository {
                 LocalDate fechaInforme = resultSet.getDate("fecha_informe").toLocalDate();
                 informe = new Informe(fechaInforme);
                 informe.setIdInforme(id);
+                informe.setFechaInforme(fechaInforme);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -122,7 +122,7 @@ public class AdminSucursal extends Empleado {
 		LocalDate fechaInforme = LocalDate.now();
 		Informe informe = new Informe(fechaInforme);
 		informeControlador.addInforme(informe);
-		JOptionPane.showMessageDialog(null, fechaInforme);
+
 		for (Pedido pedido : pedidoControlador.getAllPedidos()) {
 
 			if (pedido.getFechaEntrega().equals(fechaInforme)) {
