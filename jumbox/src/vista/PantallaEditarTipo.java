@@ -3,23 +3,26 @@ package vista;
 import modelos.Empleado;
 import modelos.AdminSucursal;
 import modelos.DetalleInforme;
+import modelos.Producto;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import vista.PantallaInforme;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Font;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
 
 import controladores.EmpleadoControlador;
 import controladores.AdminSucursalControlador;
 import controladores.DetalleInformeControlador;
 import controladores.ProductoControlador;
-import modelos.Producto;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.awt.event.ActionEvent;
 
 public class PantallaEditarTipo extends JFrame {
 
@@ -58,7 +61,7 @@ public class PantallaEditarTipo extends JFrame {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         Empleado empleado = empleadoControlador.getUserByEmail(mail);
 
-        // Reemplazar contentPane por una instancia de ImagePanel con la ruta correcta
+        // Replace contentPane with an instance of ImagePanel with the correct path
         contentPane = new ImagePanel("/resources/supermercado.jpg");
         contentPane.setToolTipText("");
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,19 +78,10 @@ public class PantallaEditarTipo extends JFrame {
 
         detalleTableModel = new DefaultTableModel(
                 new Object[][] {},
-                new String[] { "Id Detalle", "Tipo de registro", "Id Tipo" }
-                cargarDetallesInforme();
-            );
-
-            detalleTable = new JTable(detalleTableModel);
-            detalleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            detalleTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-            
-
-           
-            
-
+                new String[] { "Id Detalle", "Tipo de registro", "Id Tipo" });
+               
+				this.cargarDetallesInforme()
+              ;
 
         detalleTable = new JTable(detalleTableModel);
         detalleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -97,7 +91,7 @@ public class PantallaEditarTipo extends JFrame {
         detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
         detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
         detalleScrollPane.setBounds(65, 102, 761, 167);
-        detalleScrollPane.setVisible(false); // Inicialmente invisible
+        detalleScrollPane.setVisible(true); // Initially invisible
         contentPane.add(detalleScrollPane);
 
         JLabel lblCANTIDAD = new JLabel("Tipo:");
@@ -123,6 +117,7 @@ public class PantallaEditarTipo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 PantallaAdminSucursal adminsucursal = new PantallaAdminSucursal(empleado.getEmail());
                 adminsucursal.setVisible(true);
+                
                 dispose();
             }
         });
@@ -132,16 +127,12 @@ public class PantallaEditarTipo extends JFrame {
         contentPane.add(btnVolveralHome);
     }
 
-    private void cargarDetallesInforme(int idInforme) {
+    private void cargarDetallesInforme() {
         DetalleInformeControlador detalleInformeControlador = new DetalleInformeControlador();
-        List<DetalleInforme> detalles = detalleInformeControlador.getAllDetalleInformesByInformeId(idInforme);
+        List<DetalleInforme> detalles = detalleInformeControlador.getAllDetalleInformes();
         detalleTableModel.setRowCount(0);
         for (DetalleInforme detalle : detalles) {
             detalleTableModel.addRow(new Object[] { detalle.getIdDetalle(), detalle.getTipo(), detalle.getIdTipo() });
         }
-        
     }
-
-    
-    
 }

@@ -93,6 +93,7 @@ public class PantallaInforme extends JFrame {
 					cargarDetallesInforme(idPedido);
 					detalleScrollPane.setVisible(true);
 					lblNewLabel_2_1.setVisible(true);
+					devolverIdInforme(idPedido);
 				}
 			}
 		});
@@ -146,6 +147,7 @@ public class PantallaInforme extends JFrame {
 		        PantallaEditarTipo pantallaEditarTipo = new PantallaEditarTipo(mail);
 		        pantallaEditarTipo.setVisible(true);
 		        dispose();
+		        ;
 		    }
 		});
 
@@ -206,7 +208,9 @@ public class PantallaInforme extends JFrame {
 		int tableHeight = rowCount * rowHeight + pedidoTable.getTableHeader().getHeight();
 		pedidoScrollPane.setBounds(51, 62, 761, tableHeight + 20); // Ajustar la altura de la tabla de pedidos
 	}
-
+	int devolverIdInforme(int id) {
+		return id;
+	};
 	private void ajustarAlturaDetalleTable() {
 		int rowCount = detalleTableModel.getRowCount();
 		int rowHeight = detalleTable.getRowHeight();
