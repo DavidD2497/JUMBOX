@@ -73,8 +73,21 @@ public class PantallaEditarTipo extends JFrame {
         lblNewLabel_2.setFont(new Font("Consolas", Font.BOLD, 28));
         contentPane.add(lblNewLabel_2);
 
-        detalleTableModel = new DefaultTableModel(new Object[][] {},
-                new String[] { "Id Detalle", "Tipo de registro", "Id Tipo" });
+        detalleTableModel = new DefaultTableModel(
+                new Object[][] {},
+                new String[] { "Id Detalle", "Tipo de registro", "Id Tipo" }
+                cargarDetallesInforme();
+            );
+
+            detalleTable = new JTable(detalleTableModel);
+            detalleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            detalleTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+            
+
+           
+            
+
 
         detalleTable = new JTable(detalleTableModel);
         detalleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -129,16 +142,6 @@ public class PantallaEditarTipo extends JFrame {
         
     }
 
-    private void cargarProductos() {
-        ProductoControlador productoControlador = new ProductoControlador();
-        List<Producto> productos = productoControlador.getAllProductos();
-        tableModel.setRowCount(0);
-        for (Producto producto : productos) {
-            tableModel.addRow(new Object[]{
-                producto.getIdProducto(),
-                producto.getNombreProducto(),
-                producto.getCategoria(),
-            });
-        }
-    }
+    
+    
 }
