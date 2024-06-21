@@ -6,12 +6,20 @@ import java.util.LinkedList;
 public class Pedido {
 	private int codigoPedido;
 	private LocalDate fechaEntrega;
+	private int idInventario;
 
-	
-	public Pedido(LocalDate fechaEntrega) {
+	public Pedido(LocalDate fechaEntrega, int idInventario) {
 		super();
 		this.fechaEntrega = fechaEntrega;
+		this.idInventario = idInventario;
+	}
 
+	public int getIdInventario() {
+		return idInventario;
+	}
+
+	public void setIdInventario(int idInventario) {
+		this.idInventario = idInventario;
 	}
 
 	public int getCodigoPedido() {

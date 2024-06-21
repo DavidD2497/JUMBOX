@@ -27,6 +27,7 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
             while (result.next()) {
                 InventarioSucursal inventario = new InventarioSucursal();
                 inventario.setIdInventario(result.getInt("id_inventario_sucursal"));
+                inventario.setUbicacion(result.getString("ubicacion"));
                 inventarios.add(inventario);
             }
         } catch (SQLException e) {
@@ -45,6 +46,7 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
             if (result.next()) {
                 inventario = new InventarioSucursal();
                 inventario.setIdInventario(result.getInt("id_inventario_sucursal"));
+                inventario.setUbicacion(result.getString("ubicacion"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,6 +85,5 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
         }
     }
 }
-
 
 
