@@ -20,6 +20,7 @@ public class PantallaAgregarPedido extends JFrame {
 	private DefaultTableModel detalleTableModel;
 	private int selectedRow = -1;
 	public static JTable pedidoTable;
+	private JComboBox<String> comboBoxSucursal;
 	private JTable detalleTable;
 	private JScrollPane detalleScrollPane;
 	private JScrollPane pedidoScrollPane;
@@ -96,11 +97,6 @@ public class PantallaAgregarPedido extends JFrame {
 		for (int i = 0; i < inventarioControlador.getAllInventarioSucursal().size(); i++) {
 			tiposSucursal[i] = inventarioControlador.getInventarioSucursalById(i).getUbicacion();
 		}
-		JComboBox<String> comboBoxTipo = new JComboBox<>(tiposSucursal);
-		comboBoxTipo.setBounds(145, 76, 229, 29);
-		comboBoxTipo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBoxTipo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		contentPane.add(comboBoxTipo);
 
 		pedidoScrollPane = new JScrollPane(pedidoTable);
 		pedidoScrollPane.setBounds(37, 114, 522, 328);
@@ -162,14 +158,32 @@ public class PantallaAgregarPedido extends JFrame {
 		lblNewLabel.setBounds(38, 67, 197, 54);
 		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 22));
 		contentPane.add(lblNewLabel);
-
+		
+		JComboBox<String> comboBoxSucursal = new JComboBox<String>();
+		comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		comboBoxSucursal.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		comboBoxSucursal.setBounds(148, 75, 230, 31);
+		contentPane.add(comboBoxSucursal);
+		cargarSucursales();
 		btnVolver.addActionListener(e -> {
 			PantallaPedido pantallaPedido = new PantallaPedido(mail);
 			pantallaPedido.setVisible(true);
 			dispose();
 		});
-	}
+		
+	
 
+	}
+	private void cargarSucursales() {
+   
+		comboBoxSucursal.addItem("--Seleccione una sucursal--");
+        
+        InventarioSucursalControlador inventarioControlador = new InventarioSucursalControlador();
+        List<InventarioSucursal> inventarios = inventarioControlador.getAllInventarioSucursal();
+        for (InventarioSucursal inventario : inventarios) {
+            comboBoxSucursal.addItem(inventario.getIdInventario() + " - " + inventario.getUbicacion());
+        }
+    }
 	private void cargarProductos() {
 		ProductoControlador productoControlador = new ProductoControlador();
 		InventarioSucursalControlador inventarioControlador = new InventarioSucursalControlador();
@@ -182,8 +196,7 @@ public class PantallaAgregarPedido extends JFrame {
 
 	}
 
-
-
+	 
 	private void cargarDetallesPedido(int idPedido) {
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
 		List<DetallePedido> detalles = detallePedidoControlador.getAllDetallePedidosByIdPedido(idPedido);
