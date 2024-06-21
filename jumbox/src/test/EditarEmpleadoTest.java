@@ -13,7 +13,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "david@gmail.com", "nuevaContraseña", "AdminDeposito")) {
+            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "david@gmail.com", "nuevaContraseña", "AdminDeposito").equals("Usuario actualizado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -28,7 +28,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "AdminDeposito")) {
+            if (empleado.editarEmpleado("", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "AdminDeposito").equals("Usuario actualizado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -43,7 +43,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("david@gmail.com", "", "", "", "")) {
+            if (empleado.editarEmpleado("david@gmail.com", "", "", "", "").equals("Usuario actualizado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -58,7 +58,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "TipoInvalido")) {
+            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "TipoInvalido").equals("Usuario actualizado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -73,7 +73,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "nuevoemailgmail.com", "nuevaContraseña", "AdminDeposito")) {
+            if (empleado.editarEmpleado("david@gmail.com", "NuevoNombre", "nuevoemailgmail.com", "nuevaContraseña", "AdminDeposito").equals("Usuario actualizado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -88,7 +88,7 @@ public class EditarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.editarEmpleado("noexiste@gmail.com", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "AdminDeposito")) {
+            if (empleado.editarEmpleado("noexiste@gmail.com", "NuevoNombre", "nuevoemail@gmail.com", "nuevaContraseña", "AdminDeposito").equals("Usuario actualizado exitosamente.")) {
                 flag = true;
                 break;
             }

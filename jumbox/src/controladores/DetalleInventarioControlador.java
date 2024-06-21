@@ -65,7 +65,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void addDetalleInventario(DetalleInventario detalleInventario) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_inventario (id_producto, id_inventario_sucursal, id_descuento, cantidad) VALUES (?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_inventario (id_producto, id_inventario, id_descuento, cantidad) VALUES (?, ?, ?, ?)");
             statement.setInt(1, detalleInventario.getIdProducto());
             statement.setInt(2, detalleInventario.getIdInventarioSucursal());
             statement.setInt(3, detalleInventario.getIdDescuento());
@@ -80,7 +80,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     @Override
     public void updateDetalleInventario(DetalleInventario detalleInventario) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_inventario SET id_producto = ?, id_inventario_sucursal = ?, id_descuento = ?, cantidad = ? WHERE id_detalle = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_inventario SET id_producto = ?, id_inventario = ?, id_descuento = ?, cantidad = ? WHERE id_detalle = ?");
             statement.setInt(1, detalleInventario.getIdProducto());
             statement.setInt(2, detalleInventario.getIdInventarioSucursal());
             statement.setInt(3, detalleInventario.getIdDescuento());

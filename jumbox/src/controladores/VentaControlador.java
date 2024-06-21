@@ -114,6 +114,7 @@ public class VentaControlador implements VentaRepository {
         }
     }
 
+    
     @Override
     public int obtenerUltimoIdVenta() {
         int ultimoIdVenta = -1;
@@ -132,3 +133,4 @@ public class VentaControlador implements VentaRepository {
         return ultimoIdVenta;
     }
 }
+

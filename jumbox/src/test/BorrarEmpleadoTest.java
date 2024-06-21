@@ -13,7 +13,7 @@ public class BorrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.borrarEmpleado("david@gmail.com")) {
+            if (empleado.borrarEmpleado("david@gmail.com").equals("Usuario eliminado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -28,7 +28,7 @@ public class BorrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.borrarEmpleado("")) {
+            if (empleado.borrarEmpleado("").equals("Usuario eliminado exitosamente.")) {
                 flag = true;
                 break;
             }
@@ -43,7 +43,7 @@ public class BorrarEmpleadoTest {
         boolean flag = false;
 
         for (Empleado empleado : empleadoControlador.getAllUsers()) {
-            if (empleado.borrarEmpleado("fede@noexiste.com")) {
+            if (empleado.borrarEmpleado("fede@noexiste.com").equals("Usuario eliminado exitosamente.")) {
                 flag = true;
                 break;
             }

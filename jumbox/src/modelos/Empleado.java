@@ -93,15 +93,15 @@ public abstract class Empleado {
         return "Usuario registrado exitosamente.";
     }
     
-    public boolean editarEmpleado(String email, String nuevoNombre, String nuevoEmail, String nuevaContraseña, String nuevoTipo) {
+    public static String editarEmpleado(String email, String nuevoNombre, String nuevoEmail, String nuevaContraseña, String nuevoTipo) {
         if (email.isEmpty() || nuevoNombre.isEmpty() || nuevoEmail.isEmpty() || nuevaContraseña.isEmpty() || nuevoTipo.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-            return false;
+            return  "Todos los campos son obligatorios.";
+
         }
 
         if (!nuevoEmail.contains("@")) {
-            //JOptionPane.showMessageDialog(null, "Nuevo email no válido. Debe contener un '@'.");
-            return false;
+            return "Nuevo email no válido. Debe contener un '@'.";
+
         }
 
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
@@ -124,24 +124,20 @@ public abstract class Empleado {
                     nuevoEmpleado = new Cajero(nuevoNombre, nuevoEmail, nuevaContraseña);
                     break;
                 default:
-                    //JOptionPane.showMessageDialog(null, "Tipo de usuario no válido.");
-                    return false;
+                    return "Tipo de usuario no válido.";
             }
 
-            // Actualizar los datos del empleado
+
             empleadoControlador.updateUser(email, nuevoEmpleado);
-            //JOptionPane.showMessageDialog(null, "Usuario actualizado exitosamente.");
-            return true;
+            return "Usuario actualizado exitosamente.";
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el email proporcionado.");
-            return false;
+            return "No se encontró ningún usuario con el email proporcionado.";
         }
     }
     
-    public boolean borrarEmpleado(String email) {
+    public static String borrarEmpleado(String email) {
         if (email.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "El email no puede estar vacío.");
-            return false;
+            return "El email no puede estar vacío.";
         }
 
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
@@ -149,11 +145,9 @@ public abstract class Empleado {
 
         if (empleado != null) {
             empleadoControlador.deleteUser(email);
-            //JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente.");
-            return true;
+            return "Usuario eliminado exitosamente.";
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el email proporcionado.");
-            return false;
+            return "No se encontró ningún usuario con el email proporcionado.";
         }
     }
     

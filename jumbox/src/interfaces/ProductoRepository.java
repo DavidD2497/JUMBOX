@@ -16,4 +16,6 @@ public interface ProductoRepository {
     void deleteProducto(int id); // Elimina un producto de la base de datos
     
     double getPrecioProductoById(int id);
+    
+    List<String> getAllCategorias();
 }

@@ -7,20 +7,23 @@ public class Venta {
 	private double montoTotal;
 	private String tipoPago;
 	private LocalDate fechaVenta;
+	
     public Venta(double montoTotal, String tipoPago, LocalDate fechaVenta) {
         super();
         this.montoTotal = montoTotal;
         this.tipoPago = tipoPago;
-        this.fechaVenta=fechaVenta;
+        this.fechaVenta = fechaVenta;
     }
 
 	public LocalDate getFechaVenta() {
 		return fechaVenta;
 	}
 
+
 	public void setFechaVenta(LocalDate fechaVenta) {
 		this.fechaVenta = fechaVenta;
 	}
+
 
 	public int getIdVenta() {
 		return idVenta;

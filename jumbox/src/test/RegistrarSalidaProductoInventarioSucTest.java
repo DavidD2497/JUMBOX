@@ -13,7 +13,7 @@ public class RegistrarSalidaProductoInventarioSucTest {
     	
         boolean flag = false;
         
-        if (Cajero.registrarSalidaProductoInventarioSuc(1,1,1)) {
+        if (Cajero.registrarSalidaProductoInventarioSuc(1,1,1).equals("Salida registrada correctamente")) {
         	flag = true;
 		}
 
@@ -24,7 +24,7 @@ public class RegistrarSalidaProductoInventarioSucTest {
     public void RegistrarSalidaProductoInventarioSucCantidadMenorOIgualCero() {
         boolean flag = false;
 
-        if (Cajero.registrarSalidaProductoInventarioSuc(1, 1, 0)) {
+        if (Cajero.registrarSalidaProductoInventarioSuc(1, 1, 0).equals("Salida registrada correctamente")) {
             flag = true;
         }
 
@@ -35,7 +35,7 @@ public class RegistrarSalidaProductoInventarioSucTest {
     public void RegistrarSalidaProductoInventarioSucIdProductoNoExistente() {
         boolean flag = false;
 
-        if (Cajero.registrarSalidaProductoInventarioSuc(1, 999, 5)) {
+        if (Cajero.registrarSalidaProductoInventarioSuc(1, 999, 5).equals("Salida registrada correctamente")) {
             flag = true;
         }
 
@@ -46,7 +46,7 @@ public class RegistrarSalidaProductoInventarioSucTest {
     public void RegistrarSalidaProductoInventarioSucCantidadMayorDisponible() {
         boolean flag = false;
 
-        if (Cajero.registrarSalidaProductoInventarioSuc(1, 1, 300)) {
+        if (Cajero.registrarSalidaProductoInventarioSuc(1, 1, 300).equals("Salida registrada correctamente")) {
             flag = true;
         }
 

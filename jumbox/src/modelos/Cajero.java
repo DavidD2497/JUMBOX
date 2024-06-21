@@ -24,15 +24,15 @@ public class Cajero extends Empleado {
         this.tipo = tipo;
     }
 
-    public static boolean registrarSalidaProductoInventarioSuc(int idInventarioSucursal, int idProducto, int cantidadSalida) {
+    public static String registrarSalidaProductoInventarioSuc(int idInventarioSucursal, int idProducto, int cantidadSalida) {
         if (cantidadSalida <= 0) {
-            return false;
+            return "No puedes registrar salidas menores a 0";
         }
 
         DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
 
         if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
-            return false;
+            return "No existe ese producto en esta sucursal";
         }
 
         int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
@@ -40,16 +40,15 @@ public class Cajero extends Empleado {
         if (cantidadDisponible >= cantidadSalida) {
             int cantidadTotal = cantidadDisponible - cantidadSalida;
             detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
-            return true;
+            return "Salida registrada correctamente";
         } else {
-            return false;
+            return "No hay suficiente cantidad, la cantidad total actual es " + cantidadDisponible;
         }
     }
 
-    public static boolean registrarVenta(int idInventarioSucursal, List<DetalleVenta> detallesVenta, String tipoPago) {
+    public static String registrarVenta(int idInventarioSucursal, List<DetalleVenta> detallesVenta, String tipoPago) {
         if (idInventarioSucursal == 0 || detallesVenta.isEmpty() || tipoPago.isEmpty()) {
-            //JOptionPane.showMessageDialog(null, "Todos los campos deben ser completados.");
-            return false;
+            return "Todos los campos deben ser completados.";
         }
 
         DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
@@ -58,19 +57,16 @@ public class Cajero extends Empleado {
         for (DetalleVenta detalle : detallesVenta) {
             if (detalle.getCantidad() <= 0) {
                 todosDisponibles = false;
-                //JOptionPane.showMessageDialog(null, "La cantidad de cada producto debe ser mayor que cero.");
-                break;
+                return "La cantidad de cada producto debe ser mayor que cero.";
             }
             if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, detalle.getIdProducto())) {
                 todosDisponibles = false;
-                //JOptionPane.showMessageDialog(null, "No se puede registrar la venta porque no existe el producto en esta sucursal");
-                break;
+                return "No se puede registrar la venta porque no existe el producto en esta sucursal";
             } else {
                 int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
                 if (cantidadDisponible < detalle.getCantidad()) {
                     todosDisponibles = false;
-                    //JOptionPane.showMessageDialog(null, "No se puede registrar la venta porque no están disponibles la cantidad requerida en el inventario de la sucursal, la cantidad total disponible es " + detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto()));
-                    break;
+                    return "No se puede registrar la venta porque no están disponibles la cantidad requerida en el inventario de la sucursal, la cantidad total disponible es " + detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
                 }
             }
         }
@@ -95,10 +91,9 @@ public class Cajero extends Empleado {
                 detalleVentaControlador.addDetalleVenta(detalle);
             }
 
-            //JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
-            return true;
+            return "Venta registrada con éxito";
         } else {
-            return false;
+            return "No todos los productos estan disponibles en el inventario";
         }
     }
 
