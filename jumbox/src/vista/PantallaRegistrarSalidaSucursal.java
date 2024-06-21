@@ -1,7 +1,9 @@
 package vista;
 
 import modelos.Cajero;
+import modelos.InventarioSucursal;
 import modelos.Producto;
+import controladores.InventarioSucursalControlador;
 import controladores.ProductoControlador;
 
 import javax.swing.JFrame;
@@ -11,26 +13,33 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PantallaRegistrarSalidaSucursal extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField inpCantidad;
-    private JTextField inpIDSuc;
+    private JComboBox<String> comboBoxSucursal;
     private JTable table;
     private DefaultTableModel tableModel;
     private int selectedRow = -1;
+    private JTextField filtroNombre;
+    private JComboBox<String> filtroCategoria;
 
     public PantallaRegistrarSalidaSucursal(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +50,40 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        
+        JLabel lblFiltroNombre = new JLabel("Filtrar por Nombre:");
+        lblFiltroNombre.setFont(new Font("Consolas", Font.BOLD, 16));
+        lblFiltroNombre.setBounds(51, 50, 184, 25);
+        contentPane.add(lblFiltroNombre);
+
+        filtroNombre = new JTextField();
+        filtroNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        filtroNombre.setBounds(51, 79, 150, 25);
+        contentPane.add(filtroNombre);
+        
+        filtroNombre.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                aplicarFiltros();
+            }
+        });
+
+        JLabel lblFiltroCategoria = new JLabel("Filtrar por Categoría:");
+        lblFiltroCategoria.setFont(new Font("Consolas", Font.BOLD, 16));
+        lblFiltroCategoria.setBounds(536, 50, 198, 25);
+        contentPane.add(lblFiltroCategoria);
+
+        filtroCategoria = new JComboBox<>();
+        filtroCategoria.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        filtroCategoria.setBounds(536, 79, 150, 25);
+        contentPane.add(filtroCategoria);
+        
+        cargarCategorias();
+        
+        filtroCategoria.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                aplicarFiltros();
+            }
+        });
 
         JLabel lblNewLabel = new JLabel("REGISTRAR SALIDAS - INVENTARIO SUCURSAL");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -68,11 +111,13 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         inpCantidad.setBounds(69, 310, 301, 31);
         contentPane.add(inpCantidad);
 
-        inpIDSuc = new JTextField();
-        inpIDSuc.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        inpIDSuc.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        inpIDSuc.setBounds(433, 310, 301, 31);
-        contentPane.add(inpIDSuc);
+        comboBoxSucursal = new JComboBox<>();
+        comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        comboBoxSucursal.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        comboBoxSucursal.setBounds(433, 310, 301, 31);
+        contentPane.add(comboBoxSucursal);
+        
+        cargarSucursales();
 
         JLabel lblError = new JLabel("");
         lblError.setFont(new Font("Consolas", Font.BOLD, 16));
@@ -94,7 +139,7 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         lblSeleccion.setVerticalAlignment(SwingConstants.BOTTOM);
         lblSeleccion.setHorizontalAlignment(SwingConstants.CENTER);
         lblSeleccion.setFont(new Font("Consolas", Font.BOLD, 16));
-        lblSeleccion.setBounds(0, 210, 796, 29);
+        lblSeleccion.setBounds(0, 230, 796, 29);
         contentPane.add(lblSeleccion);
 
         tableModel = new DefaultTableModel(
@@ -110,7 +155,7 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        scrollPane.setBounds(51, 91, 683, 90);
+        scrollPane.setBounds(51, 119, 683, 90);
         contentPane.add(scrollPane);
 
         cargarProducto();
@@ -132,7 +177,8 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (selectedRow != -1) {
                     try {
-                        int idSucursal = Integer.parseInt(inpIDSuc.getText());
+                    	String selectedSucursal = (String) comboBoxSucursal.getSelectedItem();                   	                        
+                        int idSucursal = Integer.parseInt(selectedSucursal.split(" - ")[0]);
                         int cantidad = Integer.parseInt(inpCantidad.getText());
                         Object valueAt = table.getValueAt(selectedRow, 0);
 
@@ -195,6 +241,52 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
                 producto.getNombreProducto(),
                 producto.getCategoria()
             });
+        }
+    }
+    
+    private void cargarCategorias() {
+        ProductoControlador productoControlador = new ProductoControlador();
+        List<String> categorias = productoControlador.getAllCategorias();
+        filtroCategoria.addItem("--Todas--");
+        for (String categoria : categorias) {
+            filtroCategoria.addItem(categoria);
+        }
+    }
+
+    private void aplicarFiltros() {
+        String nombreFiltro = filtroNombre.getText().trim();
+        String categoriaFiltro = (String) filtroCategoria.getSelectedItem();
+
+        ProductoControlador productoControlador = new ProductoControlador();
+        List<Producto> productos = productoControlador.getAllProductos();
+
+        List<Producto> productosFiltrados = productos.stream()
+                .filter(p -> p.getNombreProducto().toLowerCase().contains(nombreFiltro.toLowerCase()))
+                .filter(p -> categoriaFiltro.equals("--Todas--") || p.getCategoria().equals(categoriaFiltro))
+                .collect(Collectors.toList());
+
+        actualizarTabla(productosFiltrados);
+    }
+
+
+    private void actualizarTabla(List<Producto> productos) {
+        tableModel.setRowCount(0);
+        for (Producto producto : productos) {
+            tableModel.addRow(new Object[]{
+                    producto.getIdProducto(),
+                    producto.getNombreProducto(),
+                    producto.getCategoria()
+            });
+        }
+    }
+    
+    private void cargarSucursales() {
+        comboBoxSucursal.addItem("--Seleccione una sucursal--");
+        
+        InventarioSucursalControlador inventarioControlador = new InventarioSucursalControlador();
+        List<InventarioSucursal> inventarios = inventarioControlador.getAllInventarioSucursal();
+        for (InventarioSucursal inventario : inventarios) {
+            comboBoxSucursal.addItem(inventario.getIdInventario() + " - " + inventario.getUbicacion());
         }
     }
 }

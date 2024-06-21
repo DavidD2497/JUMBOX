@@ -26,7 +26,8 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 InventarioSucursal inventario = new InventarioSucursal();
-                inventario.setIdInventario(result.getInt("id_inventario_sucursal"));
+                inventario.setIdInventario(result.getInt("id_inventario"));
+                inventario.setUbicacion(result.getString("ubicacion"));
                 inventarios.add(inventario);
             }
         } catch (SQLException e) {
@@ -39,12 +40,13 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
     public InventarioSucursal getInventarioSucursalById(int id) {
         InventarioSucursal inventario = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM inventario_sucursal WHERE id_inventario_sucursal = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM inventario_sucursal WHERE id_inventario = ?");
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 inventario = new InventarioSucursal();
-                inventario.setIdInventario(result.getInt("id_inventario_sucursal"));
+                inventario.setIdInventario(result.getInt("id_inventario"));
+                inventario.setUbicacion(result.getString("ubicacion"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +72,7 @@ public class InventarioSucursalControlador implements InventarioSucursalReposito
     @Override
     public void deleteInventarioSucursal(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM inventario_sucursal WHERE id_inventario_sucursal = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM inventario_sucursal WHERE id_inventario = ?");
             statement.setInt(1, id);
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {

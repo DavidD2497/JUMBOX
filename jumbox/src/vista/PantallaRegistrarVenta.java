@@ -2,7 +2,9 @@ package vista;
 
 import modelos.Cajero;
 import modelos.DetalleVenta;
+import modelos.InventarioSucursal;
 import modelos.Producto;
+import controladores.InventarioSucursalControlador;
 import controladores.ProductoControlador;
 import controladores.VentaControlador;
 
@@ -10,19 +12,21 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PantallaRegistrarVenta extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField inpCantidad;
-    private JTextField inpIDSuc;
     private JTable table;
     private DefaultTableModel tableModel;
     private DefaultTableModel detalleTableModel;
@@ -32,6 +36,9 @@ public class PantallaRegistrarVenta extends JFrame {
     private JLabel lblError;
     private JLabel lblAprobado;
     private Timer mensajeTimer;
+    private JComboBox<String> comboBoxSucursal;
+    private JTextField filtroNombre;
+    private JComboBox<String> filtroCategoria;
 
     public PantallaRegistrarVenta(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,16 +50,52 @@ public class PantallaRegistrarVenta extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
         
+        JLabel lblFiltroNombre = new JLabel("Filtrar por Nombre:");
+        lblFiltroNombre.setFont(new Font("Consolas", Font.BOLD, 16));
+        lblFiltroNombre.setBounds(51, 74, 184, 25);
+        contentPane.add(lblFiltroNombre);
+
+        filtroNombre = new JTextField();
+        filtroNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        filtroNombre.setBounds(51, 99, 150, 25);
+        contentPane.add(filtroNombre);
+        
+        filtroNombre.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                aplicarFiltros();
+            }
+        });
+
+        JLabel lblFiltroCategoria = new JLabel("Filtrar por Categoría:");
+        lblFiltroCategoria.setFont(new Font("Consolas", Font.BOLD, 16));
+        lblFiltroCategoria.setBounds(536, 74, 198, 25);
+        contentPane.add(lblFiltroCategoria);
+
+        filtroCategoria = new JComboBox<>();
+        filtroCategoria.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        filtroCategoria.setBounds(536, 99, 150, 25);
+        contentPane.add(filtroCategoria);
+        
+        cargarCategorias();
+        
+        filtroCategoria.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                aplicarFiltros();
+            }
+        });
+        
+        
         mensajeTimer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cuando el temporizador se activa, ocultar los mensajes
                 lblError.setVisible(false);
                 lblAprobado.setVisible(false);
-                mensajeTimer.stop(); // Detener el temporizador después de ocultar los mensajes
+                mensajeTimer.stop(); 
             }
         });
         mensajeTimer.setRepeats(false);
+        
+ 
 
         JLabel lblNewLabel = new JLabel("REGISTRAR VENTAS");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,13 +114,13 @@ public class PantallaRegistrarVenta extends JFrame {
         lblContraseña.setVerticalAlignment(SwingConstants.BOTTOM);
         lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
         lblContraseña.setFont(new Font("Consolas", Font.BOLD, 20));
-        lblContraseña.setBounds(52, 39, 175, 29);
+        lblContraseña.setBounds(505, 319, 175, 29);
         contentPane.add(lblContraseña);
 
         inpCantidad = new JTextField();
         inpCantidad.setFont(new Font("Tahoma", Font.PLAIN, 15));
         inpCantidad.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        inpCantidad.setBounds(52, 310, 230, 31);
+        inpCantidad.setBounds(51, 310, 174, 31);
         contentPane.add(inpCantidad);
 
         String[] tiposEmpleado = {"", "Efectivo", "Debito", "Credito"};
@@ -92,11 +135,13 @@ public class PantallaRegistrarVenta extends JFrame {
         btnMas.setBounds(326, 309, 98, 39);
         contentPane.add(btnMas);
 
-        inpIDSuc = new JTextField();
-        inpIDSuc.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        inpIDSuc.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        inpIDSuc.setBounds(51, 75, 301, 31);
-        contentPane.add(inpIDSuc);
+        comboBoxSucursal = new JComboBox<>();
+        comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        comboBoxSucursal.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        comboBoxSucursal.setBounds(505, 363, 230, 31);
+        contentPane.add(comboBoxSucursal);
+        
+        cargarSucursales();
 
         lblError = new JLabel("");
         lblError.setFont(new Font("Consolas", Font.BOLD, 16));
@@ -127,7 +172,7 @@ public class PantallaRegistrarVenta extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        scrollPane.setBounds(52, 117, 683, 142);
+        scrollPane.setBounds(51, 145, 683, 95);
         contentPane.add(scrollPane);
 
         cargarProducto();
@@ -226,7 +271,10 @@ public class PantallaRegistrarVenta extends JFrame {
         btnRegistrarSalida.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int idSucursal = Integer.parseInt(inpIDSuc.getText());
+                	String selectedSucursal = (String) comboBoxSucursal.getSelectedItem();
+                	
+                   
+                    int idSucursal = Integer.parseInt(selectedSucursal.split(" - ")[0]);
                     String tipoPago = (String) comboBoxTipo.getSelectedItem();
                     String respuesta = Cajero.registrarVenta(idSucursal, detalles, tipoPago);
                     if (respuesta.equals("Venta registrada con éxito")) {
@@ -235,7 +283,8 @@ public class PantallaRegistrarVenta extends JFrame {
                         detalleTableModel.setRowCount(0);
                         actualizarMontoTotal();
                         cargarProducto();
-                        inpIDSuc.setText("");
+                        comboBoxSucursal.setSelectedIndex(0);
+                        comboBoxTipo.setSelectedIndex(0);
                     } else {
                         mostrarMensajeError(respuesta);
                     }
@@ -321,6 +370,52 @@ public class PantallaRegistrarVenta extends JFrame {
         lblAprobado.setVisible(true);
         lblError.setVisible(false);
         mensajeTimer.restart();
+    }
+    
+    private void cargarSucursales() {
+        comboBoxSucursal.addItem("--Seleccione una sucursal--");
+        
+        InventarioSucursalControlador inventarioControlador = new InventarioSucursalControlador();
+        List<InventarioSucursal> inventarios = inventarioControlador.getAllInventarioSucursal();
+        for (InventarioSucursal inventario : inventarios) {
+            comboBoxSucursal.addItem(inventario.getIdInventario() + " - " + inventario.getUbicacion());
+        }
+    }
+    
+    private void cargarCategorias() {
+        ProductoControlador productoControlador = new ProductoControlador();
+        List<String> categorias = productoControlador.getAllCategorias();
+        filtroCategoria.addItem("--Todas--");
+        for (String categoria : categorias) {
+            filtroCategoria.addItem(categoria);
+        }
+    }
+
+    private void aplicarFiltros() {
+        String nombreFiltro = filtroNombre.getText().trim();
+        String categoriaFiltro = (String) filtroCategoria.getSelectedItem();
+
+        ProductoControlador productoControlador = new ProductoControlador();
+        List<Producto> productos = productoControlador.getAllProductos();
+
+        List<Producto> productosFiltrados = productos.stream()
+                .filter(p -> p.getNombreProducto().toLowerCase().contains(nombreFiltro.toLowerCase()))
+                .filter(p -> categoriaFiltro.equals("--Todas--") || p.getCategoria().equals(categoriaFiltro))
+                .collect(Collectors.toList());
+
+        actualizarTabla(productosFiltrados);
+    }
+
+
+    private void actualizarTabla(List<Producto> productos) {
+        tableModel.setRowCount(0);
+        for (Producto producto : productos) {
+            tableModel.addRow(new Object[]{
+                    producto.getIdProducto(),
+                    producto.getNombreProducto(),
+                    producto.getCategoria()
+            });
+        }
     }
 }
 

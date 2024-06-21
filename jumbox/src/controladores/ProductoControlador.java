@@ -130,5 +130,20 @@ public class ProductoControlador implements ProductoRepository {
         }
         return precio;
     }
+    
+    @Override
+    public List<String> getAllCategorias() {
+        List<String> categorias = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT DISTINCT categoria FROM producto");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                categorias.add(result.getString("categoria"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categorias;
+    }
 }
 
