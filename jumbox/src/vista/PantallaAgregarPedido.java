@@ -61,6 +61,10 @@ public class PantallaAgregarPedido extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JToggleButton tglbtnNewToggleButton_1 = new JToggleButton("New toggle button");
+		tglbtnNewToggleButton_1.setBounds(178, 116, 28, 23);
+		contentPane.add(tglbtnNewToggleButton_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Productos Agregados al Pedido");
 		lblNewLabel_2.setBounds(479, 73, 496, 40);
@@ -111,6 +115,9 @@ public class PantallaAgregarPedido extends JFrame {
 		JToggleButton tglbtnNewToggleButton = new JToggleButton("New xzxzzxzxbutton");
 		tglbtnNewToggleButton.setForeground(Color.RED);
 		pedidoScrollPane.setColumnHeaderView(tglbtnNewToggleButton);
+		
+		JToggleButton tglbtnNewToggleButton_1_1 = new JToggleButton("New toggle button");
+		pedidoScrollPane.setColumnHeaderView(tglbtnNewToggleButton_1_1);
 
 		detalleTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "Id Producto", "Producto Solicitado", "Cantidad Solicitada" });
