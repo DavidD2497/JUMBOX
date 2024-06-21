@@ -118,7 +118,7 @@ public class PantallaMostrarPedido extends JFrame {
         lblNewLabel_2_1.setHorizontalTextPosition(SwingConstants.CENTER);
         lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
-        lblNewLabel_2_1.setBounds(219, 240, 496, 40);
+        lblNewLabel_2_1.setBounds(217, 233, 496, 40);
         lblNewLabel_2_1.setVisible(false);
         contentPane.add(lblNewLabel_2_1);
         
@@ -128,16 +128,18 @@ public class PantallaMostrarPedido extends JFrame {
         	}
         });
         btnEliminar.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnEliminar.setBounds(512, 462, 99, 31);
+        btnEliminar.setBounds(495, 482, 99, 31);
         contentPane.add(btnEliminar);
         
         JButton btnEditar = new JButton("Editar");
         btnEditar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		JOptionPane.showMessageDialog(btnEditar,"Hola, se borro todo");
+        		
         	}
         });
         btnEditar.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnEditar.setBounds(356, 462, 99, 31);
+        btnEditar.setBounds(297, 482, 99, 31);
         contentPane.add(btnEditar);
 
         btnVolver.addActionListener(e -> {
