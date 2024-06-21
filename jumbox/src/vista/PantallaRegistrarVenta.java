@@ -4,30 +4,18 @@ import modelos.Cajero;
 import modelos.DetalleVenta;
 import modelos.Producto;
 import controladores.ProductoControlador;
-import controladores.DetalleVentaControlador;
-import controladores.DetalleInventarioControlador;
 import controladores.VentaControlador;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.border.MatteBorder;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 public class PantallaRegistrarVenta extends JFrame {
 
@@ -41,16 +29,30 @@ public class PantallaRegistrarVenta extends JFrame {
     private int selectedRow = -1;
     private List<DetalleVenta> detalles = new ArrayList<>();
     private JLabel lblMontoTotal;
+    private JLabel lblError;
+    private JLabel lblAprobado;
+    private Timer mensajeTimer;
 
     public PantallaRegistrarVenta(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 812, 700); // Ajustado el tamaño para acomodar más componentes
+        setBounds(100, 100, 812, 700);
 
         contentPane = new ImagePanel("/resources/supermercado.jpg");
         contentPane.setToolTipText("");
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        
+        mensajeTimer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cuando el temporizador se activa, ocultar los mensajes
+                lblError.setVisible(false);
+                lblAprobado.setVisible(false);
+                mensajeTimer.stop(); // Detener el temporizador después de ocultar los mensajes
+            }
+        });
+        mensajeTimer.setRepeats(false);
 
         JLabel lblNewLabel = new JLabel("REGISTRAR VENTAS");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,7 +77,7 @@ public class PantallaRegistrarVenta extends JFrame {
         inpCantidad = new JTextField();
         inpCantidad.setFont(new Font("Tahoma", Font.PLAIN, 15));
         inpCantidad.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-        inpCantidad.setBounds(52, 310, 230, 31); // Ajustado para dejar espacio para el botón "+"
+        inpCantidad.setBounds(52, 310, 230, 31);
         contentPane.add(inpCantidad);
 
         String[] tiposEmpleado = {"", "Efectivo", "Debito", "Credito"};
@@ -85,9 +87,9 @@ public class PantallaRegistrarVenta extends JFrame {
         comboBoxTipo.setBounds(506, 443, 229, 29);
         contentPane.add(comboBoxTipo);
 
-        JButton btnMas = new JButton("+");
+        JButton btnMas = new JButton("Agregar");
         btnMas.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnMas.setBounds(346, 302, 56, 39); // Tamaño y ubicación del botón "+"
+        btnMas.setBounds(326, 309, 98, 39);
         contentPane.add(btnMas);
 
         inpIDSuc = new JTextField();
@@ -96,25 +98,25 @@ public class PantallaRegistrarVenta extends JFrame {
         inpIDSuc.setBounds(51, 75, 301, 31);
         contentPane.add(inpIDSuc);
 
-        JLabel lblError = new JLabel("");
+        lblError = new JLabel("");
         lblError.setFont(new Font("Consolas", Font.BOLD, 16));
         lblError.setHorizontalAlignment(SwingConstants.CENTER);
         lblError.setForeground(Color.RED);
-        lblError.setBounds(0, 582, 796, 14);
+        lblError.setBounds(0, 596, 796, 14);
         lblError.setVisible(false);
         contentPane.add(lblError);
 
-        JLabel lblAprobado = new JLabel("");
+        lblAprobado = new JLabel("");
         lblAprobado.setHorizontalAlignment(SwingConstants.CENTER);
         lblAprobado.setForeground(Color.GREEN);
         lblAprobado.setFont(new Font("Consolas", Font.BOLD, 16));
-        lblAprobado.setBounds(0, 582, 796, 14);
+        lblAprobado.setBounds(0, 596, 796, 14);
         lblAprobado.setVisible(false);
         contentPane.add(lblAprobado);
 
         tableModel = new DefaultTableModel(
-            new Object[][]{},
-            new String[]{"ID Producto", "Nombre", "Categoría"}
+                new Object[][]{},
+                new String[]{"ID Producto", "Nombre", "Categoría"}
         );
 
         table = new JTable(tableModel);
@@ -138,35 +140,31 @@ public class PantallaRegistrarVenta extends JFrame {
             }
         });
 
-        // Tabla para mostrar los detalles
         detalleTableModel = new DefaultTableModel(
-            new Object[][]{},
-            new String[]{"ID Producto", "Nombre", "Cantidad", "Monto"}
+                new Object[][]{},
+                new String[]{"ID Producto", "Nombre", "Cantidad", "Monto"}
         );
 
         JTable detalleTable = new JTable(detalleTableModel);
         JScrollPane detalleScrollPane = new JScrollPane(detalleTable);
         detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        detalleScrollPane.setBounds(52, 399, 372, 150); // Posición de la tabla de detalles
+        detalleScrollPane.setBounds(52, 399, 372, 150);
         contentPane.add(detalleScrollPane);
 
-        // Label para mostrar el monto total
         lblMontoTotal = new JLabel("Monto Total: $0.00");
         lblMontoTotal.setFont(new Font("Consolas", Font.BOLD, 20));
-        lblMontoTotal.setBounds(52, 560, 372, 29); // Posición del label
+        lblMontoTotal.setBounds(52, 560, 372, 29);
         contentPane.add(lblMontoTotal);
 
-        // Acción del botón "+"
         btnMas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (selectedRow != -1) {
                     try {
+                        VentaControlador ventaControlador = new VentaControlador();
                         int cantidad = Integer.parseInt(inpCantidad.getText());
+                        int idVenta = ventaControlador.obtenerUltimoIdVenta() + 1;
                         Object valueAt = table.getValueAt(selectedRow, 0);
-                        String nombreProducto = (String) table.getValueAt(selectedRow, 1);
-                        double precioProducto = 10.0; // Supongamos un precio fijo por simplicidad
-
                         int idProducto;
                         if (valueAt instanceof Integer) {
                             idProducto = (Integer) valueAt;
@@ -176,21 +174,49 @@ public class PantallaRegistrarVenta extends JFrame {
                             throw new NumberFormatException("Tipo de datos inesperado en la celda seleccionada.");
                         }
 
-                        // Añadir el detalle a la lista y actualizar la tabla de detalles
-                        DetalleVenta detalle = new DetalleVenta(idProducto, nombreProducto, cantidad, precioProducto);
-                        detalles.add(detalle);
-                        detalleTableModel.addRow(new Object[]{idProducto, nombreProducto, cantidad, cantidad * precioProducto});
-                        inpCantidad.setText(""); // Limpiar el campo de cantidad
+                        ProductoControlador productoControlador = new ProductoControlador();
+                        double precioProducto = productoControlador.getPrecioProductoById(idProducto);
+
+                        DetalleVenta detalleExistente = detalles.stream()
+                                .filter(detalle -> detalle.getIdProducto() == idProducto)
+                                .findFirst()
+                                .orElse(null);
+
+                        if (detalleExistente != null) {
+                            detalleExistente.setCantidad(detalleExistente.getCantidad() + cantidad);
+                        } else {
+                            DetalleVenta nuevoDetalle = new DetalleVenta(idProducto, idVenta, precioProducto, cantidad);
+                            detalles.add(nuevoDetalle);
+                        }
+
+                        actualizarTablaDetalles();
+                        inpCantidad.setText("");
                         actualizarMontoTotal();
+                        mostrarMensajeExito("Producto agregado correctamente.");
                     } catch (NumberFormatException ex) {
-                        lblError.setText("Por favor, ingrese valores numéricos válidos.");
-                        lblError.setVisible(true);
-                        lblAprobado.setVisible(false);
+                        mostrarMensajeError("Por favor, ingrese valores numéricos válidos.");
                     }
                 } else {
-                    lblError.setText("Por favor, seleccione un producto.");
-                    lblError.setVisible(true);
-                    lblAprobado.setVisible(false);
+                    mostrarMensajeError("Por favor, seleccione un producto.");
+                }
+            }
+        });
+
+        JButton btnEliminarDetalle = new JButton("Borrar");
+        btnEliminarDetalle.setFont(new Font("Consolas", Font.BOLD, 15));
+        btnEliminarDetalle.setBounds(431, 511, 86, 39);
+        contentPane.add(btnEliminarDetalle);
+
+        btnEliminarDetalle.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedDetalleIndex = detalleTable.getSelectedRow();
+                if (selectedDetalleIndex != -1) {
+                    detalles.remove(selectedDetalleIndex);
+                    detalleTableModel.removeRow(selectedDetalleIndex);
+                    actualizarMontoTotal();
+                    mostrarMensajeExito("Detalle de venta eliminado correctamente.");
+                } else {
+                    mostrarMensajeError("Por favor, seleccione un detalle de venta.");
                 }
             }
         });
@@ -204,22 +230,17 @@ public class PantallaRegistrarVenta extends JFrame {
                     String tipoPago = (String) comboBoxTipo.getSelectedItem();
                     String respuesta = Cajero.registrarVenta(idSucursal, detalles, tipoPago);
                     if (respuesta.equals("Venta registrada con éxito")) {
-                        lblAprobado.setText(respuesta);
-                        lblAprobado.setVisible(true);
-                        lblError.setVisible(false);
-                        detalles.clear(); // Limpiar la lista de detalles
-                        detalleTableModel.setRowCount(0); // Limpiar la tabla de detalles
-                        actualizarMontoTotal(); // Reiniciar el monto total
+                        mostrarMensajeExito(respuesta);
+                        detalles.clear();
+                        detalleTableModel.setRowCount(0);
+                        actualizarMontoTotal();
                         cargarProducto();
+                        inpIDSuc.setText("");
                     } else {
-                        lblError.setText(respuesta);
-                        lblError.setVisible(true);
-                        lblAprobado.setVisible(false);
+                        mostrarMensajeError(respuesta);
                     }
                 } catch (NumberFormatException ex) {
-                    lblError.setText("Por favor, ingrese valores numéricos válidos.");
-                    lblError.setVisible(true);
-                    lblAprobado.setVisible(false);
+                    mostrarMensajeError("Por favor, ingrese valores numéricos válidos para el ID de sucursal.");
                 }
             }
         });
@@ -251,6 +272,8 @@ public class PantallaRegistrarVenta extends JFrame {
         lblNombre_1.setFont(new Font("Consolas", Font.BOLD, 20));
         lblNombre_1.setBounds(52, 280, 256, 29);
         contentPane.add(lblNombre_1);
+
+        actualizarMontoTotal();
     }
 
     private void cargarProducto() {
@@ -259,9 +282,21 @@ public class PantallaRegistrarVenta extends JFrame {
         tableModel.setRowCount(0);
         for (Producto producto : productos) {
             tableModel.addRow(new Object[]{
-                producto.getIdProducto(),
-                producto.getNombreProducto(),
-                producto.getCategoria()
+                    producto.getIdProducto(),
+                    producto.getNombreProducto(),
+                    producto.getCategoria()
+            });
+        }
+    }
+
+    private void actualizarTablaDetalles() {
+        detalleTableModel.setRowCount(0);
+        for (DetalleVenta detalle : detalles) {
+            detalleTableModel.addRow(new Object[]{
+                    detalle.getIdProducto(),
+                    detalle.getIdVenta(),
+                    detalle.getCantidad(),
+                    detalle.getMonto() * detalle.getCantidad()
             });
         }
     }
@@ -273,6 +308,21 @@ public class PantallaRegistrarVenta extends JFrame {
         }
         lblMontoTotal.setText("Monto Total: $" + String.format("%.2f", montoTotal));
     }
+
+    private void mostrarMensajeError(String mensaje) {
+        lblError.setText(mensaje);
+        lblError.setVisible(true);
+        lblAprobado.setVisible(false);
+        mensajeTimer.restart();
+    }
+
+    private void mostrarMensajeExito(String mensaje) {
+        lblAprobado.setText(mensaje);
+        lblAprobado.setVisible(true);
+        lblError.setVisible(false);
+        mensajeTimer.restart();
+    }
 }
+
 
 
