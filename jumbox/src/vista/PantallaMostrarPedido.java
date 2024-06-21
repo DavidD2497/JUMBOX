@@ -50,7 +50,7 @@ public class PantallaMostrarPedido extends JFrame {
      * Crear el frame.
      */
     public PantallaMostrarPedido(String mail) {
-        JLabel lblNewLabel_2_1 = new JLabel("Tabla Pedidos");
+        JLabel lblNewLabel_2_1 = new JLabel("Productos Solicitados");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 894, 563);
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
@@ -64,7 +64,7 @@ public class PantallaMostrarPedido extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel lblNewLabel_2 = new JLabel("Tabla Pedidos");
+        JLabel lblNewLabel_2 = new JLabel("Pedidos");
         lblNewLabel_2.setBounds(185, 11, 496, 40);
         lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
         lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,7 +118,7 @@ public class PantallaMostrarPedido extends JFrame {
         lblNewLabel_2_1.setHorizontalTextPosition(SwingConstants.CENTER);
         lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
-        lblNewLabel_2_1.setBounds(217, 233, 496, 40);
+        lblNewLabel_2_1.setBounds(185, 233, 496, 40);
         lblNewLabel_2_1.setVisible(false);
         contentPane.add(lblNewLabel_2_1);
         
@@ -128,7 +128,7 @@ public class PantallaMostrarPedido extends JFrame {
         	}
         });
         btnEliminar.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnEliminar.setBounds(495, 482, 99, 31);
+        btnEliminar.setBounds(557, 482, 99, 31);
         contentPane.add(btnEliminar);
         
         JButton btnEditar = new JButton("Editar");
@@ -139,8 +139,13 @@ public class PantallaMostrarPedido extends JFrame {
         	}
         });
         btnEditar.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnEditar.setBounds(297, 482, 99, 31);
+        btnEditar.setBounds(185, 482, 99, 31);
         contentPane.add(btnEditar);
+        
+        JButton btnAgregarPedido = new JButton("Agregar Pedido");
+        btnAgregarPedido.setFont(new Font("Consolas", Font.BOLD, 13));
+        btnAgregarPedido.setBounds(319, 482, 214, 31);
+        contentPane.add(btnAgregarPedido);
 
         btnVolver.addActionListener(e -> {
             PantallaPedido pantallaPedido = new PantallaPedido(mail);

@@ -66,7 +66,6 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
                 int idInforme = resultSet.getInt("id_informe");
                 String tipo = resultSet.getString("tipo");
                 int idTipo = resultSet.getInt("id_tipo");
-
                 detalleInforme = new DetalleInforme(idInforme, tipo, idTipo);
                 detalleInforme.setIdDetalle(idDetalle);
             }
