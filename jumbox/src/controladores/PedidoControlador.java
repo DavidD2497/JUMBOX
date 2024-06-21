@@ -28,7 +28,8 @@ public class PedidoControlador implements PedidoRepository {
             while (resultSet.next()) {
                 int codigoPedido = resultSet.getInt("codigo_pedido");
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
-                Pedido pedido = new Pedido(fechaEntrega);
+                int idInventario = resultSet.getInt("id_inventario");
+                Pedido pedido = new Pedido(fechaEntrega, idInventario);
                 pedido.setCodigoPedido(codigoPedido);
                 pedidos.add(pedido);
             }
@@ -48,7 +49,8 @@ public class PedidoControlador implements PedidoRepository {
 
             if (resultSet.next()) {
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
-                pedido = new Pedido(fechaEntrega);
+                int idInventario = resultSet.getInt("id_inventario");
+                pedido = new Pedido(fechaEntrega, idInventario);
                 pedido.setCodigoPedido(id);
             }
         } catch (SQLException e) {
@@ -60,8 +62,9 @@ public class PedidoControlador implements PedidoRepository {
     @Override
     public void addPedido(Pedido pedido) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO pedido (fecha_entrega) VALUES (?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO pedido (fecha_entrega, id_inventario) VALUES (?, ?)");
             statement.setDate(1, java.sql.Date.valueOf(pedido.getFechaEntrega()));
+            statement.setInt(2, pedido.getIdInventario());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -80,7 +83,7 @@ public class PedidoControlador implements PedidoRepository {
     @Override
     public void deletePedido(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM pedido WHERE id_pedido = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM pedido WHERE codigo_pedido = ?");
             statement.setInt(1, id);
 
             int rowsDeleted = statement.executeUpdate();
@@ -113,26 +116,26 @@ public class PedidoControlador implements PedidoRepository {
     
     @Override
     public void actualizarEstadoPedido(int codigoPedido, String estado) {
-		try {
-			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigo_Pedido = ?");
-			statement.setString(1, estado);
-			statement.setInt(2, codigoPedido);
+        try {
+            PreparedStatement statement = connection
+                    .prepareStatement("UPDATE pedido SET estado = ? WHERE codigo_pedido = ?");
+            statement.setString(1, estado);
+            statement.setInt(2, codigoPedido);
 
-			int rowsUpdated = statement.executeUpdate();
-			if (rowsUpdated > 0) {
-				System.out.println("Estado del pedido actualizado exitosamente");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Estado del pedido actualizado exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
     @Override
     public void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega) {
         try {
             PreparedStatement statement = connection
-                    .prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE id_pedido = ?");
+                    .prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE codigo_pedido = ?");
             statement.setDate(1, java.sql.Date.valueOf(nuevaFechaEntrega));
             statement.setInt(2, codigoPedido);
 
@@ -145,9 +148,9 @@ public class PedidoControlador implements PedidoRepository {
         }
     }
 
-	@Override
-	public boolean editarPedido(int idDetalle, int idPedido) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean editarPedido(int idDetalle, int idPedido) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

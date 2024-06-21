@@ -148,9 +148,8 @@ public class PantallaMostrarPedido extends JFrame {
 		contentPane.add(btnAgregarPedido);
 
 		btnAgregarPedido.addActionListener(e -> {
-			PantallaPedido pantallaPedido = new PantallaPedido(empleado.getEmail());
-			pantallaPedido.setVisible(true);
-			JOptionPane.showMessageDialog(btnAgregarPedido, "dsdsdsdsdsdsdsdd");
+			PantallaAgregarPedido pantallaAgregarPedido = new PantallaAgregarPedido(empleado.getEmail());
+			pantallaAgregarPedido.setVisible(true);
 			dispose();
 			
 			

@@ -27,7 +27,29 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
             while (result.next()) {
                 DetalleInventario detalle = new DetalleInventario(
                     result.getInt("id_producto"),
-                    result.getInt("id_inventario_sucursal"),
+                    result.getInt("id_inventario"),
+                    result.getInt("id_descuento"),
+                    result.getInt("cantidad")
+                );
+                detalle.setIdDetalle(result.getInt("id_detalle"));
+                detalles.add(detalle);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return detalles;
+    }
+    public List<DetalleInventario> getAllDetalleInventariosBySucursalId(int idSucursal) {
+        List<DetalleInventario> detalles = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_inventario WHERE id_inventario=?");
+            statement.setInt(1, idSucursal);
+            ResultSet result = statement.executeQuery();
+            
+            while (result.next()) {
+                DetalleInventario detalle = new DetalleInventario(
+                    result.getInt("id_producto"),
+                    result.getInt("id_inventario"),
                     result.getInt("id_descuento"),
                     result.getInt("cantidad")
                 );
@@ -50,7 +72,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
             if (result.next()) {
                 detalle = new DetalleInventario(
                     result.getInt("id_producto"),
-                    result.getInt("id_inventario_sucursal"),
+                    result.getInt("id_inventario"),
                     result.getInt("id_descuento"),
                     result.getInt("cantidad")
                 );
