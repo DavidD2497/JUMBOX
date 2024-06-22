@@ -69,12 +69,14 @@ public class Producto {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	   public boolean tieneDescuentoActivo() {
-		   for (Descuento descuento : this.descuentosAplicados) {
-		        if (descuento.isActivo()) { 
-		            return true; 
-		        }
-		    }
-		    return false;
-}
+	public boolean tieneDescuentoActivo() {
+	    if (this.descuentosAplicados != null) {
+	        for (Descuento descuento : this.descuentosAplicados) {
+	            if (descuento.isActivo()) {
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}
 }

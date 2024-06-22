@@ -110,17 +110,16 @@ public class PantallaCrearDescuento extends JFrame {
 		
 		btnCrear.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        btnCrear.setEnabled(false); // Desactivar el botón mientras se procesa
+		        btnCrear.setEnabled(false); 
 
 		        Producto productoSeleccionado = (Producto) comboBoxProductos.getSelectedItem();
 
 		        if (productoSeleccionado != null) {
-		            // Verificar si ya tiene un descuento activo
-		            if (productoSeleccionado.tieneDescuentoActivo()) {
+		            if (productoSeleccionado.tieneDescuentoActivo()==true) {
 		                lblAviso.setText("Ya existe un descuento activo para este producto.");
 		                lblAviso.setVisible(true);
-		                btnCrear.setEnabled(true); // Habilitar el botón de nuevo
-		                return; // Salir del método sin crear un nuevo descuento
+		                btnCrear.setEnabled(true); 
+		                return; 
 		            }
 
 		            String Dto = inpDto.getText();
