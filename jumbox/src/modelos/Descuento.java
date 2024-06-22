@@ -5,11 +5,13 @@ public class Descuento {
 	private int porcentajeDesc;
 	private Producto producto;
 	int idProducto;
-
+	private boolean activo;
+	
 	public Descuento(int idDescuento, int porcentajeDesc, int idProducto) {
 		this.idDescuento = idDescuento;
 		this.porcentajeDesc = porcentajeDesc;
 		this.idProducto = idProducto;
+		 this.activo = true; 
 	}
 
 	public Descuento(int porcentajeDescuento, Producto producto) {
@@ -48,5 +50,13 @@ public class Descuento {
 	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
+	
+	  public boolean isActivo() {
+	        return activo;
+	    }
+
+	    public void setActivo(boolean activo) {
+	        this.activo = activo;
+	    }
 
 }

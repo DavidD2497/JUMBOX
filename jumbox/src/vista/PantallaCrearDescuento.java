@@ -18,7 +18,7 @@ public class PantallaCrearDescuento extends JFrame {
 	private JTextField inpDto;
 	private JLabel lblAviso;
 	private AdminSucursal adminSucursal;
-	private JComboBox<String> comboBoxProductos;
+	private JComboBox<Producto> comboBoxProductos;
 	private JButton btnCrear;
 	private JButton btnVolver;
 
@@ -104,12 +104,19 @@ public class PantallaCrearDescuento extends JFrame {
 
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				btnCrear.setEnabled(false);
 				Producto productoSeleccionado = (Producto) comboBoxProductos.getSelectedItem();
 
 				if (productoSeleccionado != null) {
-					int id_producto = productoSeleccionado.getIdProducto(); // Obtener el ID del producto seleccionado
-
-					String Dto = inpDto.getText(); // Obtener el descuento ingresado
+					productoSeleccionado.getIdProducto();
+					// Verificar si ya tiene un descuento activo
+					if (productoSeleccionado.tieneDescuentoActivo()) {
+						lblAviso.setText("Ya existe un descuento activo para este producto.");
+						lblAviso.setVisible(true);
+						btnCrear.setEnabled(true); // Habilitar el botón de nuevo
+						return; // Salir del método sin crear un nuevo descuento
+					}
+					String Dto = inpDto.getText();
 
 					try {
 						int cantDescuento = Integer.parseInt(Dto);
@@ -136,9 +143,7 @@ public class PantallaCrearDescuento extends JFrame {
 						lblAviso.setText("El porcentaje de descuento debe ser un número entero");
 						lblAviso.setVisible(true);
 					}
-				} else {
-					lblAviso.setText("Seleccione un producto válido");
-					lblAviso.setVisible(true);
+					btnCrear.setEnabled(true);
 				}
 			}
 		});
@@ -150,13 +155,26 @@ public class PantallaCrearDescuento extends JFrame {
 	}
 
 	private void llenarComboBoxProductos() {
-	    ProductoControlador productoControlador = new ProductoControlador();
-	    List<Producto> productos = productoControlador.getAllProductos();
+		ProductoControlador productoControlador = new ProductoControlador();
+		List<Producto> productos = productoControlador.getAllProductos();
 
-	    comboBoxProductos.removeAllItems();
+		comboBoxProductos.removeAllItems();
 
-	    for (Producto producto : productos) {
-	        comboBoxProductos.addItem(producto.getNombreProducto()); // Agregar solo el nombre del producto al JComboBox
-	    }
+		for (Producto producto : productos) {
+			comboBoxProductos.addItem(producto);
+		}
+
+		comboBoxProductos.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+					boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value instanceof Producto) {
+					Producto producto = (Producto) value;
+					setText(producto.getNombreProducto());
+				}
+				return this;
+			}
+		});
 	}
 }

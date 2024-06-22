@@ -1,6 +1,8 @@
 package modelos;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Producto {
 	private int idProducto;
@@ -8,6 +10,7 @@ public class Producto {
 	private String categoria;
 	private double precio;
 	private LocalDate fechaVencimiento;
+	private List<Descuento> descuentosAplicados;
 
 	public Producto(int idProducto, String nombreProducto, String categoria, double precio,
 			LocalDate fechaVencimiento) {
@@ -17,6 +20,7 @@ public class Producto {
 		this.categoria = categoria;
 		this.precio = precio;
 		this.fechaVencimiento = fechaVencimiento;
+        this.descuentosAplicados = new ArrayList<>(); // Inicializar la lista de descuentos
 	}
 
 	public Producto(String nombreProducto, LocalDate fechaVencimiento, double precio) {
@@ -64,4 +68,16 @@ public class Producto {
 	public void setFechaVencimiento(LocalDate fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
+
+	   public boolean tieneDescuentoActivo() {
+	        if (descuentosAplicados == null) {
+	            return false;
+	        }
+	        for (Descuento descuento : descuentosAplicados) {
+	            if (descuento.isActivo()) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
 }

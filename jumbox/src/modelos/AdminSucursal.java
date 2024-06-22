@@ -2,6 +2,7 @@ package modelos;
 
 import java.time.LocalDate;
 
+
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 
@@ -9,6 +10,8 @@ import javax.swing.JOptionPane;
 import controladores.DescuentoControlador;
 import controladores.InventarioSucursalControlador;
 import controladores.ProductoControlador;
+import controladores.DetalleInventarioControlador;
+import controladores.EntradaInventarioControlador;
 
 public class AdminSucursal extends Empleado {
 	private int idAdminSuc;
@@ -84,25 +87,6 @@ public class AdminSucursal extends Empleado {
 
 	}
 
-	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
-		ProductoControlador productoControlador = new ProductoControlador();
-		LocalDate fechaEntrega = LocalDate.now();
-		JOptionPane.showMessageDialog(null, fechaEntrega);
-		if (listaDetalle.isEmpty()) {
-			// JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el
-			// pedido");
-			return false;
-		}
-
-		for (DetallePedido detalle : listaDetalle) {
-			if (productoControlador.getProductoById(detalle.getIdProducto()) == null) {
-				// JOptionPane.showMessageDialog(null, "El producto con ID " +
-				// detalle.getIdProducto() + " no existe.");
-
-				return false;
-			}
-
-		}
 	
 	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
 
