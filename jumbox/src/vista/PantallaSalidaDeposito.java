@@ -125,7 +125,7 @@ public class PantallaSalidaDeposito extends JFrame {
             }
         });
 
-        JLabel lblCANTIDAD = new JLabel("Cantidad:");
+        JLabel lblCANTIDAD = new JLabel("Cantidad: ");
         lblCANTIDAD.setBounds(336, 343, 200, 40);
         lblCANTIDAD.setFont(new Font("Consolas", Font.BOLD, 20));
         lblCANTIDAD.setHorizontalAlignment(SwingConstants.CENTER);
