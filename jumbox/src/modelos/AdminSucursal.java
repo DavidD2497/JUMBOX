@@ -46,6 +46,64 @@ public class AdminSucursal extends Empleado {
 		return idAdminSuc;
 	}
 
+	public static String registroEntradaProducto(int idInventarioSucursal, int idProducto, int cantidadEntrada) {
+		LocalDate fechaEntrega = LocalDate.now();
+		if (cantidadEntrada >= 1000) {
+			// JOptionPane.showMessageDialog(null,"La cantidad de Entrada debe ser menor que
+			// 1000.");
+
+			return "Error";
+		}
+
+		if (cantidadEntrada <= 0) {
+			// JOptionPane.showMessageDialog(null, "La cantidad de Entrada debe ser mayor
+			// que cero.");
+			return "Error";
+		}
+
+		DetalleInventarioControlador detalleInventarioControlador = new DetalleInventarioControlador();
+		EntradaInventarioControlador entradaControlador = new EntradaInventarioControlador();
+		if (!detalleInventarioControlador.existeProducto(idInventarioSucursal, idProducto)) {
+			// JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el
+			// inventario de la sucursal.");
+			return "Error";
+		}
+
+		int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, idProducto);
+
+		int cantidadTotal = cantidadDisponible + cantidadEntrada;
+		EntradaInventario entrada = new EntradaInventario(idProducto, idInventarioSucursal, fechaEntrega,
+				cantidadEntrada);
+		entradaControlador.addEntradaInventario(entrada);
+		detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, idProducto, cantidadTotal);
+		// JOptionPane.showMessageDialog(null, "Entrada de " + cantidadEntrada + "
+		// unidades al producto "
+		// +detalleInventarioControlador.getNombreProducto(idProducto) + " registrada
+		// con éxito.");
+		return "correcto";
+
+	}
+
+	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
+		ProductoControlador productoControlador = new ProductoControlador();
+		LocalDate fechaEntrega = LocalDate.now();
+		JOptionPane.showMessageDialog(null, fechaEntrega);
+		if (listaDetalle.isEmpty()) {
+			// JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el
+			// pedido");
+			return false;
+		}
+
+		for (DetallePedido detalle : listaDetalle) {
+			if (productoControlador.getProductoById(detalle.getIdProducto()) == null) {
+				// JOptionPane.showMessageDialog(null, "El producto con ID " +
+				// detalle.getIdProducto() + " no existe.");
+
+				return false;
+			}
+
+		}
+	
 	public void RegistroEntrada(int idProducto, int cantidadEntrada) {
 
 		InventarioSucursalControlador inventarioSucursalControlador = new InventarioSucursalControlador();
