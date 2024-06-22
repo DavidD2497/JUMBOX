@@ -70,13 +70,21 @@ public class Producto {
 	}
 
 	public boolean tieneDescuentoActivo() {
+	    System.out.println("Verificando descuentos activos para el producto: " + this.getNombreProducto());
+	    
 	    if (this.descuentosAplicados != null) {
 	        for (Descuento descuento : this.descuentosAplicados) {
+	            System.out.println("Descuento aplicado: " + descuento.getIdDescuento());
 	            if (descuento.isActivo()) {
+	                System.out.println("Descuento activo encontrado para el producto: " + this.getNombreProducto());
 	                return true;
 	            }
 	        }
+	    } else {
+	        System.out.println("No se encontraron descuentos aplicados para el producto: " + this.getNombreProducto());
 	    }
+	    
 	    return false;
 	}
+	
 }

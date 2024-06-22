@@ -136,9 +136,11 @@ public class PantallaCrearDescuento extends JFrame {
 
 		                    if (respuesta.equals("Se aplicó el descuento")) {
 		                        JOptionPane.showMessageDialog(null, "Descuento aplicado con éxito");
-		                        dispose(); // Cerrar la ventana actual
+		                        dispose();
+		                        
+		                
 		                        PantallaDescuentos frame = new PantallaDescuentos();
-		                        frame.setVisible(true); // Mostrar la ventana de descuentos
+		                        frame.setVisible(true); 
 		                    } else {
 		                        lblAviso.setText(respuesta);
 		                        lblAviso.setVisible(true);
@@ -153,7 +155,7 @@ public class PantallaCrearDescuento extends JFrame {
 		            lblAviso.setVisible(true);
 		        }
 
-		        btnCrear.setEnabled(true); // Habilitar el botón al finalizar
+		        btnCrear.setEnabled(true); 
 		    }
 		});
 	}
