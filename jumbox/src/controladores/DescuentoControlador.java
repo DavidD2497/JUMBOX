@@ -59,18 +59,18 @@ public class DescuentoControlador implements DescuentoRepository {
 
 	@Override
 	public void addDescuento(Descuento descuento) {
-		try {
-			PreparedStatement statement = connection
-					.prepareStatement("INSERT INTO `descuento`(`porcentaje`) VALUES (?)");
-			statement.setDouble(1, descuento.getPorcentajeDesc());
+	    try {
+	        PreparedStatement statement = connection.prepareStatement("INSERT INTO `descuento`(`porcentaje_descuento`, `id_producto`) VALUES (?, ?)");
+	        statement.setDouble(1, descuento.getPorcentajeDesc());
+	        statement.setInt(2, descuento.getProducto().getIdProducto());
 
-			int rowsInserted = statement.executeUpdate();
-			if (rowsInserted > 0) {
-				System.out.println("Descuento insertado exitosamente");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	        int rowsInserted = statement.executeUpdate();
+	        if (rowsInserted > 0) {
+	            System.out.println("Descuento insertado exitosamente");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	@Override

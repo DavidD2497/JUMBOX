@@ -38,7 +38,7 @@ public class ProductoControlador implements ProductoRepository {
 	public Producto getProductoById(int id) {
 		Producto producto = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM producto WHERE idProducto = ?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM producto WHERE id_producto = ?");
 			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 
@@ -55,7 +55,7 @@ public class ProductoControlador implements ProductoRepository {
 	public void addProducto(Producto producto) {
 		try {
 			PreparedStatement statement = connection.prepareStatement(
-					"INSERT INTO producto (nombreProducto, categoria, precio, fechaVencimiento) VALUES (?, ?, ?, ?)");
+					"INSERT INTO producto (nombre_producto, categoria, precio, fecha_vencimiento) VALUES (?, ?, ?, ?)");
 			statement.setString(1, producto.getNombreProducto());
 			statement.setString(2, producto.getCategoria());
 			statement.setDouble(3, producto.getPrecio());
@@ -74,7 +74,7 @@ public class ProductoControlador implements ProductoRepository {
 	public void updateProducto(Producto producto) {
 		try {
 			PreparedStatement statement = connection.prepareStatement(
-					"UPDATE productos SET nombreProducto = ?, categoria = ?, precio = ?, fechaVencimiento = ? WHERE idProducto = ?");
+					"UPDATE productos SET nombre_producto = ?, categoria = ?, precio = ?, fecha_vencimiento = ? WHERE id_producto = ?");
 			statement.setString(1, producto.getNombreProducto());
 			statement.setString(2, producto.getCategoria());
 			statement.setDouble(3, producto.getPrecio());
@@ -93,7 +93,7 @@ public class ProductoControlador implements ProductoRepository {
 	@Override
 	public void deleteProducto(int id) {
 		try {
-			PreparedStatement statement = connection.prepareStatement("DELETE FROM productos WHERE idProducto = ?");
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM productos WHERE id_producto = ?");
 			statement.setInt(1, id);
 
 			int rowsDeleted = statement.executeUpdate();
@@ -106,11 +106,11 @@ public class ProductoControlador implements ProductoRepository {
 	}
 
 	private Producto mapResultSetToProducto(ResultSet resultSet) throws SQLException {
-		int idProducto = resultSet.getInt("idProducto");
-		String nombreProducto = resultSet.getString("nombreProducto");
+		int idProducto = resultSet.getInt("id_producto");
+		String nombreProducto = resultSet.getString("nombre_producto");
 		String categoria = resultSet.getString("categoria");
 		double precio = resultSet.getDouble("precio");
-		Date fechaVencimiento = resultSet.getDate("fechaVencimiento");
+		Date fechaVencimiento = resultSet.getDate("fecha_vencimiento");
 
 		return new Producto(idProducto, nombreProducto, categoria, precio, fechaVencimiento.toLocalDate());
 	}
