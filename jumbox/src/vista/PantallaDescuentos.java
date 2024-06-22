@@ -54,9 +54,9 @@ public class PantallaDescuentos extends JFrame {
 		btnCrearDescuento.setBounds(103, 143, 156, 33);
 		contentPane.add(btnCrearDescuento);
 		btnCrearDescuento.addActionListener(e -> {
-		    PantallaCrearDescuento pantallaCrearDescuento = new PantallaCrearDescuento();
-		    pantallaCrearDescuento.setVisible(true);
-		    dispose(); 
+			PantallaCrearDescuento pantallaCrearDescuento = new PantallaCrearDescuento();
+			pantallaCrearDescuento.setVisible(true);
+			dispose();
 		});
 
 		JButton btnEditarDescuento = new JButton("Editar Descuento");
@@ -64,16 +64,16 @@ public class PantallaDescuentos extends JFrame {
 		btnEditarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnEditarDescuento.setBounds(365, 143, 156, 33);
 		contentPane.add(btnEditarDescuento);
-		
+
 		JButton btnMostrarDescuento = new JButton("Mostrar Descuentos");
 		btnMostrarDescuento.setFont(new Font("Consolas", Font.BOLD, 15));
 		btnMostrarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnMostrarDescuento.setBounds(103, 217, 156, 33);
 		contentPane.add(btnMostrarDescuento);
 		btnMostrarDescuento.addActionListener(e -> {
-		    PantallaMostrarDescuentos pantallaMostrarDescuentos = new PantallaMostrarDescuentos();
-		    pantallaMostrarDescuentos.setVisible(true);
-		    dispose(); 
+			PantallaMostrarDescuentos pantallaMostrarDescuentos = new PantallaMostrarDescuentos();
+			pantallaMostrarDescuentos.setVisible(true);
+			dispose();
 		});
 
 		JButton btnEliminarDescuento = new JButton("Eliminar Descuento");
@@ -81,6 +81,11 @@ public class PantallaDescuentos extends JFrame {
 		btnEliminarDescuento.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnEliminarDescuento.setBounds(365, 217, 156, 33);
 		contentPane.add(btnEliminarDescuento);
+		btnEliminarDescuento.addActionListener(e -> {
+			PantallaEliminarDescuento pantallaEliminarDescuento = new PantallaEliminarDescuento();
+			pantallaEliminarDescuento.setVisible(true);
+			dispose();
+		});
 	}
 
 	public PantallaDescuentos(String email) {
