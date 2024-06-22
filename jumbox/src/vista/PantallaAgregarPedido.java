@@ -69,7 +69,7 @@ public class PantallaAgregarPedido extends JFrame {
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Consolas", Font.BOLD, 18));
 		contentPane.add(lblNewLabel_2);
-
+		JButton btnEliminar = new JButton("");
 		inventarioSucursalTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "Id Producto", "Producto", "Cantidad Inventario" });
 		JLabel lblNewLabel_3 = new JLabel("Detalle del Pedido");
@@ -84,6 +84,7 @@ public class PantallaAgregarPedido extends JFrame {
 					cargarProductos();
 
 					productosSolicitudScrollPane.setVisible(true);
+					btnEliminar.setVisible(true);
 					lblNewLabel_2_1.setVisible(true);
 				}
 			}
@@ -131,7 +132,8 @@ public class PantallaAgregarPedido extends JFrame {
 		lblNewLabel_2_1.setVisible(false);
 		contentPane.add(lblNewLabel_2_1);
 
-		JButton btnEliminar = new JButton("Eliminar");
+		
+		btnEliminar.setIcon(new ImageIcon(PantallaAgregarPedido.class.getResource("/resources/Imagen1.png")));
 		btnEliminar.setBackground(new Color(226, 46, 14));
 		btnEliminar.setBounds(586, 318, 282, 31);
 		btnEliminar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -143,23 +145,23 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.add(btnEliminar);
 
 		JButton btnAgregarPedido = new JButton("Registrar Pedido");
-		btnAgregarPedido.setBounds(237, 424, 416, 40);
+		btnAgregarPedido.setBounds(391, 424, 416, 40);
 		btnAgregarPedido.setFont(new Font("Consolas", Font.BOLD, 20));
 		contentPane.add(btnAgregarPedido);
-
+		btnEliminar.setVisible(false);
 		JLabel lblNewLabel = new JLabel("Sucursal");
-		lblNewLabel.setBounds(38, 67, 197, 54);
+		lblNewLabel.setBounds(26, 68, 183, 48);
 		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 22));
 		contentPane.add(lblNewLabel);
 
 		comboBoxSucursal = new JComboBox<>();
 		comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		comboBoxSucursal.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
-		comboBoxSucursal.setBounds(141, 75, 230, 31);
+		comboBoxSucursal.setBounds(124, 75, 230, 31);
 		contentPane.add(comboBoxSucursal);
 
 		cargarSucursales(comboBoxSucursal);
-		
+
 		JButton btnAgregarProducto = new JButton("");
 		btnAgregarProducto.setIcon(new ImageIcon(PantallaAgregarPedido.class.getResource("/resources/Imagen2.png")));
 		btnAgregarProducto.setBackground(new Color(0, 128, 0));
@@ -167,6 +169,17 @@ public class PantallaAgregarPedido extends JFrame {
 		btnAgregarProducto.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnAgregarProducto.setBounds(37, 353, 522, 40);
 		contentPane.add(btnAgregarProducto);
+		
+		JLabel lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setFont(new Font("Consolas", Font.BOLD, 18));
+		lblCantidad.setBounds(37, 417, 106, 31);
+		contentPane.add(lblCantidad);
+		
+		JComboBox<String> comboBoxSucursal_1 = new JComboBox<String>();
+		comboBoxSucursal_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		comboBoxSucursal_1.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
+		comboBoxSucursal_1.setBounds(125, 414, 57, 31);
+		contentPane.add(comboBoxSucursal_1);
 		comboBoxSucursal.addActionListener(e -> {
 			if (comboBoxSucursal.getSelectedIndex() > 0) {
 				String selectedItem = (String) comboBoxSucursal.getSelectedItem();
@@ -199,8 +212,9 @@ public class PantallaAgregarPedido extends JFrame {
 		List<DetalleInventario> detalles = detalleControlador.getAllDetalleInventariosBySucursalId(idSucursal);
 		inventarioSucursalTableModel.setRowCount(0);
 		for (DetalleInventario detalle : detalles) {
-			inventarioSucursalTableModel.addRow(new Object[] {detalle.getIdProducto(),
-					productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(), detalle.getCantidad() });
+			inventarioSucursalTableModel.addRow(new Object[] { detalle.getIdProducto(),
+					productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(),
+					detalle.getCantidad() });
 		}
 	}
 
