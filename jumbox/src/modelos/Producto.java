@@ -3,6 +3,7 @@ package modelos;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import controladores.DescuentoControlador;
 
 public class Producto {
 	private int idProducto;
@@ -69,22 +70,25 @@ public class Producto {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public boolean tieneDescuentoActivo() {
-	    System.out.println("Verificando descuentos activos para el producto: " + this.getNombreProducto());
-	    
-	    if (this.descuentosAplicados != null) {
-	        for (Descuento descuento : this.descuentosAplicados) {
-	            System.out.println("Descuento aplicado: " + descuento.getIdDescuento());
-	            if (descuento.isActivo()) {
-	                System.out.println("Descuento activo encontrado para el producto: " + this.getNombreProducto());
-	                return true;
-	            }
-	        }
-	    } else {
-	        System.out.println("No se encontraron descuentos aplicados para el producto: " + this.getNombreProducto());
-	    }
-	    
-	    return false;
-	}
+	public static boolean tieneDescuentoActivo(Producto producto) {
+        System.out.println("Verificando descuentos activos para el producto: " + producto.getNombreProducto());
+
+        DescuentoControlador descuentoControlador = new DescuentoControlador();
+        List<Descuento> descuentosAplicados = descuentoControlador.getAllDescuentos();
+
+        if (descuentosAplicados != null) {
+            for (Descuento descuento : descuentosAplicados) {
+                System.out.println("Descuento aplicado: " + descuento.getIdDescuento());
+                if (producto.getIdProducto()==descuento.getIdProducto()) {
+                    System.out.println("Descuento activo encontrado para el producto: " + producto.getNombreProducto());
+                    return true;
+                }
+            }
+        } else {
+            System.out.println("No se encontraron descuentos aplicados para el producto: " + producto.getNombreProducto());
+        }
+
+        return false;
+    }
 	
 }

@@ -115,7 +115,7 @@ public class PantallaCrearDescuento extends JFrame {
 		        Producto productoSeleccionado = (Producto) comboBoxProductos.getSelectedItem();
 
 		        if (productoSeleccionado != null) {
-		            if (productoSeleccionado.tieneDescuentoActivo()==true) {
+		            if (Producto.tieneDescuentoActivo(productoSeleccionado)==true) {
 		                lblAviso.setText("Ya existe un descuento activo para este producto.");
 		                lblAviso.setVisible(true);
 		                btnCrear.setEnabled(true); 
