@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GraphicsConfiguration;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
@@ -22,7 +24,7 @@ public class PantallaAdminDeposito extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-
+    int idPedido;
     public PantallaAdminDeposito(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 626, 383);
@@ -103,5 +105,11 @@ public class PantallaAdminDeposito extends JFrame {
         btnConfirmarSolicitud.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnConfirmarSolicitud.setBounds(164, 229, 265, 33);
         contentPane.add(btnConfirmarSolicitud);
+        
+        btnConfirmarSolicitud.addActionListener(e -> {
+			PantallaConfirmarSolicitudDePedido pantallaConfirmarSolicitudDePedido = new PantallaConfirmarSolicitudDePedido(mail, idPedido);
+			pantallaConfirmarSolicitudDePedido.setVisible(true);
+			dispose();
+		});
     }
 }

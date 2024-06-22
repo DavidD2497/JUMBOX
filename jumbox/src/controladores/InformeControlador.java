@@ -73,7 +73,18 @@ public class InformeControlador implements InformeRepository {
 
     @Override
     public void updateInforme(Informe informe) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE informe SET id_informe = ? WHERE id_informe = ?");
+            statement.setInt(1, informe.getIdInforme());
+            statement.setInt(2, informe.getIdInforme()); // Aquí asumo que id_informe es la clave primaria
 
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Informe actualizado exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

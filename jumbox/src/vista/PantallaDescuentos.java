@@ -89,6 +89,6 @@ public class PantallaDescuentos extends JFrame {
 	}
 
 	public PantallaDescuentos(String email) {
-		// TODO Auto-generated constructor stub
+		
 	}
 }
