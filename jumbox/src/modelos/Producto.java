@@ -70,14 +70,11 @@ public class Producto {
 	}
 
 	   public boolean tieneDescuentoActivo() {
-	        if (descuentosAplicados == null) {
-	            return false;
-	        }
-	        for (Descuento descuento : descuentosAplicados) {
-	            if (descuento.isActivo()) {
-	                return true;
-	            }
-	        }
-	        return false;
-	    }
+		   for (Descuento descuento : this.descuentosAplicados) {
+		        if (descuento.isActivo()) { 
+		            return true; 
+		        }
+		    }
+		    return false;
+}
 }

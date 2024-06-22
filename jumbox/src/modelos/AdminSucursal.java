@@ -115,32 +115,30 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public String crearDescuentoVencimiento(Producto producto, int cantDescuento) {
-		LocalDate fechaActual = LocalDate.now();
-		long diasHastaVencimiento = producto.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
+	    LocalDate fechaActual = LocalDate.now();
+	    long diasHastaVencimiento = producto.getFechaVencimiento().until(fechaActual, ChronoUnit.DAYS);
 
-		if (diasHastaVencimiento <= 14) {
-			try {
-				Descuento desc = new Descuento(cantDescuento, producto);
+	    if (diasHastaVencimiento <= 14) {
+	        try {
+	            Descuento desc = new Descuento(cantDescuento, producto);
 
-				DescuentoControlador descuentoControlador = new DescuentoControlador();
-				descuentoControlador.addDescuento(desc);
+	            DescuentoControlador descuentoControlador = new DescuentoControlador();
+	            descuentoControlador.addDescuento(desc); // Insertar descuento solo una vez
 
-				double precioDescuentoVencimiento = producto.getPrecio() * (1 - (desc.getPorcentajeDesc() / 100.0));
-				ProductoControlador productoControlador = new ProductoControlador();
-				productoControlador.updateProducto(producto.getIdProducto(), precioDescuentoVencimiento);
+	            double precioDescuentoVencimiento = producto.getPrecio() * (1 - (desc.getPorcentajeDesc() / 100.0));
+	            ProductoControlador productoControlador = new ProductoControlador();
+	            productoControlador.updateProducto(producto.getIdProducto(), precioDescuentoVencimiento);
 
-				descuentoControlador.addDescuento(desc);
+	            JOptionPane.showMessageDialog(null,
+	                    "Se ha aplicado un descuento al producto " + producto.getNombreProducto()
+	                            + " por su fecha de vencimiento que está cerca de la actual");
 
-				JOptionPane.showMessageDialog(null,
-						"Se ha aplicado un descuento al producto " + this.producto.getNombreProducto()
-								+ " por su fecha de vencimiento que está cerca de la actual");
-
-				return "Se aplicó el descuento";
-			} catch (Exception e) {
-				return "Error al aplicar el descuento";
-			}
-		}
-		return "Error al aplicar el descuento";
+	            return "Se aplicó el descuento";
+	        } catch (Exception e) {
+	            return "Error al aplicar el descuento";
+	        }
+	    }
+	    return "Error al aplicar el descuento";
 	}
 
 	public String editarDescuento(int indiceDescuento, int nuevoPorcentaje) {

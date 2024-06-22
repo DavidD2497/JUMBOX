@@ -102,79 +102,83 @@ public class PantallaCrearDescuento extends JFrame {
 		lblAviso.setVisible(false);
 		contentPane.add(lblAviso);
 
-		btnCrear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnCrear.setEnabled(false);
-				Producto productoSeleccionado = (Producto) comboBoxProductos.getSelectedItem();
-
-				if (productoSeleccionado != null) {
-					productoSeleccionado.getIdProducto();
-					// Verificar si ya tiene un descuento activo
-					if (productoSeleccionado.tieneDescuentoActivo()) {
-						lblAviso.setText("Ya existe un descuento activo para este producto.");
-						lblAviso.setVisible(true);
-						btnCrear.setEnabled(true); // Habilitar el botón de nuevo
-						return; // Salir del método sin crear un nuevo descuento
-					}
-					String Dto = inpDto.getText();
-
-					try {
-						int cantDescuento = Integer.parseInt(Dto);
-
-						if (cantDescuento > 95 || cantDescuento < 5) {
-							lblAviso.setText("El porcentaje de descuento debe estar entre 5% y 95%");
-							lblAviso.setVisible(true);
-						} else {
-							AdminSucursal adminSucursal = new AdminSucursal();
-							String respuesta = adminSucursal.crearDescuentoVencimiento(productoSeleccionado,
-									cantDescuento);
-
-							if (respuesta.equals("Se aplicó el descuento")) {
-								JOptionPane.showMessageDialog(null, "Descuento aplicado con éxito");
-								dispose();
-								PantallaDescuentos frame = new PantallaDescuentos();
-								frame.setVisible(true);
-							} else {
-								lblAviso.setText(respuesta);
-								lblAviso.setVisible(true);
-							}
-						}
-					} catch (NumberFormatException ex) {
-						lblAviso.setText("El porcentaje de descuento debe ser un número entero");
-						lblAviso.setVisible(true);
-					}
-					btnCrear.setEnabled(true);
-				}
-			}
-		});
 		btnVolver.addActionListener(e -> {
 			PantallaDescuentos pantallaDescuentos = new PantallaDescuentos();
 			pantallaDescuentos.setVisible(true);
 			dispose();
 		});
+		
+		btnCrear.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        btnCrear.setEnabled(false); // Desactivar el botón mientras se procesa
+
+		        Producto productoSeleccionado = (Producto) comboBoxProductos.getSelectedItem();
+
+		        if (productoSeleccionado != null) {
+		            // Verificar si ya tiene un descuento activo
+		            if (productoSeleccionado.tieneDescuentoActivo()) {
+		                lblAviso.setText("Ya existe un descuento activo para este producto.");
+		                lblAviso.setVisible(true);
+		                btnCrear.setEnabled(true); // Habilitar el botón de nuevo
+		                return; // Salir del método sin crear un nuevo descuento
+		            }
+
+		            String Dto = inpDto.getText();
+
+		            try {
+		                int cantDescuento = Integer.parseInt(Dto);
+
+		                if (cantDescuento > 95 || cantDescuento < 5) {
+		                    lblAviso.setText("El porcentaje de descuento debe estar entre 5% y 95%");
+		                    lblAviso.setVisible(true);
+		                } else {
+		                    AdminSucursal adminSucursal = new AdminSucursal();
+		                    String respuesta = adminSucursal.crearDescuentoVencimiento(productoSeleccionado, cantDescuento);
+
+		                    if (respuesta.equals("Se aplicó el descuento")) {
+		                        JOptionPane.showMessageDialog(null, "Descuento aplicado con éxito");
+		                        dispose(); // Cerrar la ventana actual
+		                        PantallaDescuentos frame = new PantallaDescuentos();
+		                        frame.setVisible(true); // Mostrar la ventana de descuentos
+		                    } else {
+		                        lblAviso.setText(respuesta);
+		                        lblAviso.setVisible(true);
+		                    }
+		                }
+		            } catch (NumberFormatException ex) {
+		                lblAviso.setText("El porcentaje de descuento debe ser un número entero");
+		                lblAviso.setVisible(true);
+		            }
+		        } else {
+		            lblAviso.setText("Seleccione un producto válido");
+		            lblAviso.setVisible(true);
+		        }
+
+		        btnCrear.setEnabled(true); // Habilitar el botón al finalizar
+		    }
+		});
 	}
 
 	private void llenarComboBoxProductos() {
-		ProductoControlador productoControlador = new ProductoControlador();
-		List<Producto> productos = productoControlador.getAllProductos();
+	    ProductoControlador productoControlador = new ProductoControlador();
+	    List<Producto> productos = productoControlador.getAllProductos();
 
-		comboBoxProductos.removeAllItems();
+	    comboBoxProductos.removeAllItems();
 
-		for (Producto producto : productos) {
-			comboBoxProductos.addItem(producto);
-		}
+	    for (Producto producto : productos) {
+	        comboBoxProductos.addItem(producto);
+	    }
 
-		comboBoxProductos.setRenderer(new DefaultListCellRenderer() {
-			@Override
-			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
-					boolean cellHasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				if (value instanceof Producto) {
-					Producto producto = (Producto) value;
-					setText(producto.getNombreProducto());
-				}
-				return this;
-			}
-		});
+	    comboBoxProductos.setRenderer(new DefaultListCellRenderer() {
+	        @Override
+	        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+	            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	            if (value instanceof Producto) {
+	                Producto producto = (Producto) value;
+	                setText(producto.getNombreProducto());
+	            }
+	            return this;
+	        }
+	    });
 	}
 }
