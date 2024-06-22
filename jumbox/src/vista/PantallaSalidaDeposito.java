@@ -92,7 +92,7 @@ public class PantallaSalidaDeposito extends JFrame {
 
         tableModel = new DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Id Producto","Nombre", "Cantidad"}
+                new String[]{"Id Producto", "Nombre", "Cantidad"}
         );
 
         table = new JTable(tableModel);
@@ -151,19 +151,15 @@ public class PantallaSalidaDeposito extends JFrame {
                         } else {
                             throw new NumberFormatException("Tipo de datos inesperado en la celda seleccionada.");
                         }
-                        
-                        Object valueAt1 = table.getValueAt(selectedRow, 1);
 
-                       
-
-                        AdminDeposito adminDeposito = new AdminDeposito(mail, mail, mail); 
+                        AdminDeposito adminDeposito = new AdminDeposito(mail, mail, mail);
                         String respuesta = adminDeposito.registrarSalidaDepositoGeneral(idProducto, cantidadSalida);
-                        if (respuesta.equals("Registro con éxito")) {
+                        if (respuesta.equals("registrada con éxito.")) {
                             lblAprobado.setText(respuesta);
                             lblAprobado.setVisible(true);
                             lblError.setVisible(false);
                             selectedRow = -1;
-                            cargarProductos();
+                            cargarProductos(); // Actualiza la tabla después del registro exitoso
                         } else {
                             lblError.setText(respuesta);
                             lblError.setVisible(true);
@@ -188,13 +184,13 @@ public class PantallaSalidaDeposito extends JFrame {
         btnVolver.setBounds(460, 462, 99, 31);
         contentPane.add(btnVolver);
 
-    	btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PantallaAdminDeposito admindeposito = new PantallaAdminDeposito(mail);
-				admindeposito.setVisible(true);
-				dispose();
-			}
-		});
+        btnVolver.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PantallaAdminDeposito admindeposito = new PantallaAdminDeposito(mail);
+                admindeposito.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void cargarProductos() {
@@ -203,11 +199,15 @@ public class PantallaSalidaDeposito extends JFrame {
         List<Producto> productos = productoControlador.getAllProductos();
         tableModel.setRowCount(0);
         for (Producto producto : productos) {
+            int idProducto = producto.getIdProducto();
+            int cantidadActual = detalleDepositoControlador.getDetalleDepositoById(idProducto).getCantidad();
             tableModel.addRow(new Object[]{
-                    producto.getIdProducto(),
+                    idProducto,
                     producto.getNombreProducto(),
-                    detalleDepositoControlador.getDetalleDepositoById(producto.getIdProducto()).getCantidad(),
+                    cantidadActual
             });
         }
     }
+
+    
 }
