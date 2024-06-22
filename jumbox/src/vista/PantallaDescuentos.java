@@ -82,4 +82,8 @@ public class PantallaDescuentos extends JFrame {
 		btnEliminarDescuento.setBounds(365, 217, 156, 33);
 		contentPane.add(btnEliminarDescuento);
 	}
+
+	public PantallaDescuentos(String email) {
+		// TODO Auto-generated constructor stub
+	}
 }

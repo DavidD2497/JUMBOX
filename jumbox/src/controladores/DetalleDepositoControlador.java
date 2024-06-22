@@ -19,56 +19,60 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
 
     @Override
     public List<DetalleDeposito> getAllDetalleDepositos() {
-        List<DetalleDeposito> detalleDepositos = new ArrayList<>();
+        List<DetalleDeposito> detalles = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int idDetalle = resultSet.getInt("idDetalle");
-                int idDepositoGeneral = resultSet.getInt("idDepositoGeneral");
-                int idProducto = resultSet.getInt("idProducto");
+                int idDetalle = resultSet.getInt("id_detalle_deposito");
+                int idProducto = resultSet.getInt("id_producto");
+                int idDepositoGeneral = resultSet.getInt("id_deposito");
                 int cantidad = resultSet.getInt("cantidad");
-                DetalleDeposito detalleDeposito = new DetalleDeposito(idDetalle, idDepositoGeneral, idProducto, cantidad);
-                detalleDepositos.add(detalleDeposito);
+
+                DetalleDeposito detalle = new DetalleDeposito(idProducto, idDepositoGeneral, cantidad);
+                detalle.setIdDetalle(idDetalle);
+                detalles.add(detalle);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return detalleDepositos;
+        return detalles;
     }
 
     @Override
     public DetalleDeposito getDetalleDepositoById(int id) {
-        DetalleDeposito detalleDeposito = null;
+        DetalleDeposito detalle = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito WHERE idDetalle = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito WHERE id_detalle_deposito = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                int idDepositoGeneral = resultSet.getInt("idDepositoGeneral");
-                int idProducto = resultSet.getInt("idProducto");
+                int idProducto = resultSet.getInt("id_producto");
+                int idDepositoGeneral = resultSet.getInt("id_detalle_deposito");
                 int cantidad = resultSet.getInt("cantidad");
-                detalleDeposito = new DetalleDeposito(id, idDepositoGeneral, idProducto, cantidad);
+
+                detalle = new DetalleDeposito(idProducto, idDepositoGeneral, cantidad);
+                detalle.setIdDetalle(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return detalleDeposito;
+        return detalle;
     }
 
     @Override
     public void addDetalleDeposito(DetalleDeposito detalle) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_deposito(idDepositoGeneral, idProducto, cantidad) VALUES (?, ?, ?)");
-            statement.setInt(1, detalle.getIdDepositoGeneral());
-            statement.setInt(2, detalle.getIdProducto());
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_deposito (id_producto, id_deposito, cantidad) VALUES (?, ?, ?)");
+            statement.setInt(1, detalle.getIdProducto());
+            statement.setInt(2, detalle.getIdDepositoGeneral());
             statement.setInt(3, detalle.getCantidad());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Detalle de deposito agregado exitosamente");
+                System.out.println("Detalle de depósito agregado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,15 +82,15 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
     @Override
     public void updateDetalleDeposito(DetalleDeposito detalle) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET idDepositoGeneral = ?, idProducto = ?, cantidad = ? WHERE idDetalle = ?");
-            statement.setInt(1, detalle.getIdDepositoGeneral());
-            statement.setInt(2, detalle.getIdProducto());
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET id_producto = ?, id_deposito = ?, cantidad = ? WHERE id_detalle_deposito = ?");
+            statement.setInt(1, detalle.getIdProducto());
+            statement.setInt(2, detalle.getIdDepositoGeneral());
             statement.setInt(3, detalle.getCantidad());
             statement.setInt(4, detalle.getIdDetalle());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Detalle de deposito actualizado exitosamente");
+                System.out.println("Detalle de depósito actualizado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,25 +100,22 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
     @Override
     public void deleteDetalleDeposito(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_deposito WHERE idDetalle = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_deposito WHERE id_detalle_deposito = ?");
             statement.setInt(1, id);
 
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Detalle de deposito eliminado exitosamente");
+                System.out.println("Detalle de depósito eliminado exitosamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-    public int getCantidadDisponible(int idDepositoGeneral, int idProducto) {
+    public int getCantidadDisponible( int idProducto) {
         int cantidadDisponible = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM detalle_deposito WHERE idDepositoGeneral = ? AND idProducto = ?");
-            statement.setInt(1, idDepositoGeneral);
-            statement.setInt(2, idProducto);
+            PreparedStatement statement = connection.prepareStatement("SELECT cantidad FROM detalle_deposito WHERE id_producto = ?");
+            statement.setInt(1, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -127,34 +128,35 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
     }
 
 
-    public void actualizarCantidadProducto(int idDepositoGeneral, int idProducto, int nuevaCantidad) {
+    public void actualizarCantidadProducto( int idProducto, int nuevaCantidad) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET cantidad = ? WHERE idDepositoGeneral = ? AND idProducto = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET cantidad = ? WHERE id_producto = ?");
             statement.setInt(1, nuevaCantidad);
-            statement.setInt(2, idDepositoGeneral);
-            statement.setInt(3, idProducto);
-            statement.executeUpdate();
-            System.out.println("Cantidad del producto en el dep贸sito general actualizada correctamente.");
+           
+            statement.setInt(2, idProducto);
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Cantidad del producto actualizada exitosamente.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-    public boolean existeProducto(int idDepositoGeneral, int idProducto) {
+    public boolean existeProducto(int idProducto) {
         boolean existe = false;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito WHERE idDepositoGeneral = ? AND idProducto = ?");
-            statement.setInt(1, idDepositoGeneral);
-            statement.setInt(2, idProducto);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_deposito WHERE id_producto = ?");
+            
+            statement.setInt(1, idProducto);
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                existe = true;
-            }
+            existe = resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return existe;
     }
 }
+

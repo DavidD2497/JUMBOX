@@ -25,7 +25,31 @@ public class AdminDeposito extends Empleado {
 		this.tipo = tipo;
 	}
 
+	public static String registrarSalidaDepositoGeneral( int idProducto, int cantidadSalida) {
+	    if (cantidadSalida <= 0) {
+	        //JOptionPane.showMessageDialog(null, "La cantidad de salida debe ser mayor que cero.");
+	        return "La cantidad de salida debe ser mayor que cero.";
+	    }
 
+	    DetalleDepositoControlador detalleDepositoControlador = new DetalleDepositoControlador();
+
+	    if (!detalleDepositoControlador.existeProducto( idProducto)) {
+	        //JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
+	        return "no existe en el inventario de la sucursal";
+	    }
+
+	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible( idProducto);
+
+	    if (cantidadDisponible >= cantidadSalida) {
+	        int cantidadTotal = cantidadDisponible - cantidadSalida;
+	        detalleDepositoControlador.actualizarCantidadProducto( idProducto, cantidadTotal);
+	        //OptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
+	        return "registrada con éxito.";
+	    } else {
+	        //JOptionPane.showMessageDialog(null, "No hay suficiente inventario para sacar " + cantidadSalida + " unidades del producto con ID: " + idProducto);
+	        return "No hay suficiente inventario para sacar unidades del producto";
+	    }
+	}
 
 	public static boolean registrarSalidaDepositoGeneral(int idDepositoGeneral, int idProducto, int cantidadSalida) {
 	    if (cantidadSalida <= 0) {
@@ -35,16 +59,16 @@ public class AdminDeposito extends Empleado {
 
 	    DetalleDepositoControlador detalleDepositoControlador = new DetalleDepositoControlador();
 
-	    if (!detalleDepositoControlador.existeProducto(idDepositoGeneral, idProducto)) {
+	    if (!detalleDepositoControlador.existeProducto(idProducto)) {
 	        //JOptionPane.showMessageDialog(null, "El ID " + idProducto + " no existe en el inventario de la sucursal.");
 	        return false;
 	    }
 
-	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible(idDepositoGeneral, idProducto);
+	    int cantidadDisponible = detalleDepositoControlador.getCantidadDisponible( idProducto);
 
 	    if (cantidadDisponible >= cantidadSalida) {
 	        int cantidadTotal = cantidadDisponible - cantidadSalida;
-	        detalleDepositoControlador.actualizarCantidadProducto(idDepositoGeneral, idProducto, cantidadTotal);
+	        detalleDepositoControlador.actualizarCantidadProducto(idProducto, cantidadTotal);
 	        //OptionPane.showMessageDialog(null, "Salida de " + cantidadSalida + " unidades del producto con ID: " + idProducto + " registrada con éxito.");
 	        return true;
 	    } else {
