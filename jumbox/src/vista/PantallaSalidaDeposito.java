@@ -19,6 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
 
 public class PantallaSalidaDeposito extends JFrame {
 
@@ -28,6 +30,7 @@ public class PantallaSalidaDeposito extends JFrame {
     private DefaultTableModel tableModel;
     private int selectedRow = -1;
     private JTable table;
+    private TableRowSorter<DefaultTableModel> sorter;
 
     /**
      * Launch the application.
@@ -98,7 +101,10 @@ public class PantallaSalidaDeposito extends JFrame {
         table = new JTable(tableModel);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        table.setBounds(51, 79, 683, 112);
+
+        // TableRowSorter
+        sorter = new TableRowSorter<>(tableModel);
+        table.setRowSorter(sorter);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -179,9 +185,56 @@ public class PantallaSalidaDeposito extends JFrame {
         });
         contentPane.add(btnRegistrar);
 
+        // Campo de búsqueda y botón de filtrado
+        JTextField textFieldBuscar = new JTextField();
+        textFieldBuscar.setBounds(52, 60, 200, 25);
+        contentPane.add(textFieldBuscar);
+
+        JButton btnBuscar = new JButton("Buscar");
+        btnBuscar.setBounds(262, 60, 80, 25);
+        btnBuscar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String textoFiltro = textFieldBuscar.getText();
+                RowFilter<DefaultTableModel, Object> rf = null;
+                try {
+                    rf = RowFilter.regexFilter("(?i)" + textoFiltro, 0, 1, 2); // Filtra insensitivo a mayúsculas/minúsculas en Id Producto, Nombre, Cantidad
+                } catch (java.util.regex.PatternSyntaxException ex) {
+                    return;
+                }
+                sorter.setRowFilter(rf);
+            }
+        });
+        contentPane.add(btnBuscar);
+
+        // Filtro de ordenamiento
+        JComboBox<String> comboBoxOrden = new JComboBox<>();
+        comboBoxOrden.addItem("Id Producto");
+        comboBoxOrden.addItem("Nombre");
+        comboBoxOrden.addItem("Cantidad");
+        comboBoxOrden.setBounds(400, 60, 150, 25);
+        comboBoxOrden.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String seleccion = (String) comboBoxOrden.getSelectedItem();
+                switch (seleccion) {
+                    case "Id Producto":
+                        sorter.setSortKeys(List.of(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
+                        break;
+                    case "Nombre":
+                        sorter.setSortKeys(List.of(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
+                        break;
+                    case "Cantidad":
+                        sorter.setSortKeys(List.of(new RowSorter.SortKey(2, SortOrder.ASCENDING)));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        contentPane.add(comboBoxOrden);
+
         JButton btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnVolver.setBounds(460, 462, 99, 31);
+        btnVolver.setBounds(570, 60, 99, 25);
         contentPane.add(btnVolver);
 
         btnVolver.addActionListener(new ActionListener() {
@@ -208,6 +261,4 @@ public class PantallaSalidaDeposito extends JFrame {
             });
         }
     }
-
-    
 }
