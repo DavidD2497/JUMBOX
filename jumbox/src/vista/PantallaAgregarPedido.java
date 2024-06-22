@@ -63,10 +63,6 @@ public class PantallaAgregarPedido extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JToggleButton tglbtnNewToggleButton_1 = new JToggleButton("New toggle button");
-		tglbtnNewToggleButton_1.setBounds(178, 116, 28, 23);
-		contentPane.add(tglbtnNewToggleButton_1);
-
 		JLabel lblNewLabel_2 = new JLabel("Productos Agregados al Pedido");
 		lblNewLabel_2.setBounds(479, 73, 496, 40);
 		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -94,7 +90,7 @@ public class PantallaAgregarPedido extends JFrame {
 		});
 
 		inventarioSucursalScrollPane = new JScrollPane(tablaInventarioSucursal);
-		inventarioSucursalScrollPane.setBounds(37, 114, 522, 328);
+		inventarioSucursalScrollPane.setBounds(37, 114, 522, 243);
 		inventarioSucursalScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		inventarioSucursalScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
 		contentPane.add(inventarioSucursalScrollPane);
@@ -136,7 +132,9 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.add(lblNewLabel_2_1);
 
 		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(676, 326, 99, 31);
+		btnEliminar.setBackground(new Color(226, 46, 14));
+		btnEliminar.setBounds(586, 318, 282, 31);
+		btnEliminar.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -145,7 +143,7 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.add(btnEliminar);
 
 		JButton btnAgregarPedido = new JButton("Registrar Pedido");
-		btnAgregarPedido.setBounds(239, 469, 416, 31);
+		btnAgregarPedido.setBounds(237, 424, 416, 40);
 		btnAgregarPedido.setFont(new Font("Consolas", Font.BOLD, 20));
 		contentPane.add(btnAgregarPedido);
 
@@ -161,6 +159,14 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.add(comboBoxSucursal);
 
 		cargarSucursales(comboBoxSucursal);
+		
+		JButton btnAgregarProducto = new JButton("");
+		btnAgregarProducto.setIcon(new ImageIcon(PantallaAgregarPedido.class.getResource("/resources/Imagen2.png")));
+		btnAgregarProducto.setBackground(new Color(0, 128, 0));
+		btnAgregarProducto.setFont(new Font("Consolas", Font.BOLD, 5));
+		btnAgregarProducto.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		btnAgregarProducto.setBounds(37, 353, 522, 40);
+		contentPane.add(btnAgregarProducto);
 		comboBoxSucursal.addActionListener(e -> {
 			if (comboBoxSucursal.getSelectedIndex() > 0) {
 				String selectedItem = (String) comboBoxSucursal.getSelectedItem();
