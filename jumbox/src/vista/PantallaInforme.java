@@ -133,6 +133,10 @@ public class PantallaInforme extends JFrame {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 PantallaEliminarInforme pantallaEliminar = new PantallaEliminarInforme(mail);
+				 pantallaEliminar.setVisible(true);
+			        dispose();
+			        ;
 			}
 		});
 		
