@@ -81,8 +81,7 @@ public class AdminSucursal extends Empleado {
 		LocalDate fechaEntrega = LocalDate.now();
 		JOptionPane.showMessageDialog(null, fechaEntrega);
 		if (listaDetalle.isEmpty()) {
-			// JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el
-			// pedido");
+			 JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
 			return false;
 		}
 
@@ -112,7 +111,7 @@ public class AdminSucursal extends Empleado {
 			detallePedidoControlador.addDetallePedido(detalle);
 
 		}
-		// JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
+		 JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
 		return true;
 
 	}

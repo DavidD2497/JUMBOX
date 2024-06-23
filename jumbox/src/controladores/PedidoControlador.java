@@ -51,7 +51,7 @@ public class PedidoControlador implements PedidoRepository {
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
                 int idInventario = resultSet.getInt("id_inventario");
                 pedido = new Pedido(fechaEntrega, idInventario);
-                pedido.setCodigoPedido(id);
+                pedido.setCodigoPedido(id);			
             }
         } catch (SQLException e) {
             e.printStackTrace();
