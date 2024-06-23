@@ -4,23 +4,11 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Pedido {
-<<<<<<< HEAD
-	private int codigoPedido;
-	private LocalDate fechaEntrega;
-
-	
-	public Pedido(LocalDate fechaEntrega) {
-		super();
-		this.fechaEntrega = fechaEntrega;
-
-	}
-=======
     private int codigoPedido;
     private LocalDate fechaEntrega;
     private int idInventario; // Se supone que es el ID del inventario asociado al pedido
     private String estado; // Estado del pedido
     private LinkedList<DetallePedido> listaPedidos; // Lista de detalles del pedido
->>>>>>> origin/vicky
 
     public Pedido(int codigoPedido, LocalDate fechaEntrega, int idInventario, String estado, LinkedList<DetallePedido> listaPedidos) {
         this.codigoPedido = codigoPedido;
@@ -45,8 +33,6 @@ public class Pedido {
         this.codigoPedido = codigoPedido;
     }
 
-<<<<<<< HEAD
-=======
     public LocalDate getFechaEntrega() {
         return fechaEntrega;
     }
@@ -78,6 +64,4 @@ public class Pedido {
     public void setListaPedidos(LinkedList<DetallePedido> listaPedidos) {
         this.listaPedidos = listaPedidos;
     }
->>>>>>> origin/vicky
 }
-

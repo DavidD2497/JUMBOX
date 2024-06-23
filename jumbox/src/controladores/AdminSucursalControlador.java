@@ -114,9 +114,4 @@ public class AdminSucursalControlador implements AdminSucursalRepository {
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD
 }
-
-=======
-}
->>>>>>> origin/vicky

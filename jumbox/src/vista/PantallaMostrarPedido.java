@@ -102,8 +102,4 @@ public class PantallaMostrarPedido extends JFrame {
             });
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/vicky

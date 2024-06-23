@@ -17,9 +17,4 @@ public class ImagePanel extends JPanel {
         // Dibujar la imagen de fondo
         g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
     }
-<<<<<<< HEAD
 }
-
-=======
-}
->>>>>>> origin/vicky

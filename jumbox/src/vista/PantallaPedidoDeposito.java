@@ -86,8 +86,4 @@ public class PantallaPedidoDeposito extends JFrame {
             }
         });
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/vicky

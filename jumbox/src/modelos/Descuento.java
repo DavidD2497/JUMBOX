@@ -2,12 +2,6 @@ package modelos;
 
 public class Descuento {
 	private int idDescuento;
-<<<<<<< HEAD
-	private double porcentajeDesc;
-
-	public Descuento(double porcentajeDesc) {
-		super();
-=======
 	private int porcentajeDesc;
 	private Producto producto;
 	int idProducto;
@@ -15,7 +9,6 @@ public class Descuento {
 	
 	public Descuento(int idDescuento, int porcentajeDesc, int idProducto) {
 		this.idDescuento = idDescuento;
->>>>>>> origin/vicky
 		this.porcentajeDesc = porcentajeDesc;
 		this.idProducto = idProducto;
 		 this.activo = true; 

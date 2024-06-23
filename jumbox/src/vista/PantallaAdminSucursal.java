@@ -106,11 +106,7 @@ public class PantallaAdminSucursal extends JFrame {
         btnDescuento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para el botón de Descuento
-<<<<<<< HEAD
-                PantallaDescuento pantallaDescuento = new PantallaDescuento(empleado.getEmail());
-=======
                 PantallaDescuentos pantallaDescuento = new PantallaDescuentos(empleado.getEmail());
->>>>>>> origin/vicky
                 pantallaDescuento.setVisible(true);
                 dispose();
             }
@@ -130,8 +126,4 @@ public class PantallaAdminSucursal extends JFrame {
         btnVolveralHome.setBounds(444, 300, 156, 33);
         contentPane.add(btnVolveralHome);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/vicky

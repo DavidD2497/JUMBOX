@@ -11,16 +11,12 @@ public class Producto {
 	private String categoria;
 	private double precio;
 	private LocalDate fechaVencimiento;
-<<<<<<< HEAD
-	
-	public Producto(String nombreProducto, String categoria, double precio,
-=======
 	private List<Descuento> descuentosAplicados;
 
 	public Producto(int idProducto, String nombreProducto, String categoria, double precio,
->>>>>>> origin/vicky
 			LocalDate fechaVencimiento) {
 		super();
+		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
 		this.categoria = categoria;
 		this.precio = precio;
