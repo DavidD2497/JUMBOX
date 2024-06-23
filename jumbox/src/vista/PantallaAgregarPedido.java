@@ -295,23 +295,23 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.add(txtpnCantidad);
 
 		filtroNombre = new JTextField();
-		filtroNombre.setText("Buscador");
+		filtroNombre.setText("Buscar Por Nombre");
 		filtroNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		filtroNombre.setBounds(10, 81, 182, 25);
 		contentPane.add(filtroNombre);
 		filtroNombre.addFocusListener(new FocusAdapter() {
 		    @Override
 		    public void focusGained(FocusEvent e) {
-		        if (filtroNombre.getText().equals("Buscador")) {
+		        if (filtroNombre.getText().equals("Buscar Por Nombre")) {
 		            filtroNombre.setText("");
-		            filtroNombre.setForeground(Color.BLACK); // Cambia el color del texto al obtener el foco
+		            filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al obtener el foco
 		        }
 		    }
 
 		    @Override
 		    public void focusLost(FocusEvent e) {
 		        if (filtroNombre.getText().isEmpty()) {
-		            filtroNombre.setText("Buscador");
+		            filtroNombre.setText("Buscar Por Nombre");
 		            filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al perder el foco
 		        }
 		    }
@@ -332,7 +332,7 @@ public class PantallaAgregarPedido extends JFrame {
 
 	private void aplicarFiltros(String sucursal) {
 		int idSucursal = Integer.parseInt(sucursal);
-		if (filtroNombre.getText().equals("Buscador")) {
+		if (filtroNombre.getText().equals("Buscar Por Nombre")) {
 			cargarInventarioSucursal(sucursal);
 			return;
 		} else {
