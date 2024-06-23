@@ -79,7 +79,7 @@ public class AdminSucursal extends Empleado {
 	public static boolean solicitarPedido(LinkedList<DetallePedido> listaDetalle) {
 
 		LocalDate fechaEntrega = LocalDate.now();
-		JOptionPane.showMessageDialog(null, fechaEntrega);
+		
 		if (listaDetalle.isEmpty()) {
 			 JOptionPane.showMessageDialog(null, "Complete todos los datos para hacer el pedido");
 			return false;
@@ -181,7 +181,7 @@ public class AdminSucursal extends Empleado {
 		LocalDate fechaInforme = LocalDate.now();
 		Informe informe = new Informe(fechaInforme);
 		informeControlador.addInforme(informe);
-		JOptionPane.showMessageDialog(null, fechaInforme);
+
 		for (Pedido pedido : pedidoControlador.getAllPedidos()) {
 
 			if (pedido.getFechaEntrega().equals(fechaInforme)) {
@@ -213,6 +213,5 @@ public class AdminSucursal extends Empleado {
 
 	public static void mostrarPedido() {
 		PedidoControlador pedidoControlador = new PedidoControlador();
-		JOptionPane.showMessageDialog(null, pedidoControlador.getAllPedidos());
 	}
 }

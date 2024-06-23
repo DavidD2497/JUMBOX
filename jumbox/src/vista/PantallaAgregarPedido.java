@@ -11,7 +11,12 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 public class PantallaAgregarPedido extends JFrame {
@@ -22,7 +27,8 @@ public class PantallaAgregarPedido extends JFrame {
 	private DefaultTableModel productosSolicitudTableModel;
 	private int selectedRow = -1;
 	public static JTable tablaInventarioSucursal;
-
+	private JTextField filtroNombre;
+	private JComboBox<String> filtroCategoria;
 	private JComboBox<String> comboBoxSucursal;
 	private JTable tablaProductosSolicitud;
 	private JScrollPane productosSolicitudScrollPane;
@@ -73,13 +79,13 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel_2 = new JLabel("Productos Agregados al Pedido");
-		lblNewLabel_2.setBounds(456, 76, 496, 40);
+		lblNewLabel_2.setBounds(466, 76, 496, 40);
 		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Consolas", Font.BOLD, 18));
 		contentPane.add(lblNewLabel_2);
 		JButton btnAgregarProducto = new JButton("");
-		//btnAgregarProducto.setBackground(new Color(0, 128, 0));
+		// btnAgregarProducto.setBackground(new Color(0, 128, 0));
 		JButton btnEliminar = new JButton("");
 		btnEliminar.setEnabled(false);
 		inventarioSucursalTableModel = new DefaultTableModel(new Object[][] {},
@@ -136,7 +142,7 @@ public class PantallaAgregarPedido extends JFrame {
 			if (!event.getValueIsAdjusting()) {
 				btnEliminar.setEnabled(true);
 				btnEliminar.setBackground(new Color(210, 0, 0));
-				
+
 			}
 		});
 		JButton btnVolver = new JButton("Volver");
@@ -180,14 +186,14 @@ public class PantallaAgregarPedido extends JFrame {
 		contentPane.add(btnAgregarPedido);
 		// btnAgregarPedido.setEnabled(false);
 		JLabel lblNewLabel = new JLabel("Sucursal");
-		lblNewLabel.setBounds(26, 68, 183, 48);
+		lblNewLabel.setBounds(202, 71, 183, 48);
 		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 22));
 		contentPane.add(lblNewLabel);
 
 		comboBoxSucursal = new JComboBox<>();
 		comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		comboBoxSucursal.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
-		comboBoxSucursal.setBounds(136, 75, 230, 31);
+		comboBoxSucursal.setBounds(302, 78, 230, 31);
 		contentPane.add(comboBoxSucursal);
 
 		cargarSucursales(comboBoxSucursal);
@@ -205,11 +211,15 @@ public class PantallaAgregarPedido extends JFrame {
 		comboBoxSucursal_1.setBounds(106, 358, 143, 26);
 		contentPane.add(comboBoxSucursal_1);
 		comboBoxSucursal.addActionListener(e -> {
+			inventarioSucursalTableModel.setRowCount(0);
+			String nombre = (String) comboBoxSucursal.getSelectedItem();
 			if (comboBoxSucursal.getSelectedIndex() > 0) {
 				String selectedItem = (String) comboBoxSucursal.getSelectedItem();
 				String[] parts = selectedItem.split(" - ");
+				aplicarFiltros(parts[0]);
 
-				cargarInventarioSucursal(parts[0]);
+			} else {
+				inventarioSucursalTableModel.setRowCount(0);
 			}
 		});
 		for (int i = 0; i < 101; i++) {
@@ -283,6 +293,82 @@ public class PantallaAgregarPedido extends JFrame {
 		txtpnCantidad.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		txtpnCantidad.setBounds(10, 358, 99, 26);
 		contentPane.add(txtpnCantidad);
+
+		filtroNombre = new JTextField();
+		filtroNombre.setText("Buscador");
+		filtroNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		filtroNombre.setBounds(10, 81, 182, 25);
+		contentPane.add(filtroNombre);
+		filtroNombre.addFocusListener(new FocusAdapter() {
+		    @Override
+		    public void focusGained(FocusEvent e) {
+		        if (filtroNombre.getText().equals("Buscador")) {
+		            filtroNombre.setText("");
+		            filtroNombre.setForeground(Color.BLACK); // Cambia el color del texto al obtener el foco
+		        }
+		    }
+
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        if (filtroNombre.getText().isEmpty()) {
+		            filtroNombre.setText("Buscador");
+		            filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al perder el foco
+		        }
+		    }
+		});
+
+		filtroNombre.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				if (comboBoxSucursal.getSelectedIndex() > 0) {
+					String selectedItem = (String) comboBoxSucursal.getSelectedItem();
+					String[] parts = selectedItem.split(" - ");
+
+					aplicarFiltros(parts[0]);
+				}
+			}
+		});
+		// ...
+	}
+
+	private void aplicarFiltros(String sucursal) {
+		int idSucursal = Integer.parseInt(sucursal);
+		if (filtroNombre.getText().equals("Buscador")) {
+			cargarInventarioSucursal(sucursal);
+			return;
+		} else {
+			DetalleInventarioControlador detalleControlador = new DetalleInventarioControlador();
+			String nombreFiltro = filtroNombre.getText().trim();
+			idSucursal = Integer.parseInt(sucursal);
+			List<DetalleInventario> detalles = detalleControlador.getAllDetalleInventariosBySucursalId(idSucursal);
+			ProductoControlador productoControlador = new ProductoControlador();
+			List<Producto> productos = productoControlador.getAllProductos();
+
+			List<Producto> productosFiltrados = productos.stream()
+					.filter(p -> p.getNombreProducto().toLowerCase().contains(nombreFiltro.toLowerCase()))
+					.collect(Collectors.toList());
+
+			actualizarTabla(productosFiltrados, idSucursal);
+		}
+
+	}
+
+	private void actualizarTabla(List<Producto> productos, int sucursal) {
+		inventarioSucursalTableModel.setRowCount(0);
+		DetalleInventarioControlador detalleControlador = new DetalleInventarioControlador();
+		List<DetalleInventario> detalles = detalleControlador.getAllDetalleInventariosBySucursalId(sucursal);
+		int cantidad;
+		for (Producto producto : productos) {
+			cantidad = 0;
+			for (DetalleInventario detalleInventario : detalles) {
+				if (detalleInventario.getIdProducto() == producto.getIdProducto()) {
+					cantidad = detalleInventario.getCantidad();
+				}
+			}
+
+			inventarioSucursalTableModel
+					.addRow(new Object[] { producto.getIdProducto(), producto.getNombreProducto(), cantidad });
+			;
+		}
 	}
 
 	private void cargarInventarioSucursal(String sucursal) {
@@ -291,7 +377,7 @@ public class PantallaAgregarPedido extends JFrame {
 
 		int idSucursal = Integer.parseInt(sucursal);
 		List<DetalleInventario> detalles = detalleControlador.getAllDetalleInventariosBySucursalId(idSucursal);
-		inventarioSucursalTableModel.setRowCount(0);
+
 		for (DetalleInventario detalle : detalles) {
 			inventarioSucursalTableModel.addRow(new Object[] { detalle.getIdProducto(),
 					productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(),
@@ -302,6 +388,10 @@ public class PantallaAgregarPedido extends JFrame {
 	private void cargarProductos() {
 		productosSolicitudTableModel.setRowCount(0);
 		// Agrega lógica para cargar productos solicitados si es necesario
+	}
+
+	private void limpiarTabla(JTable table) {
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID Producto", "Nombre", "Categoría" }));
 	}
 
 	private void cargarSucursales(JComboBox<String> comboBoxSucursal) {
