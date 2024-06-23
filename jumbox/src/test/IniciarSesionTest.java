@@ -1,5 +1,8 @@
 package test;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/vicky
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import modelos.Empleado;
@@ -7,6 +10,7 @@ import controladores.EmpleadoControlador;
 
 public class IniciarSesionTest {
 
+<<<<<<< HEAD
     @Test
     public void inicioSesionCorrecto() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
@@ -83,3 +87,8 @@ public class IniciarSesionTest {
     }
 }
 
+=======
+	
+	
+}
+>>>>>>> origin/vicky

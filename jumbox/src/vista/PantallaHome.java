@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 
 public class PantallaHome extends JFrame {
 
+<<<<<<< HEAD
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 
@@ -35,16 +36,41 @@ public class PantallaHome extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
+=======
+	private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+
+
+	public PantallaHome(String mail) {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 626, 383);
+        
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        Empleado empleado = empleadoControlador.getUserByEmail(mail);
+		
+        contentPane = new ImagePanel("/resources/supermercado.jpg");
+        contentPane.setToolTipText("");
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        
+>>>>>>> origin/vicky
         JLabel lblNewLabel = new JLabel("MENÚ PRINCIPAL");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 25));
         lblNewLabel.setBounds(10, 0, 590, 68);
         contentPane.add(lblNewLabel);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/vicky
         JLabel lblIdentificacion = new JLabel("");
         lblIdentificacion.setHorizontalAlignment(SwingConstants.CENTER);
         lblIdentificacion.setFont(new Font("Consolas", Font.BOLD, 20));
         lblIdentificacion.setBounds(10, 31, 590, 68);
+<<<<<<< HEAD
         String userType = empleadoControlador.getUserTypeByEmail(mail);
         if (userType.equals("Cajero")) {
             lblIdentificacion.setText(empleado.getNombre() + " -  Cajero/a");
@@ -55,10 +81,23 @@ public class PantallaHome extends JFrame {
         }
         contentPane.add(lblIdentificacion);
 
+=======
+        if (empleadoControlador.getUserTypeByEmail(mail).equals("Cajero")) {
+            lblIdentificacion.setText(empleado.getNombre() + " -  Cajero/a" );
+		} else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
+			lblIdentificacion.setText(empleado.getNombre() + " -  Administrador/a de Sucursal" );
+		} else {
+			lblIdentificacion.setText(empleado.getNombre() + " -  Administrador/a de Depósito" );
+		} 
+
+        contentPane.add(lblIdentificacion);
+        
+>>>>>>> origin/vicky
         JButton btnCrearUsuario = new JButton("Crear Usuario");
         btnCrearUsuario.setFont(new Font("Consolas", Font.BOLD, 15));
         btnCrearUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnCrearUsuario.setBounds(10, 189, 156, 33);
+<<<<<<< HEAD
         btnCrearUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PantallaRegistroEmpleado pantallaRegistroEmpleado = new PantallaRegistroEmpleado(empleado.getEmail());
@@ -68,10 +107,15 @@ public class PantallaHome extends JFrame {
         });
         contentPane.add(btnCrearUsuario);
 
+=======
+        contentPane.add(btnCrearUsuario);
+        
+>>>>>>> origin/vicky
         JButton btnEditarUsuario = new JButton("Editar Usuario");
         btnEditarUsuario.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEditarUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnEditarUsuario.setBounds(433, 189, 156, 33);
+<<<<<<< HEAD
         btnEditarUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PantallaEditarEmpleado pantallaEditarEmpleado = new PantallaEditarEmpleado(empleado.getEmail());
@@ -81,16 +125,25 @@ public class PantallaHome extends JFrame {
         });
         contentPane.add(btnEditarUsuario);
 
+=======
+        contentPane.add(btnEditarUsuario);
+        
+>>>>>>> origin/vicky
         JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
         btnEliminarUsuario.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEliminarUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnEliminarUsuario.setBounds(219, 189, 156, 33);
         contentPane.add(btnEliminarUsuario);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/vicky
         JButton btnFuncionPrincipal = new JButton("");
         btnFuncionPrincipal.setFont(new Font("Consolas", Font.BOLD, 15));
         btnFuncionPrincipal.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnFuncionPrincipal.setBounds(96, 110, 392, 33);
+<<<<<<< HEAD
         if (userType.equals("Cajero")) {
             btnFuncionPrincipal.setText("Funciones Cajero/a");
         } else if (userType.equals("AdminSucursal")) {
@@ -114,6 +167,17 @@ public class PantallaHome extends JFrame {
         }
         contentPane.add(btnFuncionPrincipal);
 
+=======
+        if (empleadoControlador.getUserTypeByEmail(mail).equals("Cajero")) {
+        	btnFuncionPrincipal.setText("Funciones Cajero/a" );
+		} else if (empleadoControlador.getUserTypeByEmail(mail).equals("AdminSucursal")) {
+			btnFuncionPrincipal.setText("Funciones Administrador/a de Sucursal" );
+		} else {
+			btnFuncionPrincipal.setText("Funciones Administrador/a de Depósito" );
+		}
+        contentPane.add(btnFuncionPrincipal);
+        
+>>>>>>> origin/vicky
         JButton btnCerrarSesion = new JButton("Cerrar Sesión");
         btnCerrarSesion.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -126,5 +190,12 @@ public class PantallaHome extends JFrame {
         btnCerrarSesion.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnCerrarSesion.setBounds(219, 271, 156, 33);
         contentPane.add(btnCerrarSesion);
+<<<<<<< HEAD
     }
 }
+=======
+
+
+	}
+}
+>>>>>>> origin/vicky

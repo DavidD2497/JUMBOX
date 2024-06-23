@@ -18,4 +18,8 @@ public interface EntradaInventarioRepository {
 
 
 	int obtenerUltimoIdEntrada();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

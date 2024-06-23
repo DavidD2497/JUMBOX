@@ -133,5 +133,9 @@ public class PantallaLogueo extends JFrame {
             }
         });
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> origin/vicky

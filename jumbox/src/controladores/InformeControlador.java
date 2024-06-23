@@ -1,11 +1,17 @@
 package controladores;
 
 import java.sql.Connection;
+<<<<<<< HEAD
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+=======
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> origin/vicky
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +34,17 @@ public class InformeControlador implements InformeRepository {
 
             while (resultSet.next()) {
                 int idInforme = resultSet.getInt("id_informe");
+<<<<<<< HEAD
                 LocalDate fechaInforme = resultSet.getDate("fecha_informe").toLocalDate();
 
                 Informe informe = new Informe(fechaInforme);
                 informe.setIdInforme(idInforme);
+=======
+
+                Informe informe = new Informe();
+                informe.setIdInforme(idInforme);
+
+>>>>>>> origin/vicky
                 informes.add(informe);
             }
         } catch (SQLException e) {
@@ -49,8 +62,12 @@ public class InformeControlador implements InformeRepository {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+<<<<<<< HEAD
                 LocalDate fechaInforme = resultSet.getDate("fecha_informe").toLocalDate();
                 informe = new Informe(fechaInforme);
+=======
+                informe = new Informe();
+>>>>>>> origin/vicky
                 informe.setIdInforme(id);
             }
         } catch (SQLException e) {
@@ -62,9 +79,15 @@ public class InformeControlador implements InformeRepository {
     @Override
     public void addInforme(Informe informe) {
         try {
+<<<<<<< HEAD
             PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe, fecha_informe) VALUES (?, ?)");
             statement.setInt(1, informe.getIdInforme());
             statement.setDate(2, Date.valueOf(LocalDate.now()));
+=======
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO informe (id_informe) VALUES (?)");
+            statement.setInt(1, informe.getIdInforme());
+
+>>>>>>> origin/vicky
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Informe agregado exitosamente.");
@@ -76,6 +99,7 @@ public class InformeControlador implements InformeRepository {
 
     @Override
     public void updateInforme(Informe informe) {
+<<<<<<< HEAD
         // Implementar lógica de actualización si es necesario
     }
     
@@ -89,12 +113,25 @@ public class InformeControlador implements InformeRepository {
 
             if (resultSet.next()) {
                 ultimoIdInforme = resultSet.getInt(1);
+=======
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE informe SET id_informe = ? WHERE id_informe = ?");
+            statement.setInt(1, informe.getIdInforme());
+            statement.setInt(2, informe.getIdInforme()); // Aquí asumo que id_informe es la clave primaria
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Informe actualizado exitosamente.");
+>>>>>>> origin/vicky
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
 
         return ultimoIdInforme;
+=======
+>>>>>>> origin/vicky
     }
 
     @Override
@@ -102,6 +139,10 @@ public class InformeControlador implements InformeRepository {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM informe WHERE id_informe = ?");
             statement.setInt(1, id);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/vicky
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Informe eliminado exitosamente.");

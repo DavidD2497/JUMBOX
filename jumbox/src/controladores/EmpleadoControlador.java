@@ -216,4 +216,8 @@ public class EmpleadoControlador implements EmpleadoRepository {
         }
         return tipo;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

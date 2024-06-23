@@ -41,6 +41,10 @@ public abstract class Empleado {
 	
     public static String iniciarSesion(String email, String contraseña) {
         if (email.isEmpty() || contraseña.isEmpty()) {
+<<<<<<< HEAD
+=======
+            //JOptionPane.showMessageDialog(null, "Email y/o contraseña no pueden estar vacíos.");
+>>>>>>> origin/vicky
             return "Email y/o contraseña no pueden estar vacíos.";
         }
     	
@@ -48,29 +52,54 @@ public abstract class Empleado {
         Empleado empleado = empleadoControlador.getUserByEmailAndPassword(email, contraseña);
 
         if (empleado != null) {
+<<<<<<< HEAD
             return "Inicio de sesión exitoso.";
         } else {
+=======
+            //JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+            return "Inicio de sesión exitoso.";
+        } else {
+            //JOptionPane.showMessageDialog(null, "Error de inicio de sesión. Verifique sus credenciales.");
+>>>>>>> origin/vicky
             return "Error de inicio de sesión. Verifique sus credenciales.";
         }
     }
     
+<<<<<<< HEAD
     public static String registrarEmpleado(String nombre, String email, String contraseña, String tipo) {
 
         if (nombre.isEmpty() || email.isEmpty() || contraseña.isEmpty() || tipo.isEmpty()) {
             return "Todos los campos son obligatorios.";
 
+=======
+    public boolean registrarEmpleado(String nombre, String email, String contraseña, String tipo) {
+
+        if (nombre.isEmpty() || email.isEmpty() || contraseña.isEmpty() || tipo.isEmpty()) {
+            //JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
+            return false;
+>>>>>>> origin/vicky
         }
 
 
         if (!email.contains("@")) {
+<<<<<<< HEAD
             return "Email no válido. Debe contener un '@'.";
 
+=======
+            //JOptionPane.showMessageDialog(null, "Email no válido. Debe contener un '@'.");
+            return false;
+>>>>>>> origin/vicky
         }
 
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
 
         if (empleadoControlador.getUserByEmail(email) != null) {
+<<<<<<< HEAD
             return "Ya existe un usuario con este email.";
+=======
+            //JOptionPane.showMessageDialog(null, "Ya existe un usuario con este email.");
+            return false;
+>>>>>>> origin/vicky
         }
 
         Empleado nuevoEmpleado;
@@ -85,12 +114,22 @@ public abstract class Empleado {
                 nuevoEmpleado = new Cajero(nombre, email, contraseña);
                 break;
             default:
+<<<<<<< HEAD
                 return "Tipo de usuario no válido.";
 
         }
 
         empleadoControlador.addUser(nuevoEmpleado);
         return "Usuario registrado exitosamente.";
+=======
+                //JOptionPane.showMessageDialog(null, "Tipo de usuario no válido.");
+                return false;
+        }
+
+        empleadoControlador.addUser(nuevoEmpleado);
+        //JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente.");
+        return true;
+>>>>>>> origin/vicky
     }
     
     public boolean editarEmpleado(String email, String nuevoNombre, String nuevoEmail, String nuevaContraseña, String nuevoTipo) {
@@ -159,4 +198,8 @@ public abstract class Empleado {
     
 
 
+<<<<<<< HEAD
 }	
+=======
+}	
+>>>>>>> origin/vicky

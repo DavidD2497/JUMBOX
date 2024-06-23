@@ -17,4 +17,8 @@ public class DepositoGeneral {
 		this.idDeposito = idDeposito;
 	}	
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

@@ -16,4 +16,8 @@ public interface VentaRepository {
     void deleteVenta(int id); // Elimina una venta de la base de datos
     
     int obtenerUltimoIdVenta();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

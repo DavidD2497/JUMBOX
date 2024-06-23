@@ -14,11 +14,16 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
     private final Connection connection;
 
     public DetalleInformeControlador() {
+<<<<<<< HEAD
         this.connection = DatabaseConnection.getInstance().getConnection();
+=======
+    	this.connection = DatabaseConnection.getInstance().getConnection();
+>>>>>>> origin/vicky
     }
 
     @Override
     public List<DetalleInforme> getAllDetalleInformes() {
+<<<<<<< HEAD
         return getDetalleInformes("SELECT * FROM detalle_informe", -1);
     }
 
@@ -46,15 +51,33 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
                 detalleInforme.setIdDetalle(idDetalle);
 
                 detallesInformes.add(detalleInforme);
+=======
+        List<DetalleInforme> detalles = new ArrayList<>();
+        String query = "SELECT * FROM detalle_informe";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                DetalleInforme detalle = new DetalleInforme(
+                        resultSet.getInt("idDetalle"),
+                        resultSet.getInt("idVenta"),
+                        resultSet.getInt("idInventario")
+                );
+                detalles.add(detalle);
+>>>>>>> origin/vicky
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
         return detallesInformes;
+=======
+        return detalles;
+>>>>>>> origin/vicky
     }
 
     @Override
     public DetalleInforme getDetalleInformeById(int id) {
+<<<<<<< HEAD
         DetalleInforme detalleInforme = null;
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM detalle_informe WHERE id_detalle_informe = ?");
@@ -69,15 +92,33 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
 
                 detalleInforme = new DetalleInforme(idInforme, tipo, idTipo);
                 detalleInforme.setIdDetalle(idDetalle);
+=======
+        DetalleInforme detalle = null;
+        String query = "SELECT * FROM detalle_informe WHERE idDetalle = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                detalle = new DetalleInforme(
+                        resultSet.getInt("idDetalle"),
+                        resultSet.getInt("idVenta"),
+                        resultSet.getInt("idInventario")
+                );
+>>>>>>> origin/vicky
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
         return detalleInforme;
+=======
+        return detalle;
+>>>>>>> origin/vicky
     }
 
     @Override
     public void addDetalleInforme(DetalleInforme detalleInforme) {
+<<<<<<< HEAD
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO detalle_informe (id_informe, tipo, id_tipo) VALUES (?, ?, ?)");
             statement.setInt(1, detalleInforme.getIdInforme());
@@ -88,6 +129,15 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
             if (rowsInserted > 0) {
                 System.out.println("Detalle de informe agregado exitosamente.");
             }
+=======
+        String query = "INSERT INTO detalle_informe (idDetalle, idVenta, idInventario) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, detalleInforme.getIdDetalle());
+            statement.setInt(2, detalleInforme.getIdVenta());
+            statement.setInt(3, detalleInforme.getIdInventario());
+            statement.executeUpdate();
+            System.out.println("Detalle de informe agregado con éxito.");
+>>>>>>> origin/vicky
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,6 +145,7 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
 
     @Override
     public void updateDetalleInforme(DetalleInforme detalleInforme) {
+<<<<<<< HEAD
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE detalle_informe SET id_informe = ?, tipo = ?, id_tipo = ? WHERE id_detalle_informe = ?");
             statement.setInt(1, detalleInforme.getIdInforme());
@@ -106,6 +157,15 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
             if (rowsUpdated > 0) {
                 System.out.println("Detalle de informe actualizado exitosamente.");
             }
+=======
+        String query = "UPDATE detalle_informe SET idVenta = ?, idInventario = ? WHERE idDetalle = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, detalleInforme.getIdVenta());
+            statement.setInt(2, detalleInforme.getIdInventario());
+            statement.setInt(3, detalleInforme.getIdDetalle());
+            statement.executeUpdate();
+            System.out.println("Detalle de informe actualizado con éxito.");
+>>>>>>> origin/vicky
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,6 +173,7 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
 
     @Override
     public void deleteDetalleInforme(int id) {
+<<<<<<< HEAD
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM detalle_informe WHERE id_detalle_informe = ?");
             statement.setInt(1, id);
@@ -121,10 +182,18 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
             if (rowsDeleted > 0) {
                 System.out.println("Detalle de informe eliminado exitosamente.");
             }
+=======
+        String query = "DELETE FROM detalle_informe WHERE idDetalle = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            System.out.println("Detalle de informe eliminado con éxito.");
+>>>>>>> origin/vicky
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
     public int obtenerUltimoIdDetalle() {
         int ultimoIdDetalle = -1;
@@ -143,3 +212,6 @@ public class DetalleInformeControlador implements DetalleInformeRepository {
 
 }
 
+=======
+}
+>>>>>>> origin/vicky

@@ -4,14 +4,21 @@ import modelos.Empleado;
 import modelos.AdminSucursal;
 
 import java.awt.EventQueue;
+<<<<<<< HEAD
 import javax.swing.*;
+=======
+>>>>>>> origin/vicky
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controladores.EmpleadoControlador;
+<<<<<<< HEAD
 import controladores.AdminSucursalControlador;
+=======
+
+>>>>>>> origin/vicky
 import controladores.ProductoControlador;
 import modelos.Producto;
 import java.awt.Color;
@@ -26,9 +33,12 @@ import javax.swing.JLabel;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+<<<<<<< HEAD
 import javax.swing.JComboBox;
 
 
+=======
+>>>>>>> origin/vicky
 
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -41,7 +51,11 @@ public class PantallaRegistroEntrada extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField inpCANTIDAD;
+<<<<<<< HEAD
 	private JTextField  inpIDINVENTARIOSUCURSAL;
+=======
+	private JTextField inpIDINVENTARIOSUCURSAL;
+>>>>>>> origin/vicky
 	private DefaultTableModel tableModel;
 	private JTextField intIDsuc;
 	private int selectedRow = -1;
@@ -87,15 +101,22 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblNewLabel_2.setFont(new Font("Consolas", Font.BOLD, 28));
 		contentPane.add(lblNewLabel_2);
 
+<<<<<<< HEAD
 		
+=======
+>>>>>>> origin/vicky
 		JLabel lblSeleccionado = new JLabel("");
 		lblSeleccionado.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblSeleccionado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeleccionado.setFont(new Font("Consolas", Font.BOLD, 18));
 		lblSeleccionado.setBounds(254, 274, 385, 29);
 		contentPane.add(lblSeleccionado);
+<<<<<<< HEAD
 		
 		
+=======
+
+>>>>>>> origin/vicky
 		JLabel lblError = new JLabel("");
 		lblError.setBackground(new Color(255, 0, 0));
 		lblError.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -103,7 +124,11 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblError.setFont(new Font("Consolas", Font.BOLD, 18));
 		lblError.setBounds(52, 436, 573, 29);
 		contentPane.add(lblError);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> origin/vicky
 		JLabel lblAprobado = new JLabel("");
 		lblAprobado.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblAprobado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -111,11 +136,16 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblAprobado.setBackground(new Color(0, 128, 0));
 		lblAprobado.setBounds(10, 411, 858, 29);
 		contentPane.add(lblAprobado);
+<<<<<<< HEAD
 		
 		tableModel = new DefaultTableModel(
 				new Object[][]{},
 				new String[]{"Id Producto", "Nombre" , "Categoria"}
 		);
+=======
+
+		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Id Producto", "Nombre", "Categoria" });
+>>>>>>> origin/vicky
 
 		JTable table = new JTable(tableModel);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -131,6 +161,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		cargarProductos();
 
 		table.getSelectionModel().addListSelectionListener(event -> {
+<<<<<<< HEAD
             if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                 selectedRow = table.getSelectedRow();
                 String producto = (String) table.getValueAt(selectedRow, 1);
@@ -140,6 +171,17 @@ public class PantallaRegistroEntrada extends JFrame {
                 selectedRow = -1;
             }
         });
+=======
+			if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+				selectedRow = table.getSelectedRow();
+				String producto = (String) table.getValueAt(selectedRow, 1);
+				lblSeleccionado.setText("Producto seleccionado: " + producto);
+			} else {
+				lblSeleccionado.setText("Debes seleccionar un producto para poder registrarlo.");
+				selectedRow = -1;
+			}
+		});
+>>>>>>> origin/vicky
 
 		JLabel lblCANTIDAD = new JLabel("Cantidad:");
 		lblCANTIDAD.setBounds(493, 321, 200, 40);
@@ -160,7 +202,11 @@ public class PantallaRegistroEntrada extends JFrame {
 		lblIDINVENTARIOSUCURSAL.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIDINVENTARIOSUCURSAL.setHorizontalTextPosition(SwingConstants.CENTER);
 		contentPane.add(lblIDINVENTARIOSUCURSAL);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> origin/vicky
 		inpIDINVENTARIOSUCURSAL = new JTextField();
 		inpIDINVENTARIOSUCURSAL.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		inpIDINVENTARIOSUCURSAL.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -172,6 +218,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		btnRegistrar.setBounds(330, 462, 99, 31);
 
 		btnRegistrar.addActionListener(new ActionListener() {
+<<<<<<< HEAD
 		    public void actionPerformed(ActionEvent e) {
 		        if (selectedRow != -1) {
 		            try {
@@ -221,12 +268,59 @@ public class PantallaRegistroEntrada extends JFrame {
 
 		
 		
+=======
+			public void actionPerformed(ActionEvent e) {
+				if (selectedRow != -1) {
+					try {
+						int idSucursal = Integer.parseInt(inpIDINVENTARIOSUCURSAL.getText());
+						int cantidad = Integer.parseInt(inpCANTIDAD.getText());
+						Object valueAt = table.getValueAt(selectedRow, 0);
+
+						int idProducto;
+						if (valueAt instanceof Integer) {
+							idProducto = (Integer) valueAt;
+						} else if (valueAt instanceof String) {
+							idProducto = Integer.parseInt((String) valueAt);
+						} else {
+							throw new NumberFormatException("Tipo de datos inesperado en la celda seleccionada.");
+						}
+
+						String respuesta = AdminSucursal.registroEntradaProducto(idSucursal, idProducto, cantidad);
+						if (respuesta.equals("Registro con éxito")) {
+							lblAprobado.setText(respuesta);
+							lblAprobado.setVisible(true);
+							lblError.setVisible(false);
+							selectedRow = -1;
+							cargarProductos();
+						} else {
+							lblError.setText(respuesta);
+							lblError.setVisible(true);
+							lblAprobado.setVisible(false);
+						}
+					} catch (NumberFormatException ex) {
+						lblError.setText("Por favor, ingrese valores numeros válidos.");
+						lblError.setVisible(true);
+						lblAprobado.setVisible(false);
+					}
+				} else {
+					lblError.setText("Por favor, seleccione un producto.");
+					lblError.setVisible(true);
+					lblAprobado.setVisible(false);
+				}
+			}
+		});
+		contentPane.add(btnRegistrar);
+
+>>>>>>> origin/vicky
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
 		btnVolver.setBounds(460, 462, 99, 31);
 		contentPane.add(btnVolver);
+<<<<<<< HEAD
 		
 		
+=======
+>>>>>>> origin/vicky
 
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -236,11 +330,14 @@ public class PantallaRegistroEntrada extends JFrame {
 			}
 		});
 
+<<<<<<< HEAD
 		
 		
 		
 		
 	
+=======
+>>>>>>> origin/vicky
 	}
 
 	private void cargarProductos() {
@@ -248,6 +345,7 @@ public class PantallaRegistroEntrada extends JFrame {
 		List<Producto> productos = productoControlador.getAllProductos();
 		tableModel.setRowCount(0);
 		for (Producto producto : productos) {
+<<<<<<< HEAD
 			tableModel.addRow(new Object[]{
 					producto.getIdProducto(),
 					producto.getNombreProducto(),
@@ -257,3 +355,12 @@ public class PantallaRegistroEntrada extends JFrame {
 		 }
 	}
 }
+=======
+			tableModel.addRow(
+					new Object[] { producto.getIdProducto(), producto.getNombreProducto(), producto.getCategoria(),
+
+					});
+		}
+	}
+}
+>>>>>>> origin/vicky

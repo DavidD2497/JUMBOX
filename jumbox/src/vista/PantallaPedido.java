@@ -11,7 +11,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import vista.PantallaRegistroEntrada;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/vicky
 import controladores.EmpleadoControlador;
 
 import java.awt.Color;

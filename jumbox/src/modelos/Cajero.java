@@ -1,6 +1,9 @@
 package modelos;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
+=======
+>>>>>>> origin/vicky
 import java.util.List;
 import javax.swing.JOptionPane;
 import controladores.DetalleVentaControlador;
@@ -83,6 +86,7 @@ public class Cajero extends Empleado {
                 int cantidadDisponible = detalleInventarioControlador.getCantidadDisponible(idInventarioSucursal, detalle.getIdProducto());
                 int cantidadTotal = cantidadDisponible - detalle.getCantidad();
                 detalleInventarioControlador.actualizarCantidadProducto(idInventarioSucursal, detalle.getIdProducto(), cantidadTotal);
+<<<<<<< HEAD
             }
             LocalDate fechaVenta = LocalDate.now();
             Venta venta = new Venta(montoTotal, tipoPago, fechaVenta);
@@ -95,6 +99,20 @@ public class Cajero extends Empleado {
                 detalleVentaControlador.addDetalleVenta(detalle);
             }
 
+=======
+            }
+
+            Venta venta = new Venta(montoTotal, tipoPago);
+            VentaControlador ventaControlador = new VentaControlador();
+            ventaControlador.addVenta(venta);
+            
+
+
+            for (DetalleVenta detalle : detallesVenta) {
+                detalleVentaControlador.addDetalleVenta(detalle);
+            }
+
+>>>>>>> origin/vicky
             //JOptionPane.showMessageDialog(null, "Venta registrada con éxito. Monto total: " + montoTotal);
             return true;
         } else {
@@ -103,4 +121,7 @@ public class Cajero extends Empleado {
     }
 
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/vicky

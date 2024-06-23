@@ -1,11 +1,17 @@
 package controladores;
 
 import java.sql.Connection;
+<<<<<<< HEAD
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+=======
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> origin/vicky
 import java.util.ArrayList;
 import java.util.List;
 import interfaces.VentaRepository;
@@ -26,6 +32,7 @@ public class VentaControlador implements VentaRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+<<<<<<< HEAD
                 int idVenta = resultSet.getInt("id_venta");
                 double montoTotal = resultSet.getDouble("monto_total");
                 String tipoPago = resultSet.getString("tipo_pago");
@@ -33,6 +40,12 @@ public class VentaControlador implements VentaRepository {
 
                 Venta venta = new Venta(montoTotal, tipoPago, fechaVenta);
                 venta.setIdVenta(idVenta);
+=======
+                double montoTotal = resultSet.getDouble("monto_total");
+                String tipoPago = resultSet.getString("tipo_pago");
+
+                Venta venta = new Venta(montoTotal, tipoPago);
+>>>>>>> origin/vicky
                 ventas.add(venta);
             }
         } catch (SQLException e) {
@@ -50,6 +63,7 @@ public class VentaControlador implements VentaRepository {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+<<<<<<< HEAD
                 int idVenta = resultSet.getInt("id_venta");
                 double montoTotal = resultSet.getDouble("monto_total");
                 String tipoPago = resultSet.getString("tipo_pago");
@@ -57,6 +71,12 @@ public class VentaControlador implements VentaRepository {
 
                 venta = new Venta(montoTotal, tipoPago, fechaVenta);
                 venta.setIdVenta(id);
+=======
+                double montoTotal = resultSet.getDouble("monto_total");
+                String tipoPago = resultSet.getString("tipo_pago");
+
+                venta = new Venta(montoTotal, tipoPago);
+>>>>>>> origin/vicky
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,10 +87,16 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void addVenta(Venta venta) {
         try {
+<<<<<<< HEAD
             PreparedStatement statement = connection.prepareStatement("INSERT INTO venta (monto_total, tipo_pago, fecha_venta) VALUES (?, ?, ?)");
             statement.setDouble(1, venta.getMontoTotal());
             statement.setString(2, venta.getTipoPago());
             statement.setDate(3, Date.valueOf(venta.getFechaVenta()));
+=======
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO venta (monto_total, tipo_pago) VALUES (?, ?)");
+            statement.setDouble(1, venta.getMontoTotal());
+            statement.setString(2, venta.getTipoPago());
+>>>>>>> origin/vicky
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -84,11 +110,18 @@ public class VentaControlador implements VentaRepository {
     @Override
     public void updateVenta(Venta venta) {
         try {
+<<<<<<< HEAD
             PreparedStatement statement = connection.prepareStatement("UPDATE venta SET monto_total = ?, tipo_pago = ?, fecha_venta = ? WHERE id_venta = ?");
             statement.setDouble(1, venta.getMontoTotal());
             statement.setString(2, venta.getTipoPago());
             statement.setDate(3, Date.valueOf(venta.getFechaVenta()));
             statement.setInt(4, venta.getIdVenta());
+=======
+            PreparedStatement statement = connection.prepareStatement("UPDATE venta SET monto_total = ?, tipo_pago = ? WHERE id_venta = ?");
+            statement.setDouble(1, venta.getMontoTotal());
+            statement.setString(2, venta.getTipoPago());
+            statement.setInt(3, venta.getIdVenta());
+>>>>>>> origin/vicky
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -113,7 +146,11 @@ public class VentaControlador implements VentaRepository {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/vicky
     @Override
     public int obtenerUltimoIdVenta() {
         int ultimoIdVenta = -1;

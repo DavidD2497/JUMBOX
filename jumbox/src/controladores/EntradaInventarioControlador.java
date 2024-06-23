@@ -101,7 +101,10 @@ public class EntradaInventarioControlador implements EntradaInventarioRepository
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> origin/vicky
     public void deleteEntradaInventario(int id) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM entrada_inventario WHERE id_entrada = ?");
@@ -115,7 +118,10 @@ public class EntradaInventarioControlador implements EntradaInventarioRepository
         }
     }
     
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> origin/vicky
     public int obtenerUltimoIdEntrada() {
         int ultimoIdDetalle = -1;
         try {
@@ -130,4 +136,8 @@ public class EntradaInventarioControlador implements EntradaInventarioRepository
         }
         return ultimoIdDetalle;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

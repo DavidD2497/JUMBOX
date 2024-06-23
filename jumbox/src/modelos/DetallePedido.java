@@ -5,8 +5,14 @@ public class DetallePedido {
 	private int idPedido;
 	private int idProducto;
 	private int cantidad;
+<<<<<<< HEAD
 	
 	public DetallePedido(int idProducto, int cantidad, int idPedido) {
+=======
+	private int idPedido;
+
+	public DetallePedido(int idDetalle, int idProducto, int cantidad) {
+>>>>>>> origin/vicky
 		super();
 		this.idProducto = idProducto;
 		this.cantidad = cantidad;
@@ -37,6 +43,7 @@ public class DetallePedido {
 		this.cantidad = cantidad;
 	}
 
+<<<<<<< HEAD
 	public int getIdPedido() {
 		return idPedido;
 	}
@@ -45,4 +52,9 @@ public class DetallePedido {
 		this.idPedido = idPedido;
 	}
 	
+=======
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
+	}
+>>>>>>> origin/vicky
 }

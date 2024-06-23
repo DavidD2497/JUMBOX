@@ -7,6 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+<<<<<<< HEAD
+=======
+import java.awt.GraphicsConfiguration;
+
+>>>>>>> origin/vicky
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
@@ -22,7 +27,11 @@ public class PantallaAdminDeposito extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+<<<<<<< HEAD
 
+=======
+    int idPedido;
+>>>>>>> origin/vicky
     public PantallaAdminDeposito(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 626, 383);
@@ -60,7 +69,11 @@ public class PantallaAdminDeposito extends JFrame {
         JButton btnRegistrarSalida = new JButton("Registrar Salida");
         btnRegistrarSalida.setFont(new Font("Consolas", Font.BOLD, 15));
         btnRegistrarSalida.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+<<<<<<< HEAD
         btnRegistrarSalida.setBounds(73, 176, 156, 33);
+=======
+        btnRegistrarSalida.setBounds(74, 133, 156, 33);
+>>>>>>> origin/vicky
         btnRegistrarSalida.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para el botón de Registro de entrada
@@ -74,7 +87,11 @@ public class PantallaAdminDeposito extends JFrame {
         JButton btnPedido = new JButton("Pedido");
         btnPedido.setFont(new Font("Consolas", Font.BOLD, 15));
         btnPedido.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+<<<<<<< HEAD
         btnPedido.setBounds(351, 176, 173, 33);
+=======
+        btnPedido.setBounds(352, 133, 173, 33);
+>>>>>>> origin/vicky
         btnPedido.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para el botón de Pedido
@@ -97,5 +114,22 @@ public class PantallaAdminDeposito extends JFrame {
         btnVolveralHome.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         btnVolveralHome.setBounds(444, 300, 156, 33);
         contentPane.add(btnVolveralHome);
+<<<<<<< HEAD
     }
 }
+=======
+        
+        JButton btnConfirmarSolicitud = new JButton("Confirmar Solicitud de pedido");
+        btnConfirmarSolicitud.setFont(new Font("Consolas", Font.BOLD, 15));
+        btnConfirmarSolicitud.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+        btnConfirmarSolicitud.setBounds(164, 229, 265, 33);
+        contentPane.add(btnConfirmarSolicitud);
+        
+        btnConfirmarSolicitud.addActionListener(e -> {
+			PantallaConfirmarSolicitudDePedido pantallaConfirmarSolicitudDePedido = new PantallaConfirmarSolicitudDePedido(mail, idPedido);
+			pantallaConfirmarSolicitudDePedido.setVisible(true);
+			dispose();
+		});
+    }
+}
+>>>>>>> origin/vicky

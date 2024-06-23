@@ -57,4 +57,8 @@ public class EntradaInventario {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

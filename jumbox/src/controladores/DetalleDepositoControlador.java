@@ -111,8 +111,11 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
     @Override
+=======
+>>>>>>> origin/vicky
     public int getCantidadDisponible( int idProducto) {
         int cantidadDisponible = 0;
         try {
@@ -129,7 +132,11 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
         return cantidadDisponible;
     }
 
+<<<<<<< HEAD
     @Override
+=======
+
+>>>>>>> origin/vicky
     public void actualizarCantidadProducto( int idProducto, int nuevaCantidad) {
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE detalle_deposito SET cantidad = ? WHERE id_producto = ?");
@@ -146,7 +153,10 @@ public class DetalleDepositoControlador implements DetalleDepRepository {
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> origin/vicky
     public boolean existeProducto(int idProducto) {
         boolean existe = false;
         try {

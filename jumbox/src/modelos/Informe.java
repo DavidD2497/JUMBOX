@@ -1,5 +1,6 @@
 package modelos;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
 
 public class Informe {
@@ -8,6 +9,13 @@ public class Informe {
 	public Informe(LocalDate fechaInforme) {
 		super();
 		fechaInforme=this.fechaInforme;
+=======
+public class Informe {
+	private int idInforme;
+	
+	public Informe() {
+		super();
+>>>>>>> origin/vicky
 	}
 
 	public int getIdInforme() {
@@ -26,4 +34,8 @@ public class Informe {
 		this.idInforme = idInforme;
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky

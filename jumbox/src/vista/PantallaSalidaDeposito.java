@@ -261,4 +261,8 @@ public class PantallaSalidaDeposito extends JFrame {
             });
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/vicky
