@@ -19,7 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PantallaEliminarEmpleado extends JFrame {
 
@@ -28,6 +33,8 @@ public class PantallaEliminarEmpleado extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
     private int selectedRow = -1;
+    private JTextField filtroNombre;
+    private JComboBox<String> filtroTipo;
 
     public PantallaEliminarEmpleado(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +53,40 @@ public class PantallaEliminarEmpleado extends JFrame {
         lblNewLabel.setBounds(0, 0, 796, 68);
         contentPane.add(lblNewLabel);
 
+        JLabel lblFiltroNombre = new JLabel("Filtrar por Nombre:");
+        lblFiltroNombre.setFont(new Font("Consolas", Font.BOLD, 16));
+        lblFiltroNombre.setBounds(51, 50, 184, 25);
+        contentPane.add(lblFiltroNombre);
+
+        filtroNombre = new JTextField();
+        filtroNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        filtroNombre.setBounds(51, 79, 150, 25);
+        contentPane.add(filtroNombre);
         
+        filtroNombre.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                aplicarFiltros();
+            }
+        });
+
+        JLabel lblFiltroTipo = new JLabel("Filtrar por Tipo:");
+        lblFiltroTipo.setFont(new Font("Consolas", Font.BOLD, 16));
+        lblFiltroTipo.setBounds(584, 50, 198, 25);
+        contentPane.add(lblFiltroTipo);
+
+        filtroTipo = new JComboBox<>();
+        filtroTipo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        filtroTipo.setBounds(584, 79, 150, 25);
+        contentPane.add(filtroTipo);
+        
+        cargarTipos();
+        
+        filtroTipo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                aplicarFiltros();
+            }
+        });
+
         JLabel lblError = new JLabel("");
         lblError.setFont(new Font("Consolas", Font.BOLD, 16));
         lblError.setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,7 +94,7 @@ public class PantallaEliminarEmpleado extends JFrame {
         lblError.setBounds(0, 352, 796, 14);
         lblError.setVisible(false);
         contentPane.add(lblError);
-        
+
         JLabel lblAprobado = new JLabel("");
         lblAprobado.setHorizontalAlignment(SwingConstants.CENTER);
         lblAprobado.setForeground(Color.GREEN);
@@ -62,7 +102,7 @@ public class PantallaEliminarEmpleado extends JFrame {
         lblAprobado.setBounds(0, 352, 796, 14);
         lblAprobado.setVisible(false);
         contentPane.add(lblAprobado);
-        
+
         JLabel lblSeleccionado = new JLabel("Debes seleccionar un usuario para poder eliminarlo.");
         lblSeleccionado.setHorizontalAlignment(SwingConstants.CENTER);
         lblSeleccionado.setFont(new Font("Consolas", Font.BOLD, 19));
@@ -82,7 +122,7 @@ public class PantallaEliminarEmpleado extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         scrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        scrollPane.setBounds(51, 79, 683, 113);
+        scrollPane.setBounds(51, 119, 683, 113);
         contentPane.add(scrollPane);
 
         cargarEmpleados();
@@ -97,7 +137,7 @@ public class PantallaEliminarEmpleado extends JFrame {
                 selectedRow = -1;
             }
         });
-        
+
         JButton btnEliminarEmpleado = new JButton("Eliminar");
         btnEliminarEmpleado.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEliminarEmpleado.addActionListener(new ActionListener() {
@@ -109,7 +149,7 @@ public class PantallaEliminarEmpleado extends JFrame {
                         lblAprobado.setText(respuesta);
                         lblAprobado.setVisible(true);
                         lblError.setVisible(false);
-                        selectedRow = -1; 
+                        selectedRow = -1;
                         cargarEmpleados();
                     } else {
                         lblError.setText(respuesta);
@@ -137,13 +177,47 @@ public class PantallaEliminarEmpleado extends JFrame {
             }
         });
         contentPane.add(btnVolver);
-        
     }
-    
+
     private void cargarEmpleados() {
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         List<Empleado> empleados = empleadoControlador.getAllUsers();
         tableModel.setRowCount(0);
+        for (Empleado empleado : empleados) {
+            tableModel.addRow(new Object[]{
+                empleado.getNombre(),
+                empleado.getEmail(),
+                empleadoControlador.getUserTypeByEmail(empleado.getEmail()),
+                empleado.getContraseña()
+            });
+        }
+    }
+    
+    private void cargarTipos() {
+        filtroTipo.addItem("--Todos--");
+        filtroTipo.addItem("AdminSucursal");
+        filtroTipo.addItem("Cajero");
+        filtroTipo.addItem("AdminDeposito");
+    }
+
+    private void aplicarFiltros() {
+        String nombreFiltro = filtroNombre.getText().trim();
+        String tipoFiltro = (String) filtroTipo.getSelectedItem();
+
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
+        List<Empleado> empleados = empleadoControlador.getAllUsers();
+
+        List<Empleado> empleadosFiltrados = empleados.stream()
+                .filter(e -> e.getNombre().toLowerCase().contains(nombreFiltro.toLowerCase()))
+                .filter(e -> tipoFiltro.equals("--Todos--") || empleadoControlador.getUserTypeByEmail(e.getEmail()).equals(tipoFiltro))
+                .collect(Collectors.toList());
+
+        actualizarTabla(empleadosFiltrados);
+    }
+
+    private void actualizarTabla(List<Empleado> empleados) {
+        tableModel.setRowCount(0);
+        EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         for (Empleado empleado : empleados) {
             tableModel.addRow(new Object[]{
                 empleado.getNombre(),

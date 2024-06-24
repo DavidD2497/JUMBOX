@@ -110,7 +110,7 @@ public class PantallaRegistrarVenta extends JFrame {
         lblTipo.setBounds(505, 403, 230, 29);
         contentPane.add(lblTipo);
 
-        JLabel lblContraseña = new JLabel("ID SUCURSAL");
+        JLabel lblContraseña = new JLabel("SUCURSAL");
         lblContraseña.setVerticalAlignment(SwingConstants.BOTTOM);
         lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
         lblContraseña.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -123,7 +123,7 @@ public class PantallaRegistrarVenta extends JFrame {
         inpCantidad.setBounds(51, 310, 174, 31);
         contentPane.add(inpCantidad);
 
-        String[] tiposEmpleado = {"", "Efectivo", "Debito", "Credito"};
+        String[] tiposEmpleado = {"--Seleccione un tipo de pago--", "Efectivo", "Debito", "Credito"};
         JComboBox<String> comboBoxTipo = new JComboBox<>(tiposEmpleado);
         comboBoxTipo.setFont(new Font("Tahoma", Font.PLAIN, 15));
         comboBoxTipo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));

@@ -98,7 +98,7 @@ public class PantallaRegistrarSalidaSucursal extends JFrame {
         lblNombre.setBounds(69, 270, 256, 29);
         contentPane.add(lblNombre);
 
-        JLabel lblContraseña = new JLabel("ID SUCURSAL");
+        JLabel lblContraseña = new JLabel("SUCURSAL");
         lblContraseña.setVerticalAlignment(SwingConstants.BOTTOM);
         lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
         lblContraseña.setFont(new Font("Consolas", Font.BOLD, 20));
