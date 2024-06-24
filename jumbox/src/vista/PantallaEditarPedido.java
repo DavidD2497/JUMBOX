@@ -73,7 +73,7 @@ public class PantallaEditarPedido extends JFrame {
 		detalleScrollPane = new JScrollPane(detalleTable);
 		detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-		detalleScrollPane.setBounds(46, 198, 761, 55);
+		detalleScrollPane.setBounds(46, 198, 761, 48);
 		contentPane.add(detalleScrollPane);
 
 		JButton btnVolver = new JButton("Volver");
@@ -90,7 +90,7 @@ public class PantallaEditarPedido extends JFrame {
 		lblNewLabel_2_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
-		lblNewLabel_2_1.setBounds(179, 108, 496, 40);
+		lblNewLabel_2_1.setBounds(177, 147, 496, 40);
 		contentPane.add(lblNewLabel_2_1);
 
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
@@ -99,9 +99,8 @@ public class PantallaEditarPedido extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = (int) comboBox_1.getSelectedItem();
 				if (selectedRow > 0) {
-					int idDetalle = (int) detalleTableModel.getValueAt(selectedRow, 0);
 					int nuevaCantidad = (int) comboBox_1.getSelectedItem();
-					detallePedidoControlador.updateCantidadDetallePedido(idDetalle, nuevaCantidad);
+					detallePedidoControlador.updateCantidadDetallePedido(idDetallePedido, nuevaCantidad);
 					JOptionPane.showMessageDialog(comboBox_1, "Producto Actualizado");
 					PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(mail);
 					pantallaMostrarPedido.setVisible(true);
