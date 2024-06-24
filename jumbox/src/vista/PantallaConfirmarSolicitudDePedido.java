@@ -119,19 +119,17 @@ public class PantallaConfirmarSolicitudDePedido extends JFrame {
 		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
 
+		
 		if (respuesta == JOptionPane.YES_OPTION) {
-			if (respuesta == JOptionPane.YES_OPTION) {
-				pedido.setEstado("Confirmado");
-				pedidoControlador.updatePedido(pedido);
+			pedido.setEstado("Confirmado");
+			pedidoControlador.updatePedido(pedido);
 
-				return true;
-			} else {
-				pedidoControlador.deletePedido(idPedido);
-				detallePedidoControlador.deleteDetallesByIdPedido(idPedido);
-				return false;
-			}
+			return true;
+		} else {
+			pedidoControlador.deletePedido(idPedido);
+			detallePedidoControlador.deleteDetallesByIdPedido(idPedido);
+			return false;
 		}
-		return false;
 	}
 	
 	
