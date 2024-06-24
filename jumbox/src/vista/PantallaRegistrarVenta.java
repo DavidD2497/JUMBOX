@@ -118,11 +118,18 @@ public class PantallaRegistrarVenta extends JFrame {
         lblContraseña.setFont(new Font("Consolas", Font.BOLD, 20));
         lblContraseña.setBounds(505, 319, 175, 29);
         contentPane.add(lblContraseña);
+        
+        btnMas = new JButton("Agregar");
+        btnMas.setFont(new Font("Consolas", Font.BOLD, 15));
+        btnMas.setBounds(326, 309, 98, 39);
+        btnMas.setEnabled(false);
+        contentPane.add(btnMas);
 
         inpCantidad = new JTextField();
         inpCantidad.setFont(new Font("Tahoma", Font.PLAIN, 15));
         inpCantidad.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         inpCantidad.setBounds(51, 310, 174, 31);
+        inpCantidad.setText("0");
         contentPane.add(inpCantidad);
 
         String[] tiposEmpleado = {"--Seleccione un tipo de pago--", "Efectivo", "Debito", "Credito"};
@@ -131,12 +138,6 @@ public class PantallaRegistrarVenta extends JFrame {
         comboBoxTipo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
         comboBoxTipo.setBounds(506, 443, 229, 29);
         contentPane.add(comboBoxTipo);
-
-        btnMas = new JButton("Agregar");
-        btnMas.setFont(new Font("Consolas", Font.BOLD, 15));
-        btnMas.setBounds(326, 309, 98, 39);
-        btnMas.setEnabled(false); // Inicialmente desactivado
-        contentPane.add(btnMas);
 
         comboBoxSucursal = new JComboBox<>();
         comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -236,10 +237,10 @@ public class PantallaRegistrarVenta extends JFrame {
                             DetalleVenta nuevoDetalle = new DetalleVenta(idProducto, idVenta, precioProducto, cantidad);
                             detalles.add(nuevoDetalle);
                         }
-                        btnMas.setEnabled(false); // Desactiva nuevamente después de usar
-                        btnMas.setBackground(UIManager.getColor("Button.background")); // Restaura color por defecto
+                        inpCantidad.setText("0");
+                        btnMas.setEnabled(false);
+                        btnMas.setBackground(UIManager.getColor("Button.background"));
                         actualizarTablaDetalles();
-                        inpCantidad.setText("");
                         actualizarMontoTotal();
                         mostrarMensajeExito("Producto agregado correctamente.");
                     } catch (NumberFormatException ex) {
@@ -254,7 +255,7 @@ public class PantallaRegistrarVenta extends JFrame {
         inpCantidad.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                checkInputs(); // Verifica al ingresar cualquier tecla
+                checkInputs(); 
             }
         });
 
@@ -262,11 +263,11 @@ public class PantallaRegistrarVenta extends JFrame {
         btnEliminarDetalle.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEliminarDetalle.setBounds(431, 511, 86, 39);
         contentPane.add(btnEliminarDetalle);
-        btnEliminarDetalle.setEnabled(false); // Inicialmente desactivado
+        btnEliminarDetalle.setEnabled(false);
 
         btnEliminarDetalle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Lógica para eliminar el detalle seleccionado
+                
                 int selectedDetalleIndex = detalleTable.getSelectedRow();
                 if (selectedDetalleIndex != -1) {
                     detalles.remove(selectedDetalleIndex);
@@ -282,10 +283,10 @@ public class PantallaRegistrarVenta extends JFrame {
         detalleTable.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting() && detalleTable.getSelectedRow() != -1) {
                 btnEliminarDetalle.setEnabled(true);
-                btnEliminarDetalle.setBackground(Color.RED); // Cambia a color rojo cuando está habilitado
+                btnEliminarDetalle.setBackground(Color.RED);
             } else {
                 btnEliminarDetalle.setEnabled(false);
-                btnEliminarDetalle.setBackground(UIManager.getColor("Button.background")); // Restaura color por defecto cuando está deshabilitado
+                btnEliminarDetalle.setBackground(UIManager.getColor("Button.background"));
             }
         });
 
@@ -338,12 +339,52 @@ public class PantallaRegistrarVenta extends JFrame {
         lblInformativo.setBounds(52, 363, 350, 29);
         contentPane.add(lblInformativo);
 
-        JLabel lblNombre_1 = new JLabel("CANTIDAD DEL PRODUCTO");
+        JLabel lblNombre_1 = new JLabel("Ingresar Cantidad");
         lblNombre_1.setVerticalAlignment(SwingConstants.BOTTOM);
         lblNombre_1.setHorizontalAlignment(SwingConstants.LEFT);
         lblNombre_1.setFont(new Font("Consolas", Font.BOLD, 20));
         lblNombre_1.setBounds(52, 280, 256, 29);
         contentPane.add(lblNombre_1);
+        
+        JButton btnSumar = new JButton("+");
+        btnSumar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        btnSumar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int valorActual = Integer.parseInt(inpCantidad.getText());
+                    int nuevoValor = valorActual + 1;                  
+                    inpCantidad.setText(String.valueOf(nuevoValor));
+              
+                    checkInputs();
+                    
+                } catch (NumberFormatException ex) {
+                	mostrarMensajeError("Solo se pueden sumar enteros");
+                    inpCantidad.setText("0");
+                }
+            }
+        });
+        btnSumar.setBounds(51, 343, 86, 14);
+        contentPane.add(btnSumar);
+        
+        JButton btnRestar = new JButton("-");
+        btnRestar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        btnRestar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int valorActual = Integer.parseInt(inpCantidad.getText());
+                    int nuevoValor = valorActual - 1;                  
+                    inpCantidad.setText(String.valueOf(nuevoValor));
+              
+                    checkInputs();
+                    
+                } catch (NumberFormatException ex) {
+                	mostrarMensajeError("Solo se pueden restar enteros");
+                    inpCantidad.setText("0");
+                }
+            }
+        });
+        btnRestar.setBounds(139, 343, 86, 14);
+        contentPane.add(btnRestar);
 
         actualizarMontoTotal();
     }
@@ -442,19 +483,22 @@ public class PantallaRegistrarVenta extends JFrame {
     }
     
     private void checkInputs() {
+    	
+    	
+    	
         if (selectedRow != -1 && esNumeroValido(inpCantidad.getText().trim())) {
-            btnMas.setEnabled(true); // Activa el botón
-            btnMas.setBackground(Color.GREEN); // Cambia color a verde
+            btnMas.setEnabled(true);
+            btnMas.setBackground(Color.GREEN);
         } else {
-            btnMas.setEnabled(false); // Desactiva el botón
-            btnMas.setBackground(UIManager.getColor("Button.background")); // Restaura color por defecto
+            btnMas.setEnabled(false);
+            btnMas.setBackground(UIManager.getColor("Button.background"));
         }
     }
     
     private boolean esNumeroValido(String str) {
         try {
             int num = Integer.parseInt(str);
-            return num > 0; // Asegura que sea un número positivo
+            return num > 0;
         } catch (NumberFormatException e) {
             return false;
         }
