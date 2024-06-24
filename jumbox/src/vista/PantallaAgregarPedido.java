@@ -69,7 +69,7 @@ public class PantallaAgregarPedido extends JFrame {
 		DetalleInventarioControlador detalleControlador = new DetalleInventarioControlador();
 		InventarioSucursalControlador inventarioControlador = new InventarioSucursalControlador();
 		Empleado empleado = empleadoControlador.getUserByEmail(mail);
-
+	
 		// Reemplazar contentPane por una instancia de ImagePanel con la ruta correcta
 		contentPane = new ImagePanel("/resources/supermercado.jpg");
 		contentPane.setToolTipText("");
@@ -184,16 +184,11 @@ public class PantallaAgregarPedido extends JFrame {
 		btnAgregarPedido.setBounds(227, 454, 416, 40);
 		btnAgregarPedido.setFont(new Font("Consolas", Font.BOLD, 20));
 		contentPane.add(btnAgregarPedido);
-		// btnAgregarPedido.setEnabled(false);
-		JLabel lblNewLabel = new JLabel("Sucursal");
-		lblNewLabel.setBounds(202, 71, 183, 48);
-		lblNewLabel.setFont(new Font("Consolas", Font.BOLD, 22));
-		contentPane.add(lblNewLabel);
 
 		comboBoxSucursal = new JComboBox<>();
 		comboBoxSucursal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		comboBoxSucursal.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
-		comboBoxSucursal.setBounds(302, 78, 230, 31);
+		comboBoxSucursal.setBounds(202, 78, 330, 31);
 		contentPane.add(comboBoxSucursal);
 
 		cargarSucursales(comboBoxSucursal);
@@ -297,25 +292,45 @@ public class PantallaAgregarPedido extends JFrame {
 		filtroNombre = new JTextField();
 		filtroNombre.setText("Buscar Por Nombre");
 		filtroNombre.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		filtroNombre.setBounds(10, 81, 182, 25);
+		filtroNombre.setBounds(10, 79, 182, 30);
 		contentPane.add(filtroNombre);
-		filtroNombre.addFocusListener(new FocusAdapter() {
-		    @Override
-		    public void focusGained(FocusEvent e) {
-		        if (filtroNombre.getText().equals("Buscar Por Nombre")) {
-		            filtroNombre.setText("");
-		            filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al obtener el foco
-		        }
-		    }
-
-		    @Override
-		    public void focusLost(FocusEvent e) {
-		        if (filtroNombre.getText().isEmpty()) {
-		            filtroNombre.setText("Buscar Por Nombre");
-		            filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al perder el foco
-		        }
-		    }
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int hola=(int)comboBoxSucursal_1.getSelectedItem()+1;
+				comboBoxSucursal_1.setSelectedItem(hola);
+			}
 		});
+		btnNewButton.setIcon(new ImageIcon(PantallaAgregarPedido.class.getResource("/resources/Imagen2.png")));
+		btnNewButton.setBounds(208, 358, 41, 26);
+		contentPane.add(btnNewButton);
+		filtroNombre.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (filtroNombre.getText().equals("Buscar Por Nombre")) {
+					filtroNombre.setText("");
+					filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al obtener el foco
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (filtroNombre.getText().isEmpty()) {
+					filtroNombre.setText("Buscar Por Nombre");
+					filtroNombre.setForeground(Color.GRAY); // Cambia el color del texto al perder el foco
+				}
+			}
+		});
+		JDialog dialogo = new JDialog(this, "Ventana de Diálogo", true);
+		dialogo.setSize(200, 150);
+		dialogo.setLocationRelativeTo(this); // Centrar el diálogo respecto a la ventana principal
+
+		JLabel etiqueta = new JLabel("Este es un JDialog de ejemplo");
+		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
+		dialogo.getContentPane().add(etiqueta);
+
+		dialogo.setVisible(true); // Mostrar el diálogo
 
 		filtroNombre.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
@@ -328,6 +343,19 @@ public class PantallaAgregarPedido extends JFrame {
 			}
 		});
 		// ...
+	}
+
+	private void mostrarDialogo() {
+		// Crear un JDialog con el JFrame como padre
+		JDialog dialogo = new JDialog(this, "Ventana de Diálogo", true);
+		dialogo.setSize(200, 150);
+		dialogo.setLocationRelativeTo(this); // Centrar el diálogo respecto a la ventana principal
+
+		JLabel etiqueta = new JLabel("Este es un JDialog de ejemplo");
+		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
+		dialogo.getContentPane().add(etiqueta);
+
+		dialogo.setVisible(true); // Mostrar el diálogo
 	}
 
 	private void aplicarFiltros(String sucursal) {
