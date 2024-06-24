@@ -108,7 +108,7 @@ public class PantallaInforme extends JFrame {
         detalleScrollPane = new JScrollPane(detalleTable);
         detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
         detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-        detalleScrollPane.setBounds(51, 284, 761, 167);
+        detalleScrollPane.setBounds(51, 270, 761, 167);
         detalleScrollPane.setVisible(false); // Inicialmente invisible
         contentPane.add(detalleScrollPane);
 
@@ -171,33 +171,16 @@ public class PantallaInforme extends JFrame {
             dispose();
         });
 
-        // Botones para filtrar tabla de pedidos
-        JButton btnFiltrarPedidoAbc = new JButton("Filtrar Pedido (ABC)");
-        btnFiltrarPedidoAbc.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnFiltrarPedidoAbc.setBounds(51, 215, 200, 31);
-        contentPane.add(btnFiltrarPedidoAbc);
-
-        JButton btnFiltrarPedidoNum = new JButton("Filtrar Pedido (Num)");
-        btnFiltrarPedidoNum.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnFiltrarPedidoNum.setBounds(300, 215, 200, 31);
-        contentPane.add(btnFiltrarPedidoNum);
-
         // Botones para filtrar tabla de detalles
         JButton btnFiltrarDetalleAbc = new JButton("Filtrar Detalle (ABC)");
         btnFiltrarDetalleAbc.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnFiltrarDetalleAbc.setBounds(51, 450, 200, 31);
+        btnFiltrarDetalleAbc.setBounds(51, 448, 194, 31);
         contentPane.add(btnFiltrarDetalleAbc);
 
         JButton btnFiltrarDetalleNum = new JButton("Filtrar Detalle (Num)");
         btnFiltrarDetalleNum.setFont(new Font("Consolas", Font.BOLD, 13));
-        btnFiltrarDetalleNum.setBounds(300, 450, 200, 31);
+        btnFiltrarDetalleNum.setBounds(51, 482, 194, 31);
         contentPane.add(btnFiltrarDetalleNum);
-        
-        
-
-        // ActionListeners para los botones de filtrado
-        btnFiltrarPedidoAbc.addActionListener(e -> filtrarPedidoTablaABC());
-        btnFiltrarPedidoNum.addActionListener(e -> filtrarPedidoTablaNum());
         btnFiltrarDetalleAbc.addActionListener(e -> filtrarDetalleTablaABC());
         btnFiltrarDetalleNum.addActionListener(e -> filtrarDetalleTablaNum());
     }
