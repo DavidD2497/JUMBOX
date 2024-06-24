@@ -39,6 +39,8 @@ public class PantallaRegistrarVenta extends JFrame {
     private JComboBox<String> comboBoxSucursal;
     private JTextField filtroNombre;
     private JComboBox<String> filtroCategoria;
+    private JButton btnMas;
+    private JButton btnEliminarDetalle;
 
     public PantallaRegistrarVenta(String mail) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,9 +132,10 @@ public class PantallaRegistrarVenta extends JFrame {
         comboBoxTipo.setBounds(506, 443, 229, 29);
         contentPane.add(comboBoxTipo);
 
-        JButton btnMas = new JButton("Agregar");
+        btnMas = new JButton("Agregar");
         btnMas.setFont(new Font("Consolas", Font.BOLD, 15));
         btnMas.setBounds(326, 309, 98, 39);
+        btnMas.setEnabled(false); // Inicialmente desactivado
         contentPane.add(btnMas);
 
         comboBoxSucursal = new JComboBox<>();
@@ -233,7 +236,8 @@ public class PantallaRegistrarVenta extends JFrame {
                             DetalleVenta nuevoDetalle = new DetalleVenta(idProducto, idVenta, precioProducto, cantidad);
                             detalles.add(nuevoDetalle);
                         }
-
+                        btnMas.setEnabled(false); // Desactiva nuevamente después de usar
+                        btnMas.setBackground(UIManager.getColor("Button.background")); // Restaura color por defecto
                         actualizarTablaDetalles();
                         inpCantidad.setText("");
                         actualizarMontoTotal();
@@ -246,14 +250,23 @@ public class PantallaRegistrarVenta extends JFrame {
                 }
             }
         });
+        
+        inpCantidad.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                checkInputs(); // Verifica al ingresar cualquier tecla
+            }
+        });
 
-        JButton btnEliminarDetalle = new JButton("Borrar");
+        btnEliminarDetalle = new JButton("Borrar");
         btnEliminarDetalle.setFont(new Font("Consolas", Font.BOLD, 15));
         btnEliminarDetalle.setBounds(431, 511, 86, 39);
         contentPane.add(btnEliminarDetalle);
+        btnEliminarDetalle.setEnabled(false); // Inicialmente desactivado
 
         btnEliminarDetalle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Lógica para eliminar el detalle seleccionado
                 int selectedDetalleIndex = detalleTable.getSelectedRow();
                 if (selectedDetalleIndex != -1) {
                     detalles.remove(selectedDetalleIndex);
@@ -263,6 +276,16 @@ public class PantallaRegistrarVenta extends JFrame {
                 } else {
                     mostrarMensajeError("Por favor, seleccione un detalle de venta.");
                 }
+            }
+        });
+        
+        detalleTable.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting() && detalleTable.getSelectedRow() != -1) {
+                btnEliminarDetalle.setEnabled(true);
+                btnEliminarDetalle.setBackground(Color.RED); // Cambia a color rojo cuando está habilitado
+            } else {
+                btnEliminarDetalle.setEnabled(false);
+                btnEliminarDetalle.setBackground(UIManager.getColor("Button.background")); // Restaura color por defecto cuando está deshabilitado
             }
         });
 
@@ -417,7 +440,23 @@ public class PantallaRegistrarVenta extends JFrame {
             });
         }
     }
+    
+    private void checkInputs() {
+        if (selectedRow != -1 && esNumeroValido(inpCantidad.getText().trim())) {
+            btnMas.setEnabled(true); // Activa el botón
+            btnMas.setBackground(Color.GREEN); // Cambia color a verde
+        } else {
+            btnMas.setEnabled(false); // Desactiva el botón
+            btnMas.setBackground(UIManager.getColor("Button.background")); // Restaura color por defecto
+        }
+    }
+    
+    private boolean esNumeroValido(String str) {
+        try {
+            int num = Integer.parseInt(str);
+            return num > 0; // Asegura que sea un número positivo
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
-
-
-
