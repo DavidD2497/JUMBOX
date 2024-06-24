@@ -92,19 +92,27 @@ public class PantallaEditarPedido extends JFrame {
 		lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
 		lblNewLabel_2_1.setBounds(177, 147, 496, 40);
 		contentPane.add(lblNewLabel_2_1);
-
+		JLabel lblNewLabel = new JLabel("SE EDITO LA CANTIDAD");
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
-
+		Timer timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	lblNewLabel.setVisible(false);
+            	
+                
+            }
+        });
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = (int) comboBox_1.getSelectedItem();
 				if (selectedRow > 0) {
 					int nuevaCantidad = (int) comboBox_1.getSelectedItem();
+					mostrarMensajaso(lblNewLabel,timer);
 					detallePedidoControlador.updateCantidadDetallePedido(idDetallePedido, nuevaCantidad);
 					JOptionPane.showMessageDialog(comboBox_1, "Producto Actualizado");
-					PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(mail);
-					pantallaMostrarPedido.setVisible(true);
-					dispose();
+					//PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(mail);
+					//pantallaMostrarPedido.setVisible(true);
+					//dispose();
 				}
 			}
 		});
@@ -122,6 +130,15 @@ public class PantallaEditarPedido extends JFrame {
 		lblIngresarNuevaCantidad.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblIngresarNuevaCantidad.setBounds(311, 302, 404, 63);
 		contentPane.add(lblIngresarNuevaCantidad);
+		
+		
+		lblNewLabel.setVisible(false);
+		
+		lblNewLabel.setBackground(new Color(0, 64, 0));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setIcon(new ImageIcon(PantallaEditarPedido.class.getResource("/resources/Imaagen1.png")));
+		lblNewLabel.setBounds(688, 461, 190, 63);
+		contentPane.add(lblNewLabel);
 
 		btnVolver.addActionListener(e -> {
 			PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(mail);
@@ -131,7 +148,12 @@ public class PantallaEditarPedido extends JFrame {
 
 		cargarDetallePedido(idDetallePedido);
 	}
-
+	private void mostrarMensajaso(JLabel mensaje,Timer timer) {
+	mensaje.setVisible(false);
+	mensaje.setVisible(true);
+	timer.setRepeats(false);
+	timer.start();}
+	
 	private void cargarDetallePedido(int idDetallePedido) {
 		JOptionPane.showMessageDialog(detalleScrollPane, idDetallePedido);
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
