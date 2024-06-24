@@ -78,7 +78,7 @@ public class DescuentoControlador implements DescuentoRepository {
 	public void updateDescuento(Descuento descuento) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE `descuento` SET `porcentaje` = ? WHERE `id_descuento` = ?");
+					.prepareStatement("UPDATE `descuento` SET `porcentaje_descuento` = ? WHERE `id_descuento` = ?");
 			statement.setDouble(1, descuento.getPorcentajeDesc());
 			statement.setInt(2, descuento.getIdDescuento());
 

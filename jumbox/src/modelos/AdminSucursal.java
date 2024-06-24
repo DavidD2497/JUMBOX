@@ -142,7 +142,7 @@ public class AdminSucursal extends Empleado {
 	}
 
 	public String editarDescuento(int indiceDescuento, int nuevoPorcentaje) {
-		if (indiceDescuento < 0 || indiceDescuento >= descuentos.size()) {
+		if (indiceDescuento < 0 && indiceDescuento >= descuentos.size() && nuevoPorcentaje > 100) {
 			JOptionPane.showMessageDialog(null, "Porcentaje inválido");
 			return "El descuento no es válido";
 		}
