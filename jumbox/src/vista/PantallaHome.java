@@ -1,7 +1,7 @@
 package vista;
 
 import modelos.Empleado;
-
+import vista.PantallaAdminDeposito;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -87,6 +87,12 @@ public class PantallaHome extends JFrame {
 			btnFuncionPrincipal.setText("Funciones Administrador/a de Depósito" );
 		}
         contentPane.add(btnFuncionPrincipal);
+        
+        btnFuncionPrincipal.addActionListener(e -> {
+            PantallaAdminDeposito pantallaAdminDeposito = new PantallaAdminDeposito(mail);
+            pantallaAdminDeposito.setVisible(true);
+            dispose();
+        });
         
         JButton btnCerrarSesion = new JButton("Cerrar Sesión");
         btnCerrarSesion.addActionListener(new ActionListener() {

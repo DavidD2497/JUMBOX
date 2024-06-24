@@ -47,7 +47,7 @@ public class PedidoControlador implements PedidoRepository {
 	public Pedido getPedidoById(int id) {
 		Pedido pedido = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE id_pedido = ?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM pedido WHERE codigo_pedido = ?");
 			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 
@@ -109,7 +109,7 @@ public class PedidoControlador implements PedidoRepository {
 		int ultimoIdPedido = -1;
 
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT MAX(id_pedido) FROM pedido");
+			PreparedStatement statement = connection.prepareStatement("SELECT MAX(codigo_pedido) FROM pedido");
 			ResultSet resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
@@ -126,7 +126,7 @@ public class PedidoControlador implements PedidoRepository {
 	public void actualizarEstadoPedido(int codigoPedido, String estado) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigoPedido = ?");
+					.prepareStatement("UPDATE pedidos SET estado = ? WHERE codigo_pedido = ?");
 			statement.setString(1, estado);
 			statement.setInt(2, codigoPedido);
 
@@ -143,7 +143,7 @@ public class PedidoControlador implements PedidoRepository {
 	public void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega) {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE id_pedido = ?");
+					.prepareStatement("UPDATE pedido SET fecha_entrega = ? WHERE codigo_pedido = ?");
 			statement.setDate(1, java.sql.Date.valueOf(nuevaFechaEntrega));
 			statement.setInt(2, codigoPedido);
 

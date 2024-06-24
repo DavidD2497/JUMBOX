@@ -50,39 +50,19 @@ public class PantallaConfirmarSolicitudDePedido extends JFrame {
 		textAreaPedido.setText(mensaje.toString());
 
 		JButton btnConfirmar = new JButton("CONFIRMAR");
-		btnConfirmar.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnConfirmar.setFont(new Font("Consolas", Font.BOLD, 15));
 		btnConfirmar.setBounds(250, 313, 200, 30);
 		contentPane.add(btnConfirmar);
 
 		JButton btnRechazar = new JButton("RECHAZAR Y ELIMINAR");
-		btnRechazar.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnRechazar.setFont(new Font("Consolas", Font.BOLD, 15));
 		btnRechazar.setBounds(25, 313, 215, 30);
 		contentPane.add(btnRechazar);
 
 		JButton btnVolver = new JButton("VOLVER");
-		btnVolver.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnVolver.setFont(new Font("Consolas", Font.BOLD, 15));
 		btnVolver.setBounds(460, 313, 200, 30);
 		contentPane.add(btnVolver);
-
-		btnConfirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" },
-						null);
-				if (respuesta == JOptionPane.YES_OPTION) {
-					boolean confirmacion = SolicitudDePedido(idPedido);
-					if (confirmacion) {
-						JOptionPane.showMessageDialog(null, "El pedido ha sido aceptado");
-					} else {
-						JOptionPane.showMessageDialog(null, "El pedido no pudo ser aceptado");
-					}
-					dispose(); // Cierra la ventana actual después de confirmar
-				} else {
-					JOptionPane.showMessageDialog(null, "El pedido ha sido rechazado");
-					dispose(); // Cierra la ventana actual después de rechazar
-				}
-			}
-		});
 		
 		btnRechazar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -130,7 +110,7 @@ public class PantallaConfirmarSolicitudDePedido extends JFrame {
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		Pedido pedido = pedidoControlador.getPedidoById(idPedido);
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
-		java.util.List<DetallePedido> detallesPedido = detallePedidoControlador.getDetallePedidoByIdPedido(idPedido);
+		java.util.List<DetallePedido> detallePedido = detallePedidoControlador.getDetallePedidoByIdPedido(idPedido);
 
 		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
