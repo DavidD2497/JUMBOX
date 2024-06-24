@@ -29,7 +29,8 @@ public class PedidoControlador implements PedidoRepository {
                 int codigoPedido = resultSet.getInt("codigo_pedido");
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
                 int idInventario = resultSet.getInt("id_inventario");
-                Pedido pedido = new Pedido(fechaEntrega, idInventario);
+                String estado = resultSet.getString("estado");
+                Pedido pedido = new Pedido(fechaEntrega, idInventario,estado);
                 pedido.setCodigoPedido(codigoPedido);
                 pedidos.add(pedido);
             }
@@ -50,7 +51,8 @@ public class PedidoControlador implements PedidoRepository {
             if (resultSet.next()) {
                 LocalDate fechaEntrega = resultSet.getDate("fecha_entrega").toLocalDate();
                 int idInventario = resultSet.getInt("id_inventario");
-                pedido = new Pedido(fechaEntrega, idInventario);
+                String estado = resultSet.getString("estado");
+                pedido = new Pedido(fechaEntrega, idInventario,estado);
                 pedido.setCodigoPedido(id);			
             }
         } catch (SQLException e) {

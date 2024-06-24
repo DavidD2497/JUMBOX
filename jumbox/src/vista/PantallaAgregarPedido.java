@@ -225,7 +225,6 @@ public class PantallaAgregarPedido extends JFrame {
 		}
 
 		comboBoxSucursal_1.addActionListener(e -> {
-			int selectedRow = tablaInventarioSucursal.getSelectedRow();
 			if (comboBoxSucursal_1.getSelectedIndex() > 0) {
 				selectedItem1 = (int) comboBoxSucursal_1.getSelectedItem();
 				if (tablaInventarioSucursal.getSelectedRow() != -1) {

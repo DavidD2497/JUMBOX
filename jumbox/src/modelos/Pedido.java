@@ -7,11 +7,21 @@ public class Pedido {
 	private int codigoPedido;
 	private LocalDate fechaEntrega;
 	private int idInventario;
+	private String estado="Pendiente";
 
-	public Pedido(LocalDate fechaEntrega, int idInventario) {
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Pedido(LocalDate fechaEntrega, int idInventario, String estado) {
 		super();
 		this.fechaEntrega = fechaEntrega;
 		this.idInventario = idInventario;
+		this.estado=estado;
 	}
 
 	public int getIdInventario() {

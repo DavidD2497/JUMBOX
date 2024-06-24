@@ -101,7 +101,7 @@ public class AdminSucursal extends Empleado {
 		// return false;
 		// }
 		PedidoControlador pedidoControlador = new PedidoControlador();
-		Pedido nuevoPedido = new Pedido(fechaEntrega, 2);
+		Pedido nuevoPedido = new Pedido(fechaEntrega, 2,"Pendiente");
 		pedidoControlador.addPedido(nuevoPedido);
 		int idPedido = pedidoControlador.obtenerUltimoIdPedido();
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();

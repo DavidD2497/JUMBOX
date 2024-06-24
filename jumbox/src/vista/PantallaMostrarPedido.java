@@ -12,9 +12,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.List;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 public class PantallaMostrarPedido extends JFrame {
@@ -29,6 +32,8 @@ public class PantallaMostrarPedido extends JFrame {
 	private JTable detalleTable;
 	private JScrollPane detalleScrollPane;
 	private JScrollPane pedidoScrollPane;
+	private TableRowSorter<DefaultTableModel> sorterPedido;
+	private TableRowSorter<DefaultTableModel> sorterDetalle;
 
 	/**
 	 * Lanzar la aplicación.
@@ -51,6 +56,8 @@ public class PantallaMostrarPedido extends JFrame {
 	 */
 	public PantallaMostrarPedido(String mail) {
 		JLabel lblNewLabel_2_1 = new JLabel("Productos Solicitados");
+		JButton btnEliminar = new JButton("Eliminar");
+		JButton btnEliminar_1 = new JButton("Eliminar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 894, 563);
 		EmpleadoControlador empleadoControlador = new EmpleadoControlador();
@@ -64,27 +71,21 @@ public class PantallaMostrarPedido extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel_2 = new JLabel("Pedidos");
-		lblNewLabel_2.setBounds(185, 11, 496, 40);
-		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Consolas", Font.BOLD, 28));
-		contentPane.add(lblNewLabel_2);
-
-		pedidoTableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Id Pedido", "Fecha de Solicitud" });
+		pedidoTableModel = new DefaultTableModel(new Object[][] {},
+				new String[] { "Id Pedido", "Fecha de Solicitud", "Estado" });
 		cargarPedidos();
+
 		JLabel lblNewLabel_3 = new JLabel("Detalle del Pedido");
 		pedidoTable = new JTable(pedidoTableModel);
 		pedidoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		pedidoTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		pedidoTable.getSelectionModel().addListSelectionListener(event -> {
 			if (!event.getValueIsAdjusting()) {
-
 				int selectedRow = pedidoTable.getSelectedRow();
 				if (selectedRow != -1) {
 					int idPedido = (int) pedidoTableModel.getValueAt(selectedRow, 0);
 					cargarDetallesPedido(idPedido);
-					detalleScrollPane.setVisible(true);
+					btnEliminar.setEnabled(true);
 					lblNewLabel_2_1.setVisible(true);
 				}
 			}
@@ -93,7 +94,7 @@ public class PantallaMostrarPedido extends JFrame {
 		pedidoScrollPane = new JScrollPane(pedidoTable);
 		pedidoScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		pedidoScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-		pedidoScrollPane.setBounds(51, 62, 761, 149);
+		pedidoScrollPane.setBounds(51, 50, 761, 149);
 		contentPane.add(pedidoScrollPane);
 
 		detalleTableModel = new DefaultTableModel(new Object[][] {},
@@ -106,58 +107,98 @@ public class PantallaMostrarPedido extends JFrame {
 		detalleScrollPane = new JScrollPane(detalleTable);
 		detalleScrollPane.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		detalleScrollPane.setFont(new Font("Consolas", Font.PLAIN, 15));
-		detalleScrollPane.setBounds(51, 284, 761, 167);
-		detalleScrollPane.setVisible(false);// Inicialmente invisible
+		detalleScrollPane.setBounds(51, 297, 761, 132);
+		detalleScrollPane.setVisible(true);// Inicialmente invisible
 		contentPane.add(detalleScrollPane);
 
-		JButton btnVolver = new JButton("Volver");
+		detalleTable.getSelectionModel().addListSelectionListener(event -> {
+			if (!event.getValueIsAdjusting()) {
+				int selectedRow = detalleTable.getSelectedRow();
+				if (selectedRow != -1) {
+					int idPedido = (int) detalleTableModel.getValueAt(selectedRow, 0);
+					btnEliminar_1.setEnabled(true);
+				}
+			}
+		});
+		JButton btnVolver = new JButton("");
+		btnVolver.setBackground(null);
+		JFrame frame = new JFrame("Botón Transparente");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(400, 300);
+		frame.getContentPane().setLayout(new FlowLayout());
+
+		JButton button = new JButton("Botón Transparente");
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setFocusPainted(false);
+		button.setOpaque(false);
+
+		frame.getContentPane().add(button);
+		frame.setVisible(true);
+		btnVolver.setIcon(new ImageIcon(PantallaMostrarPedido.class.getResource("/resources/Image0n1.png")));
 		btnVolver.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnVolver.setBounds(0, 0, 99, 31);
+		btnVolver.setBounds(0, 0, 49, 31);
 		contentPane.add(btnVolver);
 
 		lblNewLabel_2_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2_1.setFont(new Font("Consolas", Font.BOLD, 28));
-		lblNewLabel_2_1.setBounds(185, 233, 496, 40);
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 28));
+		lblNewLabel_2_1.setBounds(192, 249, 496, 40);
 		lblNewLabel_2_1.setVisible(false);
 		contentPane.add(lblNewLabel_2_1);
 
-		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PedidoControlador pedidoControlador = new PedidoControlador();
+				DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
+				int selectedRow = pedidoTable.getSelectedRow();
+				int idPedido = (int) pedidoTableModel.getValueAt(selectedRow, 0);
+				int i=0;
+				List<Pedido> pedidos = pedidoControlador.getAllPedidos();
+				pedidos.remove(idPedido+1);
+				for (Pedido pedido : pedidos) {i++;
+					pedidoControlador.getPedidoById(pedido.getCodigoPedido()).setCodigoPedido(i);
+					i++;
+				}
+				detallePedidoControlador.deleteDetallesByIdPedido(idPedido);
+				pedidoControlador.deletePedido(idPedido);
+
 			}
 		});
+
 		btnEliminar.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnEliminar.setBounds(557, 482, 99, 31);
+		btnEliminar.setBounds(369, 207, 150, 31);
 		contentPane.add(btnEliminar);
 
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(btnEditar, "Hola, se borro todo capo");
+		// Inicializar el TableRowSorter para la tabla de pedidos
+		sorterPedido = new TableRowSorter<>(pedidoTableModel);
+		pedidoTable.setRowSorter(sorterPedido);
 
-			}
-		});
-		btnEditar.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnEditar.setBounds(185, 482, 99, 31);
+		// Inicializar el TableRowSorter para la tabla de detalles
+		sorterDetalle = new TableRowSorter<>(detalleTableModel);
+		detalleTable.setRowSorter(sorterDetalle);
+
+		JButton btnAgregaPedido = new JButton("Agregar Pedido");
+		btnAgregaPedido.setFont(new Font("Consolas", Font.BOLD, 18));
+		btnAgregaPedido.setBounds(449, 481, 270, 31);
+		contentPane.add(btnAgregaPedido);
+
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.setFont(new Font("Consolas", Font.BOLD, 18));
+		btnEditar.setBounds(166, 482, 273, 31);
 		contentPane.add(btnEditar);
 
-		JButton btnAgregarPedido = new JButton("Agregar Pedido");
-		btnAgregarPedido.setFont(new Font("Consolas", Font.BOLD, 13));
-		btnAgregarPedido.setBounds(319, 482, 214, 31);
-		contentPane.add(btnAgregarPedido);
+		JLabel lblNewLabel = new JLabel("Pedidos");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setBounds(369, 12, 223, 39);
+		contentPane.add(lblNewLabel);
 
-		btnAgregarPedido.addActionListener(e -> {
-			PantallaAgregarPedido pantallaAgregarPedido = new PantallaAgregarPedido(empleado.getEmail());
-			pantallaAgregarPedido.setVisible(true);
-			dispose();
-			
-			
-			
-		//	PantallaAgregarPedido pantallaAgregarPedido = new PantallaAgregarPedido(mail);
-			//pantallaAgregarPedido.setVisible(true);
-		//	dispose();
-		});
+		btnEliminar_1.setFont(new Font("Consolas", Font.BOLD, 13));
+		btnEliminar_1.setEnabled(false);
+		btnEliminar_1.setBounds(369, 439, 150, 31);
+		contentPane.add(btnEliminar_1);
+
 		btnVolver.addActionListener(e -> {
 			PantallaPedido pantallaPedido = new PantallaPedido(mail);
 			pantallaPedido.setVisible(true);
@@ -166,38 +207,24 @@ public class PantallaMostrarPedido extends JFrame {
 	}
 
 	private void cargarPedidos() {
+		pedidoTableModel.setRowCount(0);
 		PedidoControlador pedidoControlador = new PedidoControlador();
 		List<Pedido> pedidos = pedidoControlador.getAllPedidos();
-		pedidoTableModel.setRowCount(0);
 		for (Pedido pedido : pedidos) {
-			pedidoTableModel.addRow(new Object[] { pedido.getCodigoPedido(), pedido.getFechaEntrega() });
+			pedidoTableModel
+					.addRow(new Object[] { pedido.getCodigoPedido(), pedido.getFechaEntrega(), pedido.getEstado() });
 		}
 	}
 
 	private void cargarDetallesPedido(int idPedido) {
+		detalleTableModel.setRowCount(0);
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
 		List<DetallePedido> detalles = detallePedidoControlador.getAllDetallePedidosByIdPedido(idPedido);
 		ProductoControlador productoControlador = new ProductoControlador();
-		detalleTableModel.setRowCount(0);
 		for (DetallePedido detalle : detalles) {
 			detalleTableModel.addRow(new Object[] { detalle.getIdProducto(),
 					productoControlador.getProductoById(detalle.getIdProducto()).getNombreProducto(),
-					detalle.getCantidad() + " unidades" });
+					detalle.getCantidad() });
 		}
-		this.ajustarAlturaDetalleTable();
-	}
-
-	private void ajustarAlturaPedidoTable() {
-		int rowCount = pedidoTableModel.getRowCount();
-		int rowHeight = pedidoTable.getRowHeight();
-		int tableHeight = rowCount * rowHeight + pedidoTable.getTableHeader().getHeight();
-		pedidoScrollPane.setBounds(51, 62, 761, tableHeight + 20); // Ajustar la altura de la tabla de pedidos
-	}
-
-	private void ajustarAlturaDetalleTable() {
-		int rowCount = detalleTableModel.getRowCount();
-		int rowHeight = detalleTable.getRowHeight();
-		int tableHeight = rowCount * rowHeight;
-		detalleScrollPane.setBounds(51, 273, 761, tableHeight + 22); // 24 es para el header
 	}
 }
