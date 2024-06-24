@@ -105,15 +105,15 @@ public class PantallaEliminarInforme extends JFrame {
         contentPane.add(detalleScrollPane);
 
         lblMensajeEliminarDetalles = new JLabel("");
-        lblMensajeEliminarDetalles.setForeground(Color.GREEN);
+        lblMensajeEliminarDetalles.setForeground(new Color(0, 128, 0));
         lblMensajeEliminarDetalles.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        lblMensajeEliminarDetalles.setBounds(51, 462, 400, 20);
+        lblMensajeEliminarDetalles.setBounds(244, 462, 400, 20);
         contentPane.add(lblMensajeEliminarDetalles);
 
         lblMensajeEliminarInforme = new JLabel("");
-        lblMensajeEliminarInforme.setForeground(Color.GREEN);
+        lblMensajeEliminarInforme.setForeground(new Color(255, 0, 0));
         lblMensajeEliminarInforme.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        lblMensajeEliminarInforme.setBounds(461, 462, 400, 20);
+        lblMensajeEliminarInforme.setBounds(244, 462, 400, 20);
         contentPane.add(lblMensajeEliminarInforme);
 
         JButton btnVolver = new JButton("Volver");
@@ -122,8 +122,8 @@ public class PantallaEliminarInforme extends JFrame {
         contentPane.add(btnVolver);
 
         btnVolver.addActionListener(e -> {
-            PantallaAdminSucursal pantallaAdminSucursal = new PantallaAdminSucursal(mail);
-            pantallaAdminSucursal.setVisible(true);
+            PantallaInforme pantallaInforme = new PantallaInforme(mail);
+            pantallaInforme.setVisible(true);
             dispose();
         });
 

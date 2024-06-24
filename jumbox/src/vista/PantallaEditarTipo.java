@@ -129,8 +129,8 @@ public class PantallaEditarTipo extends JFrame {
         JButton btnVolveralHome = new JButton("Volver");
         btnVolveralHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                PantallaAdminSucursal adminsucursal = new PantallaAdminSucursal(empleado.getEmail());
-                adminsucursal.setVisible(true);
+                PantallaInforme pantallaInforme = new PantallaInforme(empleado.getEmail());
+                pantallaInforme.setVisible(true);
                 dispose();
             }
         });
