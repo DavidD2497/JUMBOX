@@ -112,6 +112,10 @@ public class PantallaConfirmarSolicitudDePedido extends JFrame {
 		DetallePedidoControlador detallePedidoControlador = new DetallePedidoControlador();
 		java.util.List<DetallePedido> detallePedido = detallePedidoControlador.getDetallePedidoByIdPedido(idPedido);
 
+		if(detallePedido.size() == 0) { 
+			return false;
+		}
+		
 		int respuesta = JOptionPane.showOptionDialog(null, "¿Desea confirmar este pedido?", "Confirmar pedido",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] { "Sí", "No" }, null);
 
