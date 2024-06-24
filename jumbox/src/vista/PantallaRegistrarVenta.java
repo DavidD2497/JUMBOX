@@ -238,11 +238,13 @@ public class PantallaRegistrarVenta extends JFrame {
                             detalles.add(nuevoDetalle);
                         }
                         inpCantidad.setText("0");
+
                         btnMas.setEnabled(false);
                         btnMas.setBackground(UIManager.getColor("Button.background"));
                         actualizarTablaDetalles();
                         actualizarMontoTotal();
                         mostrarMensajeExito("Producto agregado correctamente.");
+                        table.clearSelection();
                     } catch (NumberFormatException ex) {
                         mostrarMensajeError("Por favor, ingrese valores numéricos válidos.");
                     }

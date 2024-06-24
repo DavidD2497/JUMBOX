@@ -60,6 +60,14 @@ public abstract class Empleado {
             return "Todos los campos son obligatorios.";
 
         }
+        
+        if (!nombre.matches("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\\s]+")) {
+            return "Nombre no válido. Debe contener solo letras y espacios.";
+        }
+        
+        if (nombre.length() < 3) {
+            return "Nombre no válido. Debe tener al menos 3 caracteres.";
+        }
 
 
         if (!email.contains("@")) {
@@ -98,11 +106,19 @@ public abstract class Empleado {
             return  "Todos los campos son obligatorios.";
 
         }
+        
+        if (!nuevoNombre.matches("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\\s]+")) {
+            return "Nombre no válido. Debe contener solo letras y espacios.";
+        }
+        
+        if (nuevoNombre.length() < 3) {
+            return "Nombre no válido. Debe tener al menos 3 caracteres.";
+        }
 
         if (!nuevoEmail.contains("@")) {
             return "Nuevo email no válido. Debe contener un '@'.";
 
-        }
+        }   
 
         EmpleadoControlador empleadoControlador = new EmpleadoControlador();
         Empleado empleado = empleadoControlador.getUserByEmail(email);
