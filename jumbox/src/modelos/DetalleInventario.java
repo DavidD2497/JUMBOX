@@ -6,6 +6,7 @@ public class DetalleInventario {
 	private int idDescuento;
 	private int idDetalle;
 	private int cantidad;
+
 	
 	public DetalleInventario(int idProducto, int idInventarioSucursal, int idDescuento, int cantidad) {
 		super();

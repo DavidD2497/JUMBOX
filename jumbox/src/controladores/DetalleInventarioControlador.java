@@ -17,6 +17,7 @@ public class DetalleInventarioControlador implements DetalleInventarioRepository
     public DetalleInventarioControlador() {
     	this.connection = DatabaseConnection.getInstance().getConnection();
     }
+ 
 
     @Override
     public List<DetalleInventario> getAllDetalleInventarios() {
