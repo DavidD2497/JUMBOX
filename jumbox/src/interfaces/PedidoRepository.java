@@ -26,4 +26,6 @@ public interface PedidoRepository {
 	void actualizarFechaEntrega(int codigoPedido, LocalDate nuevaFechaEntrega);
 
 	boolean editarPedido(int idDetalle, int idPedido);
+	
+	public void updateIdPedido(int codigo,int idPedido);
 }

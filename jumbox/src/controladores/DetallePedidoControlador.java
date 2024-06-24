@@ -104,6 +104,26 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
         }
     }
 
+    
+    
+    @Override
+    public void updateCantidadDetallePedido(int idDetalle,int cantidad) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_pedido SET  cantidad = ? WHERE id_detalle_pedido = ?");
+            statement.setInt(2, idDetalle);
+            statement.setInt(1, cantidad);
+      
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Detalle de pedido actualizado exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
     @Override
     public void updateDetallePedido(DetallePedido detallePedido) {
         try {
@@ -122,6 +142,24 @@ public class DetallePedidoControlador implements DetallePedidoRepository {
         }
     }
 
+
+    @Override
+    public void updateDetalleIdPedido(int codigo, int idPedido) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE detalle_pedido SET id_pedido = ? WHERE id_pedido = ?");
+       
+            statement.setInt(1, codigo);
+            statement.setInt(2, idPedido);
+        
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Detalle de pedido actualizado exitosamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void deleteDetallePedido(int id) {

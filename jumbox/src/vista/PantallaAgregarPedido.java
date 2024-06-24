@@ -177,7 +177,14 @@ public class PantallaAgregarPedido extends JFrame {
 		JButton btnAgregarPedido = new JButton("Registrar Pedido");
 		btnAgregarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminSucursal.solicitarPedido(listaDetalles);
+				if (AdminSucursal.solicitarPedido(listaDetalles)==true) {
+					 PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(mail);
+			            pantallaMostrarPedido.setVisible(true);
+			            dispose();
+				}
+			           
+			       
+
 
 			}
 		});
@@ -234,8 +241,8 @@ public class PantallaAgregarPedido extends JFrame {
 			}
 		});
 		btnVolver.addActionListener(e -> {
-			PantallaPedido pantallaPedido = new PantallaPedido(mail);
-			pantallaPedido.setVisible(true);
+			PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(mail);
+			pantallaMostrarPedido.setVisible(true);
 			dispose();
 		});
 
@@ -321,16 +328,7 @@ public class PantallaAgregarPedido extends JFrame {
 				}
 			}
 		});
-		JDialog dialogo = new JDialog(this, "Ventana de Diálogo", true);
-		dialogo.setSize(200, 150);
-		dialogo.setLocationRelativeTo(this); // Centrar el diálogo respecto a la ventana principal
-
-		JLabel etiqueta = new JLabel("Este es un JDialog de ejemplo");
-		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
-		dialogo.getContentPane().add(etiqueta);
-
-		dialogo.setVisible(true); // Mostrar el diálogo
-
+		
 		filtroNombre.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				if (comboBoxSucursal.getSelectedIndex() > 0) {
@@ -342,19 +340,6 @@ public class PantallaAgregarPedido extends JFrame {
 			}
 		});
 		// ...
-	}
-
-	private void mostrarDialogo() {
-		// Crear un JDialog con el JFrame como padre
-		JDialog dialogo = new JDialog(this, "Ventana de Diálogo", true);
-		dialogo.setSize(200, 150);
-		dialogo.setLocationRelativeTo(this); // Centrar el diálogo respecto a la ventana principal
-
-		JLabel etiqueta = new JLabel("Este es un JDialog de ejemplo");
-		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
-		dialogo.getContentPane().add(etiqueta);
-
-		dialogo.setVisible(true); // Mostrar el diálogo
 	}
 
 	private void aplicarFiltros(String sucursal) {

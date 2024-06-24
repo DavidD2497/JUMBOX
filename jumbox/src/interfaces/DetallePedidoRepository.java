@@ -20,4 +20,8 @@ public interface DetallePedidoRepository {
     void deleteDetallesByIdPedido(int idPedido);
 
 	List<DetallePedido> getAllDetallePedidosByIdPedido(int idPedido);
+
+	void updateDetalleIdPedido(int codigo, int idPedido);
+
+	void updateCantidadDetallePedido(int idDetalle, int cantidad);
 }
