@@ -78,9 +78,9 @@ public class PantallaAdminSucursal extends JFrame {
         btnPedido.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para el botón de Pedido
-                PantallaPedido pantallaPedido = new PantallaPedido(empleado.getEmail());
-                pantallaPedido.setVisible(true);
-                dispose();
+            	 PantallaMostrarPedido pantallaMostrarPedido = new PantallaMostrarPedido(empleado.getEmail());
+                 pantallaMostrarPedido.setVisible(true);
+                  dispose();
             }
         });
         contentPane.add(btnPedido);
